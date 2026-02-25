@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta name="theme-color" content="#0c1a2e">
-    <meta name="description" content="Ramadan 1447H Prayer Times for Hamilton, New Zealand">
+    <meta name="description" content="Hamilton Masjid Prayer Times - Hamilton, New Zealand">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Ramadan 2026">
+    <meta name="apple-mobile-web-app-title" content="Hamilton Masjid">
     <link rel="manifest" href="manifest.json">
-    <title>Ramadan 1447H - Hamilton NZ</title>
+    <title>Hamilton Masjid - Prayer Times</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
@@ -18,112 +18,119 @@
         *{margin:0;padding:0;box-sizing:border-box}
         body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--cream);min-height:100vh;color:var(--text-dark);-webkit-font-smoothing:antialiased}
 
-        /* ═══ HERO ═══ */
-        .hero{background:var(--night);color:#fff;text-align:center;padding:48px 20px 40px;position:relative;overflow:hidden}
-        .hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 20% 50%,rgba(212,168,67,.08) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(42,157,143,.06) 0%,transparent 50%),radial-gradient(ellipse at 50% 100%,rgba(212,168,67,.05) 0%,transparent 40%);pointer-events:none}
+        /* ═══ COMPACT HEADER ═══ */
+        .hero{background:var(--night);color:#fff;text-align:center;padding:20px 16px 18px;position:relative;overflow:hidden}
+        .hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 20% 50%,rgba(212,168,67,.08) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(42,157,143,.06) 0%,transparent 50%);pointer-events:none}
         .hero-stars{position:absolute;top:0;left:0;right:0;bottom:0;overflow:hidden;pointer-events:none}
         .star{position:absolute;width:2px;height:2px;background:rgba(255,255,255,.6);border-radius:50%;animation:twinkle 3s ease-in-out infinite}
         @keyframes twinkle{0%,100%{opacity:.3}50%{opacity:1}}
-        .hero-crescent{font-size:3.5em;margin-bottom:12px;display:block;filter:drop-shadow(0 0 20px rgba(212,168,67,.4));animation:gentleFloat 6s ease-in-out infinite}
-        @keyframes gentleFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-        .hero h1{font-family:'DM Serif Display',serif;font-size:2.2em;letter-spacing:.02em;margin-bottom:4px;color:var(--gold-light);position:relative}
-        .hero-subtitle{font-family:'Amiri',serif;font-size:1.3em;color:rgba(255,255,255,.7);margin-bottom:16px;letter-spacing:.05em}
-        .hero-location{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);padding:8px 20px;border-radius:100px;font-size:.9em;color:rgba(255,255,255,.8);border:1px solid rgba(212,168,67,.2)}
-        .hero-dates{margin-top:10px;font-size:.85em;color:rgba(255,255,255,.5)}
+        .hero-top{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:6px}
+        .hero-crescent{font-size:1.6em;filter:drop-shadow(0 0 10px rgba(212,168,67,.4));animation:gentleFloat 6s ease-in-out infinite;line-height:1}
+        @keyframes gentleFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+        .hero h1{font-family:'DM Serif Display',serif;font-size:1.35em;letter-spacing:.02em;color:var(--gold-light);position:relative}
+        .hero-meta{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;font-size:.78em;color:rgba(255,255,255,.55)}
+        .hero-meta span{display:flex;align-items:center;gap:4px}
+        /* Ramadan-specific subtitle */
+        .hero-ramadan{font-family:'Amiri',serif;font-size:.95em;color:rgba(255,255,255,.6);margin-bottom:6px;letter-spacing:.03em}
+        .hero-ramadan.hide{display:none}
 
         /* ═══ MOSQUE BAR ═══ */
-        .mosque-bar{background:var(--night-light);color:#fff;padding:16px 20px;display:flex;justify-content:center;align-items:center;gap:24px;flex-wrap:wrap;font-size:.88em;border-bottom:2px solid var(--gold-dim)}
-        .mosque-bar .info-chip{display:flex;align-items:center;gap:6px;opacity:.9}
+        .mosque-bar{background:var(--night-light);color:#fff;padding:10px 16px;display:flex;justify-content:center;align-items:center;gap:20px;flex-wrap:wrap;font-size:.8em;border-bottom:2px solid var(--gold-dim)}
+        .mosque-bar .info-chip{display:flex;align-items:center;gap:5px;opacity:.9}
         .mosque-bar .info-chip strong{color:var(--gold-light)}
 
-        .main-content{max-width:1100px;margin:0 auto;padding:24px 16px 40px}
+        .main-content{max-width:1100px;margin:0 auto;padding:20px 16px 40px}
 
         /* ═══ TODAY CARD ═══ */
-        .today-card{background:#fff;border-radius:20px;padding:28px 24px;box-shadow:var(--card-shadow);margin-bottom:24px;position:relative;overflow:hidden;border:1px solid rgba(0,0,0,.04)}
+        .today-card{background:#fff;border-radius:20px;padding:22px 20px;box-shadow:var(--card-shadow);margin-bottom:20px;position:relative;overflow:hidden;border:1px solid rgba(0,0,0,.04)}
         .today-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gold),var(--teal),var(--gold))}
-        .today-label{font-size:.78em;text-transform:uppercase;letter-spacing:.12em;color:var(--teal);font-weight:700;margin-bottom:6px}
-        .today-day-title{font-family:'DM Serif Display',serif;font-size:1.6em;color:var(--text-dark);margin-bottom:4px}
-        .today-date-text{color:var(--text-light);font-size:.9em;margin-bottom:20px}
-        .today-hero-times{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
-        .hero-time-box{padding:20px 16px;border-radius:14px;text-align:center}
+        .today-label{font-size:.72em;text-transform:uppercase;letter-spacing:.12em;color:var(--teal);font-weight:700;margin-bottom:4px}
+        .today-day-title{font-family:'DM Serif Display',serif;font-size:1.4em;color:var(--text-dark);margin-bottom:3px}
+        .today-date-text{color:var(--text-light);font-size:.85em;margin-bottom:16px}
+        .today-hero-times{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+        .hero-time-box{padding:16px 12px;border-radius:14px;text-align:center}
         .hero-time-box.suhoor-box{background:linear-gradient(135deg,#e8f4f8,#d1ecf1);border:1px solid rgba(42,157,143,.15)}
         .hero-time-box.iftar-box{background:linear-gradient(135deg,#fdf2e9,#fae5d3);border:1px solid rgba(224,122,95,.15)}
-        .hero-time-box .ht-label{font-size:.72em;text-transform:uppercase;letter-spacing:.1em;font-weight:700;margin-bottom:6px}
+        .hero-time-box .ht-label{font-size:.68em;text-transform:uppercase;letter-spacing:.1em;font-weight:700;margin-bottom:4px}
         .suhoor-box .ht-label{color:var(--teal-dark)} .iftar-box .ht-label{color:var(--coral-dark)}
-        .hero-time-box .ht-time{font-family:'DM Serif Display',serif;font-size:2.2em;line-height:1}
+        .hero-time-box .ht-time{font-family:'DM Serif Display',serif;font-size:2em;line-height:1}
         .suhoor-box .ht-time{color:var(--teal)} .iftar-box .ht-time{color:var(--coral)}
-        .hero-time-box .ht-suffix{font-size:.7em;opacity:.7;margin-top:2px}
-        .countdown-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-        .cd-box{background:var(--cream);border-radius:12px;padding:14px 10px;text-align:center;border:1px solid rgba(0,0,0,.04)}
-        .cd-box .cd-label{font-size:.68em;text-transform:uppercase;letter-spacing:.08em;color:var(--text-light);font-weight:600;margin-bottom:6px}
-        .cd-box .cd-value{font-family:'DM Sans',monospace;font-size:1.3em;font-weight:700;color:var(--night)}
-        .cd-box .cd-sub{font-size:.7em;color:var(--text-light);margin-top:3px}
+        .hero-time-box .ht-suffix{font-size:.65em;opacity:.7;margin-top:2px}
+        /* Hide suhoor/iftar boxes when not Ramadan */
+        .ramadan-only{display:grid} .ramadan-only.hide{display:none}
+        .countdown-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+        /* When not Ramadan, countdown is 2-col (no iftar/day) */
+        .countdown-grid.normal-mode{grid-template-columns:1fr}
+        .cd-box{background:var(--cream);border-radius:12px;padding:12px 10px;text-align:center;border:1px solid rgba(0,0,0,.04)}
+        .cd-box .cd-label{font-size:.65em;text-transform:uppercase;letter-spacing:.08em;color:var(--text-light);font-weight:600;margin-bottom:4px}
+        .cd-box .cd-value{font-family:'DM Sans',monospace;font-size:1.2em;font-weight:700;color:var(--night)}
+        .cd-box .cd-sub{font-size:.68em;color:var(--text-light);margin-top:2px}
         .cd-box.cd-iftar{background:linear-gradient(135deg,var(--coral),var(--coral-dark))}
         .cd-box.cd-iftar .cd-label,.cd-box.cd-iftar .cd-value,.cd-box.cd-iftar .cd-sub{color:#fff}
-        .special-notice{margin-top:14px;padding:10px 16px;border-radius:10px;text-align:center;font-weight:600;font-size:.88em;background:linear-gradient(135deg,#fdf2e9,#fae5d3);color:var(--coral-dark);display:none}
+        .special-notice{margin-top:12px;padding:8px 14px;border-radius:10px;text-align:center;font-weight:600;font-size:.85em;background:linear-gradient(135deg,#fdf2e9,#fae5d3);color:var(--coral-dark);display:none}
         .special-notice.show{display:block}
 
         /* ═══ BUTTONS ═══ */
-        .calendar-action{display:flex;gap:12px;margin-bottom:24px}
-        .cal-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:10px;padding:16px 20px;border-radius:14px;border:none;font-family:'DM Sans',sans-serif;font-size:.92em;font-weight:600;cursor:pointer;transition:all .25s ease}
+        .calendar-action{display:flex;gap:10px;margin-bottom:20px}
+        .cal-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 16px;border-radius:14px;border:none;font-family:'DM Sans',sans-serif;font-size:.88em;font-weight:600;cursor:pointer;transition:all .25s ease}
         .cal-btn:active{transform:scale(.97)}
         .cal-btn-primary{background:var(--night);color:var(--gold-light);box-shadow:0 4px 16px rgba(12,26,46,.2)}
         .cal-btn-primary:hover{box-shadow:0 6px 24px rgba(12,26,46,.3);background:var(--night-light)}
         .cal-btn-secondary{background:#fff;color:var(--text-dark);border:1.5px solid rgba(0,0,0,.1);box-shadow:var(--card-shadow)}
         .cal-btn-secondary:hover{border-color:var(--gold)}
-        .cal-btn .btn-icon{font-size:1.2em}
-        .view-controls{display:flex;gap:4px;background:#fff;padding:5px;border-radius:12px;margin-bottom:20px;box-shadow:var(--card-shadow);border:1px solid rgba(0,0,0,.04)}
-        .view-btn{flex:1;padding:11px 16px;border:none;background:transparent;border-radius:9px;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.88em;color:var(--text-mid);cursor:pointer;transition:all .25s ease}
+        .cal-btn .btn-icon{font-size:1.1em}
+        .view-controls{display:flex;gap:4px;background:#fff;padding:4px;border-radius:12px;margin-bottom:16px;box-shadow:var(--card-shadow);border:1px solid rgba(0,0,0,.04)}
+        .view-btn{flex:1;padding:10px 14px;border:none;background:transparent;border-radius:9px;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.85em;color:var(--text-mid);cursor:pointer;transition:all .25s ease}
         .view-btn.active{background:var(--night);color:var(--gold-light);box-shadow:0 2px 8px rgba(12,26,46,.15)}
-        .legend{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap}
-        .legend-chip{display:flex;align-items:center;gap:6px;font-size:.76em;font-weight:600;color:var(--text-mid);background:#fff;padding:8px 14px;border-radius:100px;border:1px solid rgba(0,0,0,.06);cursor:pointer;transition:all .2s ease;user-select:none;-webkit-tap-highlight-color:transparent}
+        .legend{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+        .legend-chip{display:flex;align-items:center;gap:5px;font-size:.72em;font-weight:600;color:var(--text-mid);background:#fff;padding:6px 12px;border-radius:100px;border:1px solid rgba(0,0,0,.06);cursor:pointer;transition:all .2s ease;user-select:none;-webkit-tap-highlight-color:transparent}
         .legend-chip:active{transform:scale(.95)}
         .legend-chip:hover{box-shadow:0 2px 10px rgba(0,0,0,.1)}
         .legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
 
-        /* ═══ VIEW TOGGLE ═══ */
+        /* ═══ VIEWS ═══ */
         .card-view,.table-view{display:none} .card-view.active,.table-view.active{display:block}
 
         /* ═══ CARD VIEW ═══ */
-        .day-card{background:#fff;border-radius:16px;margin-bottom:12px;overflow:hidden;box-shadow:0 2px 12px rgba(12,26,46,.05);border:1px solid rgba(0,0,0,.04);transition:box-shadow .3s ease}
+        .day-card{background:#fff;border-radius:16px;margin-bottom:10px;overflow:hidden;box-shadow:0 2px 12px rgba(12,26,46,.05);border:1px solid rgba(0,0,0,.04);transition:box-shadow .3s ease}
         .day-card:hover{box-shadow:var(--card-shadow-hover)}
         .day-card.is-today{border:2px solid var(--gold);box-shadow:0 4px 24px rgba(212,168,67,.15)}
         .day-card.is-odd .card-header{border-left:4px solid #9b59b6;background:rgba(155,89,182,.05)}
         .day-card.is-last-ten .card-header{border-left:4px solid var(--gold);background:rgba(212,168,67,.05)}
-        .day-card.is-today .card-header{border-left:3px solid var(--coral)}
-        .card-header{padding:14px 18px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;transition:background .2s}
+        .day-card.is-today .card-header{border-left:4px solid var(--coral)}
+        .card-header{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;transition:background .2s}
         .card-header:active{background:var(--cream)}
-        .card-header-left{display:flex;align-items:center;gap:14px}
-        .card-day-num{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;font-weight:700;font-size:1em;background:var(--cream);color:var(--text-dark)}
+        .card-header-left{display:flex;align-items:center;gap:12px}
+        .card-day-num{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:9px;font-weight:700;font-size:.92em;background:var(--cream);color:var(--text-dark)}
         .day-card.is-today .card-day-num{background:var(--coral);color:#fff}
         .day-card.is-odd .card-day-num{background:#f3e8ff;color:#7c3aed}
-        .card-header-info .card-title{font-weight:600;font-size:.95em;color:var(--text-dark)}
-        .card-header-info .card-subtitle{font-size:.8em;color:var(--text-light);margin-top:1px}
+        .card-header-info .card-title{font-weight:600;font-size:.9em;color:var(--text-dark)}
+        .card-header-info .card-subtitle{font-size:.75em;color:var(--text-light);margin-top:1px}
         .card-iftar-quick{text-align:right}
-        .card-iftar-quick .ciq-label{font-size:.65em;text-transform:uppercase;letter-spacing:.08em;color:var(--text-light);font-weight:600}
-        .card-iftar-quick .ciq-time{font-family:'DM Serif Display',serif;font-size:1.2em;color:var(--coral)}
-        .chevron{color:var(--text-light);transition:transform .3s ease;font-size:.85em;margin-left:8px}
+        .card-iftar-quick .ciq-label{font-size:.6em;text-transform:uppercase;letter-spacing:.08em;color:var(--text-light);font-weight:600}
+        .card-iftar-quick .ciq-time{font-family:'DM Serif Display',serif;font-size:1.15em;color:var(--coral)}
+        .chevron{color:var(--text-light);transition:transform .3s ease;font-size:.8em;margin-left:6px}
         .day-card.expanded .chevron{transform:rotate(180deg)}
-        .card-body{display:none;padding:0 18px 18px;animation:slideDown .3s ease}
+        .card-body{display:none;padding:0 16px 16px;animation:slideDown .3s ease}
         .day-card.is-today .card-body,.day-card.expanded .card-body{display:block}
         @keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
-        .prayer-pills{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-        .prayer-pill{padding:12px 8px;border-radius:10px;text-align:center;background:var(--cream);border:1px solid transparent}
-        .prayer-pill .pp-name{font-size:.68em;text-transform:uppercase;letter-spacing:.06em;color:var(--text-light);font-weight:600;margin-bottom:4px}
-        .prayer-pill .pp-time{font-weight:700;font-size:1.05em;color:var(--text-dark)}
+        .prayer-pills{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+        .prayer-pill{padding:10px 6px;border-radius:10px;text-align:center;background:var(--cream);border:1px solid transparent}
+        .prayer-pill .pp-name{font-size:.64em;text-transform:uppercase;letter-spacing:.06em;color:var(--text-light);font-weight:600;margin-bottom:3px}
+        .prayer-pill .pp-time{font-weight:700;font-size:1em;color:var(--text-dark)}
         .prayer-pill.pill-suhoor{background:#e8f8f5;border-color:rgba(42,157,143,.1)} .prayer-pill.pill-suhoor .pp-time{color:var(--teal)}
-        .prayer-pill.pill-iftar{grid-column:1/-1;background:linear-gradient(135deg,var(--coral),#d45d43);padding:18px 12px;border:none}
-        .prayer-pill.pill-iftar .pp-name{color:rgba(255,255,255,.85);font-size:.72em}
-        .prayer-pill.pill-iftar .pp-time{color:#fff;font-family:'DM Serif Display',serif;font-size:1.8em}
+        .prayer-pill.pill-iftar{grid-column:1/-1;background:linear-gradient(135deg,var(--coral),#d45d43);padding:14px 10px;border:none}
+        .prayer-pill.pill-iftar .pp-name{color:rgba(255,255,255,.85);font-size:.68em}
+        .prayer-pill.pill-iftar .pp-time{color:#fff;font-family:'DM Serif Display',serif;font-size:1.6em}
 
-        /* ═══ TABLE — DESKTOP full ═══ */
+        /* ═══ TABLE — DESKTOP ═══ */
         .table-wrapper{background:#fff;border-radius:16px;overflow:hidden;box-shadow:var(--card-shadow);border:1px solid rgba(0,0,0,.04)}
         table{width:100%;border-collapse:collapse;font-size:.92em}
         thead{background:var(--night);color:#fff;position:sticky;top:0;z-index:10}
-        th{padding:14px 8px;text-align:center;font-weight:600;font-size:.82em;letter-spacing:.03em;white-space:nowrap}
+        th{padding:12px 8px;text-align:center;font-weight:600;font-size:.8em;letter-spacing:.03em;white-space:nowrap}
         th .th-sub{display:block;font-weight:400;opacity:.6;font-size:.85em;margin-top:2px}
         th.th-suhoor{background:rgba(42,157,143,.3)} th.th-iftar{background:rgba(224,122,95,.35)}
-        td{padding:12px 8px;text-align:center;border-bottom:1px solid rgba(0,0,0,.04)}
+        td{padding:10px 8px;text-align:center;border-bottom:1px solid rgba(0,0,0,.04)}
         tbody tr:hover{background:rgba(0,0,0,.02)}
         tr.row-today{background:linear-gradient(90deg,#fef3cd,#fdf6e3,#fef3cd)!important}
         tr.row-today td{font-weight:700;color:var(--text-dark);border-top:2px solid var(--gold);border-bottom:2px solid var(--gold)}
@@ -137,7 +144,7 @@
         .td-iftar{background:rgba(224,122,95,.07);color:var(--coral-dark);font-weight:700;font-size:1.05em}
         tr.row-today .td-iftar{background:rgba(224,122,95,.22)}
 
-        /* ═══ MOBILE TABLE — all 8 cols visible, no scroll ═══ */
+        /* ═══ MOBILE TABLE ═══ */
         .desktop-table{display:block} .mobile-table{display:none}
         @media(max-width:768px){
             .desktop-table{display:none} .mobile-table{display:block}
@@ -149,50 +156,55 @@
             .mobile-table .td-iftar{font-size:.82em}
             .mobile-table .mob-date{font-size:.62em;color:var(--text-light);display:block;line-height:1.2;margin-top:1px}
         }
-
-        /* ═══ TODAY DETAIL CARD (in mobile table) ═══ */
         .today-detail-row td{padding:0!important;border:none!important}
-        .today-detail-card{background:linear-gradient(135deg,#fffbf0,#fef6e6);padding:14px;margin:4px 0 8px;border-radius:12px;border:1.5px solid var(--gold)}
-        .today-detail-card .tdc-title{font-size:.72em;text-transform:uppercase;letter-spacing:.08em;color:var(--gold-dim);font-weight:700;margin-bottom:8px;text-align:center}
-        .tdc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
-        .tdc-item{text-align:center;background:#fff;border-radius:8px;padding:8px 4px;border:1px solid rgba(0,0,0,.04)}
-        .tdc-item .tdc-label{font-size:.6em;text-transform:uppercase;letter-spacing:.04em;color:var(--text-light);font-weight:600;margin-bottom:2px}
-        .tdc-item .tdc-time{font-weight:700;font-size:.88em;color:var(--text-dark)}
+        .today-detail-card{background:linear-gradient(135deg,#fffbf0,#fef6e6);padding:12px;margin:4px 0 8px;border-radius:12px;border:1.5px solid var(--gold)}
+        .today-detail-card .tdc-title{font-size:.7em;text-transform:uppercase;letter-spacing:.08em;color:var(--gold-dim);font-weight:700;margin-bottom:6px;text-align:center}
+        .tdc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+        .tdc-item{text-align:center;background:#fff;border-radius:8px;padding:7px 3px;border:1px solid rgba(0,0,0,.04)}
+        .tdc-item .tdc-label{font-size:.58em;text-transform:uppercase;letter-spacing:.04em;color:var(--text-light);font-weight:600;margin-bottom:2px}
+        .tdc-item .tdc-time{font-weight:700;font-size:.85em;color:var(--text-dark)}
         .tdc-item.tdc-suhoor{background:#e8f8f5;border-color:rgba(42,157,143,.15)}
         .tdc-item.tdc-suhoor .tdc-time{color:var(--teal)}
         .tdc-item.tdc-iftar{background:linear-gradient(135deg,#fde8e2,#fdd8ce);border-color:rgba(224,122,95,.2)}
-        .tdc-item.tdc-iftar .tdc-time{color:var(--coral-dark);font-size:1em}
+        .tdc-item.tdc-iftar .tdc-time{color:var(--coral-dark);font-size:.95em}
 
         /* ═══ DUA + INFO + FOOTER ═══ */
-        .dua-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:28px}
-        .dua-card{background:#fff;border-radius:16px;padding:24px;box-shadow:var(--card-shadow);border:1px solid rgba(0,0,0,.04);border-top:3px solid var(--gold)}
-        .dua-card h3{font-family:'DM Serif Display',serif;font-size:1.1em;color:var(--night);margin-bottom:14px}
-        .dua-arabic{font-family:'Amiri',serif;font-size:1.35em;text-align:center;color:var(--night);direction:rtl;line-height:2;padding:16px;background:var(--cream);border-radius:10px;margin-bottom:12px}
-        .dua-translit{text-align:center;font-style:italic;color:var(--text-light);font-size:.88em;margin-bottom:8px}
-        .dua-meaning{text-align:center;color:var(--text-mid);font-size:.85em;line-height:1.5}
-        .info-section{background:#fff;border-radius:16px;padding:24px;margin-top:24px;box-shadow:var(--card-shadow);border:1px solid rgba(0,0,0,.04)}
-        .info-section h4{font-family:'DM Serif Display',serif;font-size:1.1em;color:var(--night);margin-bottom:14px}
+        .dua-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:24px}
+        .dua-card{background:#fff;border-radius:16px;padding:20px;box-shadow:var(--card-shadow);border:1px solid rgba(0,0,0,.04);border-top:3px solid var(--gold)}
+        .dua-card h3{font-family:'DM Serif Display',serif;font-size:1.05em;color:var(--night);margin-bottom:12px}
+        .dua-arabic{font-family:'Amiri',serif;font-size:1.25em;text-align:center;color:var(--night);direction:rtl;line-height:2;padding:14px;background:var(--cream);border-radius:10px;margin-bottom:10px}
+        .dua-translit{text-align:center;font-style:italic;color:var(--text-light);font-size:.85em;margin-bottom:6px}
+        .dua-meaning{text-align:center;color:var(--text-mid);font-size:.82em;line-height:1.5}
+        .info-section{background:#fff;border-radius:16px;padding:20px;margin-top:20px;box-shadow:var(--card-shadow);border:1px solid rgba(0,0,0,.04)}
+        .info-section h4{font-family:'DM Serif Display',serif;font-size:1.05em;color:var(--night);margin-bottom:12px}
         .info-list{list-style:none;margin:0;padding:0}
-        .info-list li{padding:8px 0;font-size:.88em;color:var(--text-mid);line-height:1.5;border-bottom:1px solid rgba(0,0,0,.04);display:flex;align-items:flex-start;gap:10px}
+        .info-list li{padding:7px 0;font-size:.85em;color:var(--text-mid);line-height:1.5;border-bottom:1px solid rgba(0,0,0,.04);display:flex;align-items:flex-start;gap:8px}
         .info-list li:last-child{border:none}
-        .info-list .li-icon{flex-shrink:0;width:22px;height:22px;background:var(--cream);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.7em;margin-top:1px}
-        .footer{background:var(--night);color:#fff;text-align:center;padding:32px 20px;margin-top:40px}
-        .footer-mubarak{font-family:'Amiri',serif;font-size:1.6em;color:var(--gold-light);margin-bottom:6px}
-        .footer-dua{font-size:.9em;opacity:.6;margin-bottom:20px}
-        .footer-source{font-size:.78em;opacity:.4;padding-top:16px;border-top:1px solid rgba(255,255,255,.1)}
-        .scroll-top-btn{position:fixed;bottom:24px;right:24px;width:48px;height:48px;background:var(--night);color:var(--gold-light);border:none;border-radius:50%;font-size:1.3em;cursor:pointer;box-shadow:0 4px 20px rgba(12,26,46,.3);z-index:99;opacity:0;transform:translateY(10px);transition:all .3s ease;display:flex;align-items:center;justify-content:center}
+        .info-list .li-icon{flex-shrink:0;width:20px;height:20px;background:var(--cream);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.65em;margin-top:1px}
+        .footer{background:var(--night);color:#fff;text-align:center;padding:28px 20px;margin-top:32px}
+        .footer-mubarak{font-family:'Amiri',serif;font-size:1.4em;color:var(--gold-light);margin-bottom:4px}
+        .footer-dua{font-size:.85em;opacity:.6;margin-bottom:16px}
+        .footer-source{font-size:.75em;opacity:.4;padding-top:14px;border-top:1px solid rgba(255,255,255,.1)}
+        .scroll-top-btn{position:fixed;bottom:20px;right:20px;width:44px;height:44px;background:var(--night);color:var(--gold-light);border:none;border-radius:50%;font-size:1.2em;cursor:pointer;box-shadow:0 4px 20px rgba(12,26,46,.3);z-index:99;opacity:0;transform:translateY(10px);transition:all .3s ease;display:flex;align-items:center;justify-content:center}
         .scroll-top-btn.show{opacity:1;transform:translateY(0)} .scroll-top-btn:active{transform:scale(.93)}
-        .install-banner{background:var(--teal);color:#fff;padding:12px 20px;text-align:center;font-weight:600;font-size:.88em;cursor:pointer;display:none} .install-banner.show{display:block}
-        .toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--night);color:#fff;padding:14px 24px;border-radius:12px;font-size:.88em;font-weight:500;box-shadow:0 8px 32px rgba(0,0,0,.2);opacity:0;transition:all .3s ease;z-index:200;pointer-events:none;max-width:90vw;text-align:center}
+        .install-banner{background:var(--teal);color:#fff;padding:10px 16px;text-align:center;font-weight:600;font-size:.82em;cursor:pointer;display:none} .install-banner.show{display:block}
+        .toast{position:fixed;bottom:70px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--night);color:#fff;padding:12px 20px;border-radius:12px;font-size:.85em;font-weight:500;box-shadow:0 8px 32px rgba(0,0,0,.2);opacity:0;transition:all .3s ease;z-index:200;pointer-events:none;max-width:90vw;text-align:center}
         .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
         @media(min-width:769px){
-            .hero{padding:60px 24px 50px}.hero-crescent{font-size:4.5em}.hero h1{font-size:3em}.hero-subtitle{font-size:1.5em}.main-content{padding:32px 24px 60px}.today-card{padding:36px 32px}.today-hero-times{gap:20px}.hero-time-box .ht-time{font-size:2.8em}.countdown-grid{gap:16px}
+            .hero{padding:28px 24px 22px}
+            .hero-top{gap:14px}.hero h1{font-size:1.8em}.hero-crescent{font-size:2em}
+            .main-content{padding:28px 24px 50px}
+            .today-card{padding:28px 28px}
+            .hero-time-box .ht-time{font-size:2.6em}
+            .countdown-grid{gap:14px}
             .prayer-pills{grid-template-columns:repeat(4,1fr)}.prayer-pill.pill-iftar{grid-column:1/-1}
-            th{padding:16px 12px}td{padding:13px 12px}.dua-arabic{font-size:1.5em}
+            th{padding:14px 10px}td{padding:12px 10px}.dua-arabic{font-size:1.4em}
         }
         @media(max-width:480px){
-            .hero h1{font-size:1.7em}.hero-subtitle{font-size:1.1em}.calendar-action{flex-direction:column}.hero-time-box .ht-time{font-size:1.9em}.countdown-grid{grid-template-columns:repeat(3,1fr)}.mosque-bar{gap:12px;font-size:.82em}
+            .calendar-action{flex-direction:column}
+            .hero-time-box .ht-time{font-size:1.8em}
+            .mosque-bar{gap:10px;font-size:.76em}
         }
     </style>
 </head>
@@ -200,41 +212,45 @@
 <div class="install-banner" id="installBanner" onclick="installApp()">📱 Install as app for quick access</div>
 <div class="hero">
     <div class="hero-stars" id="heroStars"></div>
-    <span class="hero-crescent">🌙</span>
-    <h1>Ramadan 1447H</h1>
-    <div class="hero-subtitle">رمضان كريم</div>
-    <div class="hero-location">📍 Hamilton, New Zealand</div>
-    <div class="hero-dates">February 20 – March 21, 2026</div>
+    <div class="hero-top">
+        <span class="hero-crescent">🌙</span>
+        <h1 id="heroTitle">Hamilton Masjid</h1>
+    </div>
+    <div class="hero-ramadan" id="heroRamadan">Ramadan 1447H · رمضان كريم</div>
+    <div class="hero-meta">
+        <span>📍 Hamilton, NZ</span>
+        <span>🕌 921 Heaphy Terrace</span>
+    </div>
 </div>
 <div class="mosque-bar">
-    <div class="info-chip">🕌 <strong>Hamilton Masjid</strong> — 921 Heaphy Terrace</div>
     <div class="info-chip">📅 Jumu'ah Khutbah: <strong>1:40 PM</strong></div>
+    <div class="info-chip" id="ramadanDateRange">🌙 <strong>Feb 20 – Mar 21, 2026</strong></div>
 </div>
 <div class="main-content">
     <div class="today-card" id="todayCard">
         <div class="today-label" id="todayLabel">Today</div>
         <div class="today-day-title" id="todayDayTitle">Loading...</div>
         <div class="today-date-text" id="todayDateText"></div>
-        <div class="today-hero-times">
+        <div class="today-hero-times ramadan-only" id="suhoorIftarBoxes">
             <div class="hero-time-box suhoor-box"><div class="ht-label">Suhoor Ends</div><div class="ht-time" id="todaySuhoor">--:--</div><div class="ht-suffix">AM</div></div>
             <div class="hero-time-box iftar-box"><div class="ht-label">Break Fast</div><div class="ht-time" id="todayIftar">--:--</div><div class="ht-suffix">PM</div></div>
         </div>
-        <div class="countdown-grid">
+        <div class="countdown-grid" id="countdownGrid">
             <div class="cd-box"><div class="cd-label">Next Prayer</div><div class="cd-value" id="cdNextPrayer">--:--</div><div class="cd-sub" id="cdNextName">...</div></div>
-            <div class="cd-box cd-iftar"><div class="cd-label">Until Iftar</div><div class="cd-value" id="cdIftar">--:--</div><div class="cd-sub" id="cdIftarSub">...</div></div>
-            <div class="cd-box"><div class="cd-label">Ramadan Day</div><div class="cd-value" id="cdDay">--</div><div class="cd-sub">of 30</div></div>
+            <div class="cd-box cd-iftar" id="cdIftarBox"><div class="cd-label">Until Iftar</div><div class="cd-value" id="cdIftar">--:--</div><div class="cd-sub" id="cdIftarSub">...</div></div>
+            <div class="cd-box" id="cdDayBox"><div class="cd-label">Ramadan Day</div><div class="cd-value" id="cdDay">--</div><div class="cd-sub">of 30</div></div>
         </div>
         <div class="special-notice" id="specialNotice"></div>
     </div>
-    <div class="calendar-action">
+    <div class="calendar-action" id="calendarAction">
         <button class="cal-btn cal-btn-primary" onclick="addToCalendar()"><span class="btn-icon">📅</span> Add to Calendar</button>
         <button class="cal-btn cal-btn-secondary" onclick="shareApp()"><span class="btn-icon">📤</span> Share</button>
     </div>
-    <div class="view-controls">
+    <div class="view-controls" id="viewControls">
         <button class="view-btn active" id="cardBtn" onclick="switchView('card')">Cards</button>
         <button class="view-btn" id="tableBtn" onclick="switchView('table')">Table</button>
     </div>
-    <div class="legend">
+    <div class="legend" id="legendBar">
         <div class="legend-chip" onclick="scrollToDay('today')"><div class="legend-dot" style="background:var(--coral)"></div> Today</div>
         <div class="legend-chip" onclick="scrollToDay('last10')"><div class="legend-dot" style="background:var(--gold)"></div> Last 10 ↓</div>
         <div class="legend-chip" onclick="scrollToDay('odd')"><div class="legend-dot" style="background:#9b59b6"></div> Odd Nights ↓</div>
@@ -242,16 +258,10 @@
     </div>
     <div class="card-view active" id="cardView"></div>
     <div class="table-view" id="tableView">
-        <!-- DESKTOP full table -->
-        <div class="table-wrapper desktop-table"><table><thead><tr>
-            <th>Day</th><th>Date</th><th class="th-suhoor">Suhoor<br>Ends</th><th>Fajr <span class="th-sub">Iqama</span></th><th>Dhuhr <span class="th-sub">Iqama</span></th><th>Asr <span class="th-sub">Iqama</span></th><th>Maghrib <span class="th-sub">Iqama</span></th><th class="th-iftar">Iftar</th><th>Isha <span class="th-sub">Iqama</span></th>
-        </tr></thead><tbody id="tableBody"></tbody></table></div>
-        <!-- MOBILE compact table — all columns fit -->
-        <div class="table-wrapper mobile-table"><table><thead><tr>
-            <th>Day</th><th class="th-suhoor">Suh<br>Ends</th><th>Fajr</th><th>Dhuhr</th><th>Asr</th><th>Mag</th><th class="th-iftar">Iftar</th><th>Isha</th>
-        </tr></thead><tbody id="mobileTableBody"></tbody></table></div>
+        <div class="table-wrapper desktop-table"><table><thead><tr id="desktopThead"></tr></thead><tbody id="tableBody"></tbody></table></div>
+        <div class="table-wrapper mobile-table"><table><thead><tr id="mobileThead"></tr></thead><tbody id="mobileTableBody"></tbody></table></div>
     </div>
-    <div class="dua-cards">
+    <div class="dua-cards" id="duaCards">
         <div class="dua-card"><h3>🤲 Suhoor Intention</h3><div class="dua-arabic">اللَّهُمَّ إِنِّي نَوَيْتُ لَكَ صَوْمَ رَمَضَانَ</div><div class="dua-translit">Allahumma inni nawaytu laka sauma ramadhan</div><div class="dua-meaning">"Oh Allah! I intend to keep the fast of Ramadhan for Your pleasure"</div></div>
         <div class="dua-card"><h3>🤲 Iftar Dua</h3><div class="dua-arabic">اللَّهُمَّ إِنِّي لَكَ صُمْتُ وَبِكَ آمَنْتُ وَعَلَى رِزْقِكَ أَفْطَرْتُ</div><div class="dua-translit">Allahumma inni laka sumtu wa bika aamantu wa ala rizq-ika-aftartu</div><div class="dua-meaning">"Oh Allah! I fasted for You and I believe in You and I break my fast with Your sustenance"</div></div>
     </div>
@@ -261,16 +271,14 @@
             <li><span class="li-icon">🕐</span> All prayer times shown are <strong>Iqama (congregation) times</strong></li>
             <li><span class="li-icon">🌙</span> Iftar times sourced from <strong>FIANZ calendar</strong></li>
             <li><span class="li-icon">🍽️</span> <strong>Suhoor Ends</strong> — stop eating before Fajr adhan</li>
-
             <li><span class="li-icon">🤲</span> Taraweeh follows Isha prayer nightly</li>
             <li><span class="li-icon">🕌</span> Prayer times sourced from <strong>Waikato Muslim Association</strong></li>
-
         </ul>
     </div>
 </div>
 <div class="footer">
-    <div class="footer-mubarak">رمضان مبارك</div>
-    <div class="footer-dua">May Allah accept our fasts 🤲</div>
+    <div class="footer-mubarak" id="footerMubarak">رمضان مبارك</div>
+    <div class="footer-dua" id="footerDua">May Allah accept our fasts 🤲</div>
     <div class="footer-source">Source: FIANZ & Waikato Muslim Association</div>
 </div>
 <button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
@@ -283,13 +291,11 @@ if(window.caches){caches.keys().then(function(n){for(var i=0;i<n.length;i++)cach
 var deferredPrompt;
 window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;document.getElementById('installBanner').classList.add('show')});
 function installApp(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(function(){deferredPrompt=null;document.getElementById('installBanner').classList.remove('show')})}}
-
-// Stars
-(function(){var c=document.getElementById('heroStars');for(var i=0;i<40;i++){var s=document.createElement('div');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=Math.random()*3+'s';var sz=(Math.random()*2+1)+'px';s.style.width=sz;s.style.height=sz;c.appendChild(s)}})();
-
+(function(){var c=document.getElementById('heroStars');for(var i=0;i<30;i++){var s=document.createElement('div');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=Math.random()*3+'s';var sz=(Math.random()*2+1)+'px';s.style.width=sz;s.style.height=sz;c.appendChild(s)}})();
 function showToast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},3500)}
-function shareApp(){if(navigator.share){navigator.share({title:'Ramadan 1447H - Hamilton NZ',text:'Prayer times for Ramadan 2026',url:window.location.href})}else{navigator.clipboard.writeText(window.location.href);showToast('Link copied!')}}
+function shareApp(){if(navigator.share){navigator.share({title:'Hamilton Masjid Prayer Times',text:'Prayer times for Hamilton Masjid',url:window.location.href})}else{navigator.clipboard.writeText(window.location.href);showToast('Link copied!')}}
 
+// ═══ RAMADAN DATA ═══
 var PT=[
 {day:1,date:"Feb 20",wd:"Fri",suh:"5:14",faj:"5:40",sun:"6:53",dhu:"1:50",asr:"5:40",mag:"8:40",ift:"8:17",ish:"9:40"},
 {day:2,date:"Feb 21",wd:"Sat",suh:"5:15",faj:"5:50",sun:"6:55",dhu:"1:50",asr:"5:40",mag:"8:40",ift:"8:15",ish:"9:40"},
@@ -323,130 +329,158 @@ var PT=[
 {day:30,date:"Mar 21",wd:"Sat",suh:"5:49",faj:"6:20",sun:"7:22",dhu:"1:50",asr:"5:00",mag:"7:25",ift:"7:33",ish:"8:50"}
 ];
 
-// ICS — all 7 events per day with 10-min alarms
+// ═══ DETECT MODE ═══
+var RAMADAN_START=new Date(2026,1,20); // Feb 20
+var RAMADAN_END=new Date(2026,2,21);   // Mar 21
+function isRamadan(){var now=new Date();var today=new Date(now.getFullYear(),now.getMonth(),now.getDate());return today>=RAMADAN_START&&today<=RAMADAN_END}
+
+function applyMode(){
+var ram=isRamadan();
+// Header
+document.getElementById('heroTitle').textContent=ram?'Ramadan 1447H':'Hamilton Masjid';
+document.getElementById('heroRamadan').classList.toggle('hide',!ram);
+document.getElementById('ramadanDateRange').style.display=ram?'':'none';
+// Today card: hide suhoor/iftar boxes, iftar countdown, day counter
+document.getElementById('suhoorIftarBoxes').classList.toggle('hide',!ram);
+document.getElementById('cdIftarBox').style.display=ram?'':'none';
+document.getElementById('cdDayBox').style.display=ram?'':'none';
+document.getElementById('countdownGrid').classList.toggle('normal-mode',!ram);
+// Hide Ramadan-specific legend, calendar button, view toggle, dua cards
+document.getElementById('legendBar').style.display=ram?'':'none';
+document.getElementById('calendarAction').style.display=ram?'':'none';
+document.getElementById('viewControls').style.display=ram?'':'none';
+document.getElementById('duaCards').style.display=ram?'':'none';
+// Footer
+document.getElementById('footerMubarak').textContent=ram?'رمضان مبارك':'Hamilton Masjid';
+document.getElementById('footerDua').textContent=ram?'May Allah accept our fasts 🤲':'Prayer Times';
+// If not Ramadan, show only today card + info (no table/cards needed)
+document.getElementById('cardView').style.display=ram?'':'none';
+document.getElementById('tableView').style.display=ram?'':'none';
+}
+
+// ═══ ICS ═══
 function pad(n){return n<10?'0'+n:''+n}
 function icsTime(ds,h,m){return 'DTSTART;TZID=Pacific/Auckland:'+ds+'T'+pad(h)+pad(m)+'00'}
 function icsEnd(ds,h,m,dur){var em=m+dur,eh=h;while(em>=60){eh++;em-=60}return 'DTEND;TZID=Pacific/Auckland:'+ds+'T'+pad(eh)+pad(em)+'00'}
-function icsEvent(ds,h,m,dur,summary,desc,uid,alarmMin){
-return ['BEGIN:VEVENT',icsTime(ds,h,m),icsEnd(ds,h,m,dur),'SUMMARY:'+summary,'DESCRIPTION:'+desc,'LOCATION:Hamilton Masjid\\, 921 Heaphy Terrace\\, Hamilton','BEGIN:VALARM','TRIGGER:-PT'+alarmMin+'M','ACTION:DISPLAY','DESCRIPTION:'+summary+' in '+alarmMin+' minutes','END:VALARM','UID:'+uid,'END:VEVENT']}
+function icsEvent(ds,h,m,dur,summary,desc,uid,alarmMin){return['BEGIN:VEVENT',icsTime(ds,h,m),icsEnd(ds,h,m,dur),'SUMMARY:'+summary,'DESCRIPTION:'+desc,'LOCATION:Hamilton Masjid\\, 921 Heaphy Terrace\\, Hamilton','BEGIN:VALARM','TRIGGER:-PT'+alarmMin+'M','ACTION:DISPLAY','DESCRIPTION:'+summary+' in '+alarmMin+' minutes','END:VALARM','UID:'+uid,'END:VEVENT']}
 function generateICSContent(){
 var L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Ramadan Hamilton 2026//EN','CALSCALE:GREGORIAN','METHOD:PUBLISH','X-WR-CALNAME:Ramadan 2026 Hamilton','X-WR-TIMEZONE:Pacific/Auckland'];
 PT.forEach(function(p){
-var mo=p.date.includes('Feb')?'02':'03';var dy=p.date.split(' ')[1];if(dy.length<2)dy='0'+dy;var ds='2026'+mo+dy;
-var d=p.day;
-// Suhoor Ends (10 min alarm)
+var mo=p.date.includes('Feb')?'02':'03';var dy=p.date.split(' ')[1];if(dy.length<2)dy='0'+dy;var ds='2026'+mo+dy;var d=p.day;
 var ss=p.suh.split(':'),sh=parseInt(ss[0]),sm=parseInt(ss[1]);
 L.push.apply(L,icsEvent(ds,sh,sm-15>0?sm-15:0,15,'Suhoor Ends - Ramadan Day '+d,'Stop eating by '+p.suh+' AM. Fajr Iqama: '+p.faj+' AM','suhoor-'+d+'-1447@ramadan-hamilton',10));
-// Fajr (10 min alarm)
 var fs=p.faj.split(':'),fh=parseInt(fs[0]),fm=parseInt(fs[1]);
 L.push.apply(L,icsEvent(ds,fh,fm,20,'Fajr Iqama','Fajr prayer at '+p.faj+' AM. Sunrise: '+p.sun+' AM','fajr-'+d+'-1447@ramadan-hamilton',10));
-// Dhuhr (10 min alarm)
 var dhs=p.dhu.split(':'),dhh=parseInt(dhs[0])+12,dhm=parseInt(dhs[1]);
 L.push.apply(L,icsEvent(ds,dhh,dhm,20,'Dhuhr Iqama','Dhuhr prayer at '+p.dhu+' PM','dhuhr-'+d+'-1447@ramadan-hamilton',10));
-// Asr (10 min alarm)
 var as=p.asr.split(':'),ah=parseInt(as[0])+12,am=parseInt(as[1]);
 L.push.apply(L,icsEvent(ds,ah,am,20,'Asr Iqama','Asr prayer at '+p.asr+' PM','asr-'+d+'-1447@ramadan-hamilton',10));
-// Maghrib (10 min alarm)
 var ms=p.mag.split(':'),mh=parseInt(ms[0])+12,mm=parseInt(ms[1]);
 L.push.apply(L,icsEvent(ds,mh,mm,20,'Maghrib Iqama','Maghrib prayer at '+p.mag+' PM','maghrib-'+d+'-1447@ramadan-hamilton',10));
-// Iftar (15 min alarm)
 var is=p.ift.split(':'),ih=parseInt(is[0])+12,im=parseInt(is[1]);
 L.push.apply(L,icsEvent(ds,ih,im,30,'🌙 Iftar - Ramadan Day '+d,'Break fast at '+p.ift+' PM. Maghrib Iqama: '+p.mag+' PM','iftar-'+d+'-1447@ramadan-hamilton',15));
-// Isha (10 min alarm)
 var es=p.ish.split(':'),eh=parseInt(es[0])+12,em=parseInt(es[1]);
 L.push.apply(L,icsEvent(ds,eh,em,20,'Isha Iqama','Isha prayer at '+p.ish+' PM. Taraweeh follows.','isha-'+d+'-1447@ramadan-hamilton',10));
 });L.push('END:VCALENDAR');return L.join('\r\n');}
-
 function addToCalendar(){
 var ics=generateICSContent();
 if(/iPad|iPhone|iPod/.test(navigator.userAgent)){window.location.href='data:text/calendar;charset=utf-8,'+encodeURIComponent(ics)}
 else{var b=new Blob([ics],{type:'text/calendar;charset=utf-8'});var u=URL.createObjectURL(b);var a=document.createElement('a');a.href=u;a.download='ramadan-hamilton-2026.ics';document.body.appendChild(a);a.click();setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(u)},200);showToast('📅 Tap the downloaded file to add to calendar')}}
 
+// ═══ HELPERS ═══
 function parseTime(t,n){var p=t.split(':'),h=parseInt(p[0]),m=parseInt(p[1]);var now=new Date();if(n!=='Fajr'&&n!=='Sunrise'&&n!=='suhoor'){if(h===1)h=13;else if(h>=4&&h<=10)h+=12}return new Date(now.getFullYear(),now.getMonth(),now.getDate(),h,m,0)}
 function getToday(){var now=new Date();for(var i=0;i<PT.length;i++){var p=PT[i];var d=new Date(2026,p.date.includes('Feb')?1:2,parseInt(p.date.split(' ')[1]));if(d.toDateString()===now.toDateString())return p}return null}
 function isToday(p){var now=new Date();var d=new Date(2026,p.date.includes('Feb')?1:2,parseInt(p.date.split(' ')[1]));return d.toDateString()===now.toDateString()}
 function switchView(v){document.getElementById('cardBtn').classList.toggle('active',v==='card');document.getElementById('tableBtn').classList.toggle('active',v==='table');document.getElementById('cardView').classList.toggle('active',v==='card');document.getElementById('tableView').classList.toggle('active',v==='table')}
-
 function rowClasses(p){var c='';if(isToday(p))c+=' row-today';if(p.day>=21)c+=' row-last-ten';if([23,25,27,29].indexOf(p.day)!==-1)c+=' row-odd';if(p.day===15)c+=' row-halfway';return c}
 function dayMarker(d){if(d===1)return' 🌟';if(d===15)return' 🎉';if(d===27)return' ✨';if(d===30)return' 🎊';return''}
-
 function scrollToDay(target){
 var dayNum;
 if(target==='today'){var tp=getToday();dayNum=tp?tp.day:1}
 else if(target==='last10'){dayNum=21}
 else if(target==='odd'){dayNum=23}
 else if(target==='halfway'){dayNum=15}
-// Find element in the currently ACTIVE view only
 var activeView=document.querySelector('.card-view.active')||document.querySelector('.table-view.active');
 if(!activeView)return;
 var el=activeView.querySelector('[data-day="'+dayNum+'"]');
 if(!el)return;
-var offset=80;
-var top=el.getBoundingClientRect().top+window.pageYOffset-offset;
+var top=el.getBoundingClientRect().top+window.pageYOffset-80;
 window.scrollTo({top:top,behavior:'smooth'});
-// Brief gold glow
 el.style.transition='box-shadow .3s, outline .3s';
 el.style.boxShadow='0 0 0 3px var(--gold), 0 4px 24px rgba(212,168,67,.3)';
 el.style.outline='2px solid #d4a843';
-setTimeout(function(){el.style.boxShadow='';el.style.outline=''},2500)
-}
+setTimeout(function(){el.style.boxShadow='';el.style.outline=''},2500)}
 
-// Cards
-function populateCards(){var c=document.getElementById('cardView');PT.forEach(function(p){
+// ═══ BUILD TABLE HEADERS DYNAMICALLY ═══
+function buildHeaders(){
+var ram=isRamadan();
+// Desktop
+var dth=document.getElementById('desktopThead');
+if(ram){dth.innerHTML='<th>Day</th><th>Date</th><th class="th-suhoor">Suhoor<br>Ends</th><th>Fajr <span class="th-sub">Iqama</span></th><th>Dhuhr <span class="th-sub">Iqama</span></th><th>Asr <span class="th-sub">Iqama</span></th><th>Maghrib <span class="th-sub">Iqama</span></th><th class="th-iftar">Iftar</th><th>Isha <span class="th-sub">Iqama</span></th>'}
+else{dth.innerHTML='<th>Date</th><th>Fajr</th><th>Sunrise</th><th>Dhuhr</th><th>Asr</th><th>Maghrib</th><th>Isha</th>'}
+// Mobile
+var mth=document.getElementById('mobileThead');
+if(ram){mth.innerHTML='<th>Day</th><th class="th-suhoor">Suh<br>Ends</th><th>Fajr</th><th>Dhuhr</th><th>Asr</th><th>Mag</th><th class="th-iftar">Iftar</th><th>Isha</th>'}
+else{mth.innerHTML='<th>Date</th><th>Fajr</th><th>Dhuhr</th><th>Asr</th><th>Mag</th><th>Isha</th>'}}
+
+// ═══ POPULATE ═══
+function populateCards(){var c=document.getElementById('cardView');var ram=isRamadan();PT.forEach(function(p){
 var iT=isToday(p),isO=[23,25,27,29].indexOf(p.day)!==-1,isL=p.day>=21;
 var cls='day-card';if(iT)cls+=' is-today';if(isO)cls+=' is-odd';if(isL)cls+=' is-last-ten';
 var d=document.createElement('div');d.className=cls;d.setAttribute('data-day',p.day);if(iT)d.id='todayCardScroll';
-d.innerHTML='<div class="card-header" onclick="this.parentElement.classList.toggle(\'expanded\')"><div class="card-header-left"><div class="card-day-num">'+p.day+'</div><div class="card-header-info"><div class="card-title">Day '+p.day+dayMarker(p.day)+'</div><div class="card-subtitle">'+p.wd+', '+p.date+'</div></div></div><div style="display:flex;align-items:center"><div class="card-iftar-quick"><div class="ciq-label">Iftar</div><div class="ciq-time">'+p.ift+'</div></div><span class="chevron">▼</span></div></div><div class="card-body"><div class="prayer-pills"><div class="prayer-pill pill-suhoor"><div class="pp-name">Suhoor Ends</div><div class="pp-time">'+p.suh+' AM</div></div><div class="prayer-pill"><div class="pp-name">Fajr</div><div class="pp-time">'+p.faj+' AM</div></div><div class="prayer-pill"><div class="pp-name">Sunrise</div><div class="pp-time">'+p.sun+' AM</div></div><div class="prayer-pill"><div class="pp-name">Dhuhr</div><div class="pp-time">'+p.dhu+' PM</div></div><div class="prayer-pill"><div class="pp-name">Asr</div><div class="pp-time">'+p.asr+' PM</div></div><div class="prayer-pill"><div class="pp-name">Maghrib</div><div class="pp-time">'+p.mag+' PM</div></div><div class="prayer-pill"><div class="pp-name">Isha</div><div class="pp-time">'+p.ish+' PM</div></div><div class="prayer-pill pill-iftar"><div class="pp-name">🌙 Iftar Time</div><div class="pp-time">'+p.ift+' PM</div></div></div></div>';
+var suhoorPill=ram?'<div class="prayer-pill pill-suhoor"><div class="pp-name">Suhoor Ends</div><div class="pp-time">'+p.suh+' AM</div></div>':'';
+var iftarPill=ram?'<div class="prayer-pill pill-iftar"><div class="pp-name">🌙 Iftar Time</div><div class="pp-time">'+p.ift+' PM</div></div>':'';
+var iftarQuick=ram?'<div class="card-iftar-quick"><div class="ciq-label">Iftar</div><div class="ciq-time">'+p.ift+'</div></div>':'<div class="card-iftar-quick"><div class="ciq-label">Maghrib</div><div class="ciq-time">'+p.mag+'</div></div>';
+d.innerHTML='<div class="card-header" onclick="this.parentElement.classList.toggle(\'expanded\')"><div class="card-header-left"><div class="card-day-num">'+p.day+'</div><div class="card-header-info"><div class="card-title">Day '+p.day+dayMarker(p.day)+'</div><div class="card-subtitle">'+p.wd+', '+p.date+'</div></div></div><div style="display:flex;align-items:center">'+iftarQuick+'<span class="chevron">▼</span></div></div><div class="card-body"><div class="prayer-pills">'+suhoorPill+'<div class="prayer-pill"><div class="pp-name">Fajr</div><div class="pp-time">'+p.faj+' AM</div></div><div class="prayer-pill"><div class="pp-name">Sunrise</div><div class="pp-time">'+p.sun+' AM</div></div><div class="prayer-pill"><div class="pp-name">Dhuhr</div><div class="pp-time">'+p.dhu+' PM</div></div><div class="prayer-pill"><div class="pp-name">Asr</div><div class="pp-time">'+p.asr+' PM</div></div><div class="prayer-pill"><div class="pp-name">Maghrib</div><div class="pp-time">'+p.mag+' PM</div></div><div class="prayer-pill"><div class="pp-name">Isha</div><div class="pp-time">'+p.ish+' PM</div></div>'+iftarPill+'</div></div>';
 c.appendChild(d)})}
 
-// Desktop table (full 9 cols)
-function populateDesktopTable(){var tb=document.getElementById('tableBody');PT.forEach(function(p){
+function populateDesktopTable(){var tb=document.getElementById('tableBody');var ram=isRamadan();PT.forEach(function(p){
 var r=document.createElement('tr');r.className=rowClasses(p);r.setAttribute('data-day',p.day);
-r.innerHTML='<td class="td-day">'+p.day+dayMarker(p.day)+'</td><td><strong>'+p.date+'</strong></td><td class="td-suhoor">'+p.suh+'</td><td>'+p.faj+'</td><td>'+p.dhu+'</td><td>'+p.asr+'</td><td>'+p.mag+'</td><td class="td-iftar">'+p.ift+'</td><td>'+p.ish+'</td>';
+if(ram){r.innerHTML='<td class="td-day">'+p.day+dayMarker(p.day)+'</td><td><strong>'+p.date+'</strong></td><td class="td-suhoor">'+p.suh+'</td><td>'+p.faj+'</td><td>'+p.dhu+'</td><td>'+p.asr+'</td><td>'+p.mag+'</td><td class="td-iftar">'+p.ift+'</td><td>'+p.ish+'</td>'}
+else{r.innerHTML='<td><strong>'+p.date+'</strong></td><td>'+p.faj+'</td><td>'+p.sun+'</td><td>'+p.dhu+'</td><td>'+p.asr+'</td><td>'+p.mag+'</td><td>'+p.ish+'</td>'}
 tb.appendChild(r)})}
 
-// Mobile table (8 cols — Day merged with weekday, all times visible)
-function populateMobileTable(){var tb=document.getElementById('mobileTableBody');PT.forEach(function(p){
+function populateMobileTable(){var tb=document.getElementById('mobileTableBody');var ram=isRamadan();PT.forEach(function(p){
 var iT=isToday(p);
 var r=document.createElement('tr');r.className=rowClasses(p);r.setAttribute('data-day',p.day);
-// Day col: number + weekday letter, compact
-r.innerHTML='<td class="td-day">'+p.day+'<span class="mob-date">'+p.wd.substring(0,2)+'</span></td><td class="td-suhoor">'+p.suh+'</td><td>'+p.faj+'</td><td>'+p.dhu+'</td><td>'+p.asr+'</td><td>'+p.mag+'</td><td class="td-iftar">'+p.ift+'</td><td>'+p.ish+'</td>';
+if(ram){r.innerHTML='<td class="td-day">'+p.day+'<span class="mob-date">'+p.wd.substring(0,2)+'</span></td><td class="td-suhoor">'+p.suh+'</td><td>'+p.faj+'</td><td>'+p.dhu+'</td><td>'+p.asr+'</td><td>'+p.mag+'</td><td class="td-iftar">'+p.ift+'</td><td>'+p.ish+'</td>'}
+else{r.innerHTML='<td class="td-day">'+p.date+'<span class="mob-date">'+p.wd.substring(0,2)+'</span></td><td>'+p.faj+'</td><td>'+p.dhu+'</td><td>'+p.asr+'</td><td>'+p.mag+'</td><td>'+p.ish+'</td>'}
 tb.appendChild(r);
-
-// For today: insert a nice detail card below the row
-if(iT){
-var dr=document.createElement('tr');dr.className='today-detail-row';
+if(iT&&ram){var dr=document.createElement('tr');dr.className='today-detail-row';
 dr.innerHTML='<td colspan="8"><div class="today-detail-card"><div class="tdc-title">📍 Today — Day '+p.day+' — '+p.wd+', '+p.date+'</div><div class="tdc-grid"><div class="tdc-item tdc-suhoor"><div class="tdc-label">Suhoor Ends</div><div class="tdc-time">'+p.suh+' AM</div></div><div class="tdc-item"><div class="tdc-label">Fajr</div><div class="tdc-time">'+p.faj+' AM</div></div><div class="tdc-item"><div class="tdc-label">Sunrise</div><div class="tdc-time">'+p.sun+' AM</div></div><div class="tdc-item"><div class="tdc-label">Dhuhr</div><div class="tdc-time">'+p.dhu+' PM</div></div><div class="tdc-item"><div class="tdc-label">Asr</div><div class="tdc-time">'+p.asr+' PM</div></div><div class="tdc-item"><div class="tdc-label">Maghrib</div><div class="tdc-time">'+p.mag+' PM</div></div><div class="tdc-item tdc-iftar"><div class="tdc-label">🌙 Iftar</div><div class="tdc-time">'+p.ift+' PM</div></div><div class="tdc-item"><div class="tdc-label">Isha</div><div class="tdc-time">'+p.ish+' PM</div></div></div></div></td>';
-tb.appendChild(dr)}
-})}
+tb.appendChild(dr)}})}
 
 function updateCountdowns(){
-var now=new Date(),tp=getToday();
-if(!tp){document.getElementById('todayDayTitle').textContent='Ramadan not active today';document.getElementById('cdDay').textContent='--';return}
-document.getElementById('todayDayTitle').textContent='Day '+tp.day+' of Ramadan';
+var now=new Date(),tp=getToday(),ram=isRamadan();
+if(!tp){
+document.getElementById('todayDayTitle').textContent=ram?'Ramadan not active today':'Prayer Times';
+document.getElementById('todayDateText').textContent=new Date().toLocaleDateString('en-NZ',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+document.getElementById('cdDay').textContent='--';return}
+document.getElementById('todayDayTitle').textContent=ram?'Day '+tp.day+' of Ramadan':'Prayer Times';
 document.getElementById('todayDateText').textContent=tp.wd+', '+tp.date+' 2026';
-document.getElementById('todaySuhoor').textContent=tp.suh;
-document.getElementById('todayIftar').textContent=tp.ift;
-document.getElementById('cdDay').textContent=tp.day;
+if(ram){document.getElementById('todaySuhoor').textContent=tp.suh;document.getElementById('todayIftar').textContent=tp.ift;document.getElementById('cdDay').textContent=tp.day}
 var notice=document.getElementById('specialNotice');
+if(ram){
 if(tp.day===1){notice.textContent='🌟 First day of Ramadan!';notice.classList.add('show')}
 else if(tp.day===15){notice.textContent='🎉 Halfway through Ramadan!';notice.classList.add('show')}
 else if(tp.day===27){notice.textContent='✨ Laylatul Qadr — most likely night!';notice.classList.add('show')}
 else if([23,25,29].indexOf(tp.day)!==-1){notice.textContent='✨ Odd night — seek Laylatul Qadr';notice.classList.add('show')}
-else if(tp.day>=21){notice.textContent='🌙 Last 10 nights — increase worship';notice.classList.add('show')}
-document.getElementById('todayLabel').textContent=tp.day>=21?'Last 10 Nights — Day '+tp.day:'Day '+tp.day+' of 30';
+else if(tp.day>=21){notice.textContent='🌙 Last 10 nights — increase worship';notice.classList.add('show')}}
+document.getElementById('todayLabel').textContent=ram?(tp.day>=21?'Last 10 Nights — Day '+tp.day:'Day '+tp.day+' of 30'):'Today';
 var prayers=[{name:'Fajr',time:tp.faj},{name:'Dhuhr',time:tp.dhu},{name:'Asr',time:tp.asr},{name:'Maghrib',time:tp.mag},{name:'Isha',time:tp.ish}];
 var next=null;
 for(var i=0;i<prayers.length;i++){var pt=parseTime(prayers[i].time,prayers[i].name);if(pt>now){next={name:prayers[i].name,time:prayers[i].time,dt:pt};break}}
 if(!next&&tp.day<30){var tm=PT[tp.day];if(tm){var ft=parseTime(tm.faj,'Fajr');ft.setDate(ft.getDate()+1);next={name:'Fajr (tmrw)',time:tm.faj,dt:ft}}}
-if(next){var diff=next.dt-now;if(diff>0){var h=Math.floor(diff/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);document.getElementById('cdNextPrayer').textContent=(h<10?'0':'')+h+':'+(m<10?'0':'')+m+':'+(s<10?'0':'')+s;document.getElementById('cdNextName').textContent=next.name+' at '+next.time+((next.name==='Fajr'||next.name.indexOf('Fajr')!==-1)?' AM':' PM')}}
+if(next){var diff=next.dt-now;if(diff>0){var h=Math.floor(diff/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);document.getElementById('cdNextPrayer').textContent=pad(h)+':'+pad(m)+':'+pad(s);document.getElementById('cdNextName').textContent=next.name+' at '+next.time+((next.name==='Fajr'||next.name.indexOf('Fajr')!==-1)?' AM':' PM')}}
 else{document.getElementById('cdNextPrayer').textContent='✅';document.getElementById('cdNextName').textContent='All prayers done'}
-var ift=parseTime(tp.ift,'Iftar'),id=ift-now;
-if(id>0){var h2=Math.floor(id/3600000),m2=Math.floor((id%3600000)/60000),s2=Math.floor((id%60000)/1000);document.getElementById('cdIftar').textContent=(h2<10?'0':'')+h2+':'+(m2<10?'0':'')+m2+':'+(s2<10?'0':'')+s2;document.getElementById('cdIftarSub').textContent='at '+tp.ift+' PM'}
-else{document.getElementById('cdIftar').textContent='✅';document.getElementById('cdIftarSub').textContent='Iftar time passed'}}
+if(ram){var ift=parseTime(tp.ift,'Iftar'),id=ift-now;
+if(id>0){var h2=Math.floor(id/3600000),m2=Math.floor((id%3600000)/60000),s2=Math.floor((id%60000)/1000);document.getElementById('cdIftar').textContent=pad(h2)+':'+pad(m2)+':'+pad(s2);document.getElementById('cdIftarSub').textContent='at '+tp.ift+' PM'}
+else{document.getElementById('cdIftar').textContent='✅';document.getElementById('cdIftarSub').textContent='Iftar time passed'}}}
 
 window.addEventListener('scroll',function(){document.getElementById('scrollTopBtn').classList.toggle('show',window.scrollY>300)});
-populateCards();populateDesktopTable();populateMobileTable();
+
+// ═══ INIT ═══
+applyMode();buildHeaders();populateCards();populateDesktopTable();populateMobileTable();
 if(window.innerWidth<769)switchView('card');else switchView('table');
 updateCountdowns();setInterval(updateCountdowns,1000);
 </script>
