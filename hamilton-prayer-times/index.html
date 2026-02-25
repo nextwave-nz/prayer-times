@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Hamilton Masjid — Prayer Times 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy: #0d1b2a;
+            --navy-mid: #1b2d42;
+            --navy-light: #243447;
+            --gold: #c9a84c;
+            --gold-light: #e8c97a;
+            --gold-pale: #f5e6c0;
+            --cream: #faf7f2;
+            --text: #1a2332;
+            --text-muted: #5a6a7a;
+            --fajr: #3d7ab5;
+            --dhuhr: #c8860a;
+            --asr: #6b8e4e;
+            --maghrib: #c24d2c;
+            --isha: #5c4a8a;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* ── HEADER ── */
+        .header {
+            background: var(--navy);
+            color: white;
+            padding: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 70% 50%, rgba(201,168,76,0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .header-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 32px 24px 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .org-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(201,168,76,0.15);
+            border: 1px solid rgba(201,168,76,0.3);
+            border-radius: 6px;
+            padding: 6px 14px;
+            margin-bottom: 20px;
+            font-size: 0.78em;
+            color: var(--gold-light);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .header-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(1.8em, 4vw, 2.6em);
+            color: white;
+            line-height: 1.15;
+            margin-bottom: 6px;
+        }
+
+        .header-arabic {
+            font-family: 'Amiri', serif;
+            font-size: clamp(1.1em, 2.5vw, 1.5em);
+            color: var(--gold-light);
+            direction: rtl;
+            margin-bottom: 16px;
+            opacity: 0.9;
+        }
+
+        .header-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .meta-pill {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: rgba(255,255,255,0.75);
+            font-size: 0.87em;
+        }
+
+        .meta-pill svg {
+            opacity: 0.7;
+        }
+
+        .gold-rule {
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold) 0%, transparent 100%);
+            margin-top: 24px;
+        }
+
+        /* ── MONTH TABS ── */
+        .tabs-bar {
+            background: var(--navy-mid);
+            sticky: top;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        }
+
+        .tabs-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            display: flex;
+            padding: 0 24px;
+            gap: 4px;
+        }
+
+        .tab-btn {
+            padding: 16px 28px;
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.5);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.92em;
+            font-weight: 500;
+            cursor: pointer;
+            position: relative;
+            transition: color 0.2s;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: var(--gold);
+            border-radius: 3px 3px 0 0;
+            transition: width 0.25s ease;
+        }
+
+        .tab-btn.active {
+            color: var(--gold-light);
+        }
+
+        .tab-btn.active::after {
+            width: calc(100% - 20px);
+        }
+
+        .tab-btn:hover:not(.active) {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .tab-month-name {
+            font-size: 1em;
+        }
+
+        .tab-hijri {
+            display: block;
+            font-size: 0.72em;
+            opacity: 0.7;
+            margin-top: 2px;
+            font-weight: 400;
+        }
+
+        /* ── MAIN CONTENT ── */
+        .content {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 24px 16px;
+        }
+
+        .month-panel {
+            display: none;
+        }
+        .month-panel.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── INFO BANNER ── */
+        .info-banner {
+            background: var(--navy);
+            color: white;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85em;
+            color: rgba(255,255,255,0.85);
+        }
+
+        .info-item strong {
+            color: var(--gold-light);
+        }
+
+        /* ── TODAY CARD ── */
+        .today-card {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+            border: 1px solid rgba(201,168,76,0.3);
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: white;
+            display: none;
+        }
+
+        .today-card.visible {
+            display: block;
+        }
+
+        .today-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .today-label {
+            background: var(--gold);
+            color: var(--navy);
+            font-size: 0.72em;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .today-date-text {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.2em;
+            color: var(--gold-light);
+        }
+
+        .today-prayers {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+        }
+
+        .today-prayer-item {
+            background: rgba(255,255,255,0.07);
+            border-radius: 10px;
+            padding: 12px 10px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .today-prayer-name {
+            font-size: 0.72em;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            opacity: 0.65;
+            margin-bottom: 6px;
+        }
+
+        .today-prayer-time {
+            font-size: 1.15em;
+            font-weight: 600;
+        }
+
+        .today-prayer-iqama {
+            font-size: 0.72em;
+            opacity: 0.55;
+            margin-top: 3px;
+        }
+
+        /* ── TABLE ── */
+        .table-wrap {
+            overflow-x: auto;
+            border-radius: 14px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            font-size: 0.83em;
+            min-width: 600px;
+        }
+
+        thead tr {
+            background: var(--navy);
+            color: white;
+        }
+
+        th {
+            padding: 14px 10px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.82em;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        th.prayer-fajr   { color: #7dbde8; }
+        th.prayer-dhuhr  { color: #f5c869; }
+        th.prayer-asr    { color: #9dcc78; }
+        th.prayer-maghrib { color: #f09070; }
+        th.prayer-isha   { color: #b0a0e0; }
+
+        th .iqama-sub {
+            display: block;
+            font-size: 0.8em;
+            opacity: 0.6;
+            text-transform: none;
+            font-weight: 400;
+            letter-spacing: 0;
+            margin-top: 2px;
+        }
+
+        td {
+            padding: 11px 10px;
+            text-align: center;
+            border-bottom: 1px solid #f0f0f0;
+            color: var(--text);
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Alternating rows */
+        tbody tr:nth-child(even) {
+            background: #fafafa;
+        }
+
+        /* Today highlight */
+        tbody tr.row-today {
+            background: linear-gradient(90deg, #fffbea, #fff8d9) !important;
+            border-left: 4px solid var(--gold) !important;
+        }
+
+        tbody tr.row-today td {
+            font-weight: 600;
+            color: #1a1a00;
+        }
+
+        /* Friday highlight */
+        tbody tr.row-friday td:first-child {
+            color: var(--maghrib);
+            font-weight: 700;
+        }
+
+        .col-date { font-weight: 600; color: var(--text-muted); font-size: 0.9em; }
+        .col-day  { font-size: 0.85em; color: var(--text-muted); }
+
+        .time-cell {
+            font-weight: 500;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 0.02em;
+        }
+
+        .iqama-cell {
+            font-size: 0.85em;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .fajr-time    { color: var(--fajr); }
+        .dhuhr-time   { color: var(--dhuhr); }
+        .asr-time     { color: var(--asr); }
+        .maghrib-time { color: var(--maghrib); }
+        .isha-time    { color: var(--isha); }
+
+        /* Prayer pair cell */
+        .prayer-pair {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        /* ── LEGEND ── */
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 18px;
+            padding: 16px 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8em;
+            color: var(--text-muted);
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
+        /* ── NOTES ── */
+        .notes-box {
+            margin-top: 20px;
+            background: #fffdf5;
+            border: 1px solid #e8d99a;
+            border-left: 4px solid var(--gold);
+            border-radius: 10px;
+            padding: 16px 20px;
+            font-size: 0.85em;
+            color: #5a4a10;
+            line-height: 1.7;
+        }
+
+        .notes-box strong {
+            color: #3a2e08;
+            display: block;
+            margin-bottom: 6px;
+            font-size: 1em;
+        }
+
+        /* ── FOOTER ── */
+        .footer {
+            background: var(--navy);
+            color: rgba(255,255,255,0.6);
+            text-align: center;
+            padding: 28px 20px;
+            font-size: 0.82em;
+            margin-top: 40px;
+            line-height: 1.8;
+        }
+
+        .footer a {
+            color: var(--gold-light);
+            text-decoration: none;
+        }
+
+        /* ── MOBILE ── */
+        @media (max-width: 640px) {
+            .header-inner { padding: 24px 16px 18px; }
+            .tab-btn { padding: 14px 16px; font-size: 0.85em; }
+            .today-prayers { grid-template-columns: repeat(3, 1fr); }
+            th, td { padding: 10px 6px; font-size: 0.78em; }
+            .info-banner { flex-direction: column; gap: 8px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="header-inner">
+        <div class="org-badge">
+            <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1z"/></svg>
+            Waikato Muslim Association
+        </div>
+        <div class="header-arabic">أوقات الصلاة — هاميلتون</div>
+        <h1 class="header-title">Hamilton Masjid<br>Prayer Times 2026</h1>
+        <div class="header-meta">
+            <span class="meta-pill">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+                921 Heaphy Terrace, Hamilton
+            </span>
+            <span class="meta-pill">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41a2 2 0 0 1 1.99-2.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                07 855 0567
+            </span>
+            <span class="meta-pill">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Friday Khutbah: 1:40 PM
+            </span>
+        </div>
+        <div class="gold-rule"></div>
+    </div>
+</div>
+
+<!-- MONTH TABS -->
+<div class="tabs-bar">
+    <div class="tabs-inner">
+        <button class="tab-btn" id="tab-feb" onclick="switchMonth('feb')">
+            <span class="tab-month-name">February 2026</span>
+            <span class="tab-hijri">Sha'ban – Ramadan 1447</span>
+        </button>
+        <button class="tab-btn" id="tab-mar" onclick="switchMonth('mar')">
+            <span class="tab-month-name">March 2026</span>
+            <span class="tab-hijri">Ramadan – Shawwal 1447</span>
+        </button>
+    </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+    <!-- FEBRUARY PANEL -->
+    <div class="month-panel" id="panel-feb">
+        <div class="today-card" id="today-card-feb">
+            <div class="today-card-header">
+                <span class="today-label">Today</span>
+                <span class="today-date-text" id="today-date-feb"></span>
+            </div>
+            <div class="today-prayers" id="today-prayers-feb"></div>
+        </div>
+
+        <div class="info-banner">
+            <div class="info-item">📅 <strong>February 2026</strong> — Sha'ban & Ramadan 1447H</div>
+            <div class="info-item">🕌 All times shown are <strong>Iqama (congregation)</strong> times</div>
+        </div>
+
+        <div class="table-wrap">
+            <table id="table-feb">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Day</th>
+                        <th class="prayer-fajr">Fajr<span class="iqama-sub">Iqama</span></th>
+                        <th>Sunrise</th>
+                        <th class="prayer-dhuhr">Dhuhr<span class="iqama-sub">Iqama</span></th>
+                        <th class="prayer-asr">Asr<span class="iqama-sub">Iqama</span></th>
+                        <th class="prayer-maghrib">Maghrib<span class="iqama-sub">Iqama</span></th>
+                        <th class="prayer-isha">Isha<span class="iqama-sub">Iqama</span></th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-feb"></tbody>
+            </table>
+        </div>
+        <div class="legend">
+            <div class="legend-item"><div class="legend-dot" style="background:#fffbea; border:1.5px solid #c9a84c;"></div> Today</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#7dbde8;"></div> Fajr</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#f5c869;"></div> Dhuhr</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#9dcc78;"></div> Asr</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#f09070;"></div> Maghrib</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#b0a0e0;"></div> Isha</div>
+        </div>
+        <div class="notes-box">
+            <strong>📌 Notes for February</strong>
+            Iqama times carry forward until next change. Asr is based on single shadow. 
+            Islamic dates are subject to moon sighting. Ramadan Iqama for Maghrib includes 3 minutes added.
+        </div>
+    </div>
+
+    <!-- MARCH PANEL -->
+    <div class="month-panel" id="panel-mar">
+        <div class="today-card" id="today-card-mar">
+            <div class="today-card-header">
+                <span class="today-label">Today</span>
+                <span class="today-date-text" id="today-date-mar"></span>
+            </div>
+            <div class="today-prayers" id="today-prayers-mar"></div>
+        </div>
+
+        <div class="info-banner">
+            <div class="info-item">📅 <strong>March 2026</strong> — Ramadan & Shawwal 1447H</div>
+            <div class="info-item">🕌 All times shown are <strong>Iqama (congregation)</strong> times</div>
+        </div>
+
+        <div class="table-wrap">
+            <table id="table-mar">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Day</th>
+                        <th class="prayer-fajr">Fajr<span class="iqama-sub">Iqama</span></th>
+                        <th>Sunrise</th>
+                        <th class="prayer-dhuhr">Dhuhr<span class="iqama-sub">Iqama</span></th>
+                        <th class="prayer-asr">Asr<span class="iqama-sub">Iqama</span></th>
+                        <th class="prayer-maghrib">Maghrib<span class="iqama-sub">Iqama</span></th>
+                        <th class="prayer-isha">Isha<span class="iqama-sub">Iqama</span></th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-mar"></tbody>
+            </table>
+        </div>
+        <div class="legend">
+            <div class="legend-item"><div class="legend-dot" style="background:#fffbea; border:1.5px solid #c9a84c;"></div> Today</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#7dbde8;"></div> Fajr</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#f5c869;"></div> Dhuhr</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#9dcc78;"></div> Asr</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#f09070;"></div> Maghrib</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#b0a0e0;"></div> Isha</div>
+        </div>
+        <div class="notes-box">
+            <strong>📌 Notes for March</strong>
+            Iqama times carry forward until next change. Asr is based on single shadow (double shadow is 40 mins later).
+            5 minutes allowed between end of Suhoor and Fajr. 5 minutes allowed between sunset and Iftar/Maghrib.
+            Islamic dates are subject to moon sighting.
+        </div>
+    </div>
+
+</div><!-- /content -->
+
+<div class="footer">
+    <p style="color:rgba(255,255,255,0.85); font-size:1.05em; font-family:'DM Serif Display',serif; margin-bottom:8px;">Waikato Muslim Association (Inc.)</p>
+    <p>921 Heaphy Terrace, Hamilton &nbsp;|&nbsp; <a href="tel:0785505670">07 855 0567</a> &nbsp;|&nbsp; <a href="mailto:wma@xtra.co.nz">wma@xtra.co.nz</a></p>
+    <p style="margin-top:8px;">Donations: BNZ 02-0320-0143860-00</p>
+    <p style="margin-top:12px; color:rgba(255,255,255,0.35); font-size:0.88em;">Source: Waikato Muslim Association Prayer Timetable 2026</p>
+</div>
+
+<script>
+// ── DATA ──
+// February: each entry has date, day, fajrTime, fajrIqama, sunrise, dhuhrTime, dhuhrIqama, asrTime, asrIqama, maghribTime, maghribIqama, ishaTime, ishaIqama
+// Iqama carry-forward logic applied per the official timetable.
+const feb = [
+    {date:"Feb 1",  day:"Sun", fajr:"4:50", fajrIq:"5:20", sun:"6:32", dhuhr:"1:33", dhuhrIq:"1:50", asr:"5:22", asrIq:"5:40", mag:"8:32", magIq:"8:40", isha:"9:59",  ishaIq:"10:05"},
+    {date:"Feb 2",  day:"Mon", fajr:"4:52", fajrIq:"",     sun:"6:33", dhuhr:"1:33", dhuhrIq:"",     asr:"5:22", asrIq:"",     mag:"8:31", magIq:"8:35", isha:"9:58",  ishaIq:""},
+    {date:"Feb 3",  day:"Tue", fajr:"4:53", fajrIq:"",     sun:"6:35", dhuhr:"1:33", dhuhrIq:"",     asr:"5:22", asrIq:"",     mag:"8:30", magIq:"",     isha:"9:56",  ishaIq:""},
+    {date:"Feb 4",  day:"Wed", fajr:"4:55", fajrIq:"",     sun:"6:36", dhuhr:"1:33", dhuhrIq:"",     asr:"5:21", asrIq:"",     mag:"8:30", magIq:"",     isha:"9:55",  ishaIq:""},
+    {date:"Feb 5",  day:"Thu", fajr:"4:57", fajrIq:"",     sun:"6:37", dhuhr:"1:33", dhuhrIq:"",     asr:"5:21", asrIq:"",     mag:"8:29", magIq:"",     isha:"9:53",  ishaIq:"10:00"},
+    {date:"Feb 6",  day:"Fri", fajr:"4:58", fajrIq:"",     sun:"6:38", dhuhr:"1:33", dhuhrIq:"",     asr:"5:21", asrIq:"",     mag:"8:28", magIq:"",     isha:"9:52",  ishaIq:""},
+    {date:"Feb 7",  day:"Sat", fajr:"5:00", fajrIq:"",     sun:"6:39", dhuhr:"1:33", dhuhrIq:"",     asr:"5:21", asrIq:"",     mag:"8:27", magIq:"",     isha:"9:51",  ishaIq:""},
+    {date:"Feb 8",  day:"Sun", fajr:"5:01", fajrIq:"5:30", sun:"6:40", dhuhr:"1:33", dhuhrIq:"",     asr:"5:21", asrIq:"",     mag:"8:26", magIq:"8:30", isha:"9:49",  ishaIq:""},
+    {date:"Feb 9",  day:"Mon", fajr:"5:03", fajrIq:"",     sun:"6:41", dhuhr:"1:33", dhuhrIq:"",     asr:"5:20", asrIq:"",     mag:"8:25", magIq:"",     isha:"9:48",  ishaIq:"9:55"},
+    {date:"Feb 10", day:"Tue", fajr:"5:04", fajrIq:"",     sun:"6:42", dhuhr:"1:33", dhuhrIq:"",     asr:"5:20", asrIq:"",     mag:"8:23", magIq:"",     isha:"9:46",  ishaIq:""},
+    {date:"Feb 11", day:"Wed", fajr:"5:06", fajrIq:"",     sun:"6:44", dhuhr:"1:33", dhuhrIq:"",     asr:"5:20", asrIq:"",     mag:"8:22", magIq:"",     isha:"9:45",  ishaIq:""},
+    {date:"Feb 12", day:"Thu", fajr:"5:07", fajrIq:"",     sun:"6:45", dhuhr:"1:33", dhuhrIq:"",     asr:"5:19", asrIq:"",     mag:"8:21", magIq:"",     isha:"9:43",  ishaIq:""},
+    {date:"Feb 13", day:"Fri", fajr:"5:09", fajrIq:"",     sun:"6:46", dhuhr:"1:33", dhuhrIq:"",     asr:"5:19", asrIq:"",     mag:"8:20", magIq:"8:25", isha:"9:42",  ishaIq:"9:50"},
+    {date:"Feb 14", day:"Sat", fajr:"5:10", fajrIq:"5:40", sun:"6:47", dhuhr:"1:33", dhuhrIq:"",     asr:"5:18", asrIq:"",     mag:"8:19", magIq:"",     isha:"9:40",  ishaIq:""},
+    {date:"Feb 15", day:"Sun", fajr:"5:12", fajrIq:"",     sun:"6:48", dhuhr:"1:33", dhuhrIq:"",     asr:"5:18", asrIq:"",     mag:"8:18", magIq:"",     isha:"9:38",  ishaIq:""},
+    {date:"Feb 16", day:"Mon", fajr:"5:13", fajrIq:"",     sun:"6:49", dhuhr:"1:33", dhuhrIq:"",     asr:"5:18", asrIq:"",     mag:"8:17", magIq:"",     isha:"9:37",  ishaIq:""},
+    {date:"Feb 17", day:"Tue", fajr:"5:15", fajrIq:"",     sun:"6:50", dhuhr:"1:33", dhuhrIq:"",     asr:"5:17", asrIq:"",     mag:"8:15", magIq:"",     isha:"9:35",  ishaIq:"9:45"},
+    {date:"Feb 18", day:"Wed", fajr:"5:16", fajrIq:"",     sun:"6:51", dhuhr:"1:33", dhuhrIq:"",     asr:"5:17", asrIq:"",     mag:"8:14", magIq:"",     isha:"9:34",  ishaIq:""},
+    {date:"Feb 19", day:"Thu", fajr:"5:18", fajrIq:"",     sun:"6:52", dhuhr:"1:33", dhuhrIq:"",     asr:"5:16", asrIq:"",     mag:"8:16", magIq:"",     isha:"9:33",  ishaIq:""},
+    {date:"Feb 20", day:"Fri", fajr:"5:19", fajrIq:"",     sun:"6:53", dhuhr:"1:33", dhuhrIq:"",     asr:"5:16", asrIq:"",     mag:"8:15", magIq:"",     isha:"9:32",  ishaIq:""},
+    {date:"Feb 21", day:"Sat", fajr:"5:20", fajrIq:"5:50", sun:"6:55", dhuhr:"1:33", dhuhrIq:"",     asr:"5:15", asrIq:"",     mag:"8:13", magIq:"",     isha:"9:30",  ishaIq:"9:40"},
+    {date:"Feb 22", day:"Sun", fajr:"5:22", fajrIq:"",     sun:"6:56", dhuhr:"1:33", dhuhrIq:"",     asr:"5:14", asrIq:"",     mag:"8:12", magIq:"",     isha:"9:28",  ishaIq:""},
+    {date:"Feb 23", day:"Mon", fajr:"5:23", fajrIq:"",     sun:"6:57", dhuhr:"1:32", dhuhrIq:"",     asr:"5:14", asrIq:"",     mag:"8:11", magIq:"8:20", isha:"9:27",  ishaIq:""},
+    {date:"Feb 24", day:"Tue", fajr:"5:25", fajrIq:"",     sun:"6:58", dhuhr:"1:32", dhuhrIq:"",     asr:"5:13", asrIq:"",     mag:"8:09", magIq:"",     isha:"9:25",  ishaIq:""},
+    {date:"Feb 25", day:"Wed", fajr:"5:26", fajrIq:"",     sun:"6:59", dhuhr:"1:32", dhuhrIq:"",     asr:"5:13", asrIq:"",     mag:"8:08", magIq:"",     isha:"9:22",  ishaIq:""},
+    {date:"Feb 26", day:"Thu", fajr:"5:27", fajrIq:"",     sun:"7:00", dhuhr:"1:32", dhuhrIq:"",     asr:"5:12", asrIq:"",     mag:"8:07", magIq:"",     isha:"9:21",  ishaIq:""},
+    {date:"Feb 27", day:"Fri", fajr:"5:29", fajrIq:"",     sun:"7:01", dhuhr:"1:32", dhuhrIq:"",     asr:"5:11", asrIq:"",     mag:"8:05", magIq:"",     isha:"9:19",  ishaIq:"9:30"},
+    {date:"Feb 28", day:"Sat", fajr:"5:30", fajrIq:"",     sun:"7:02", dhuhr:"1:32", dhuhrIq:"",     asr:"5:11", asrIq:"",     mag:"8:04", magIq:"8:15", isha:"9:17",  ishaIq:""},
+];
+
+const mar = [
+    {date:"Mar 1",  day:"Sun", fajr:"5:31", fajrIq:"5:50", sun:"7:03", dhuhr:"1:32", dhuhrIq:"1:50", asr:"5:10", asrIq:"5:20", mag:"8:02", magIq:"8:15", isha:"9:16",  ishaIq:"9:30"},
+    {date:"Mar 2",  day:"Mon", fajr:"5:33", fajrIq:"6:00", sun:"7:04", dhuhr:"1:31", dhuhrIq:"",     asr:"5:09", asrIq:"",     mag:"8:01", magIq:"",     isha:"9:14",  ishaIq:""},
+    {date:"Mar 3",  day:"Tue", fajr:"5:34", fajrIq:"",     sun:"7:05", dhuhr:"1:31", dhuhrIq:"",     asr:"5:08", asrIq:"",     mag:"8:00", magIq:"8:10", isha:"9:12",  ishaIq:""},
+    {date:"Mar 4",  day:"Wed", fajr:"5:35", fajrIq:"",     sun:"7:06", dhuhr:"1:31", dhuhrIq:"",     asr:"5:08", asrIq:"",     mag:"7:58", magIq:"",     isha:"9:11",  ishaIq:""},
+    {date:"Mar 5",  day:"Thu", fajr:"5:36", fajrIq:"",     sun:"7:07", dhuhr:"1:31", dhuhrIq:"",     asr:"5:07", asrIq:"",     mag:"7:57", magIq:"",     isha:"9:09",  ishaIq:"9:20"},
+    {date:"Mar 6",  day:"Fri", fajr:"5:38", fajrIq:"",     sun:"7:08", dhuhr:"1:30", dhuhrIq:"",     asr:"5:06", asrIq:"",     mag:"7:55", magIq:"8:05", isha:"9:07",  ishaIq:""},
+    {date:"Mar 7",  day:"Sat", fajr:"5:39", fajrIq:"",     sun:"7:09", dhuhr:"1:30", dhuhrIq:"",     asr:"5:05", asrIq:"",     mag:"7:54", magIq:"",     isha:"9:06",  ishaIq:""},
+    {date:"Mar 8",  day:"Sun", fajr:"5:40", fajrIq:"",     sun:"7:10", dhuhr:"1:30", dhuhrIq:"",     asr:"5:04", asrIq:"",     mag:"7:52", magIq:"",     isha:"9:04",  ishaIq:""},
+    {date:"Mar 9",  day:"Mon", fajr:"5:41", fajrIq:"6:10", sun:"7:11", dhuhr:"1:30", dhuhrIq:"",     asr:"5:04", asrIq:"",     mag:"7:51", magIq:"",     isha:"9:02",  ishaIq:""},
+    {date:"Mar 10", day:"Tue", fajr:"5:42", fajrIq:"",     sun:"7:12", dhuhr:"1:29", dhuhrIq:"",     asr:"5:03", asrIq:"",     mag:"7:49", magIq:"8:00", isha:"9:01",  ishaIq:""},
+    {date:"Mar 11", day:"Wed", fajr:"5:43", fajrIq:"",     sun:"7:13", dhuhr:"1:29", dhuhrIq:"",     asr:"5:02", asrIq:"",     mag:"7:48", magIq:"",     isha:"8:59",  ishaIq:"9:10"},
+    {date:"Mar 12", day:"Thu", fajr:"5:45", fajrIq:"",     sun:"7:14", dhuhr:"1:29", dhuhrIq:"",     asr:"5:01", asrIq:"",     mag:"7:46", magIq:"",     isha:"8:57",  ishaIq:""},
+    {date:"Mar 13", day:"Fri", fajr:"5:46", fajrIq:"",     sun:"7:15", dhuhr:"1:29", dhuhrIq:"",     asr:"5:00", asrIq:"5:10", mag:"7:45", magIq:"7:55", isha:"8:56",  ishaIq:""},
+    {date:"Mar 14", day:"Sat", fajr:"5:47", fajrIq:"",     sun:"7:16", dhuhr:"1:28", dhuhrIq:"",     asr:"4:59", asrIq:"",     mag:"7:43", magIq:"",     isha:"8:54",  ishaIq:""},
+    {date:"Mar 15", day:"Sun", fajr:"5:48", fajrIq:"",     sun:"7:17", dhuhr:"1:28", dhuhrIq:"",     asr:"4:58", asrIq:"",     mag:"7:42", magIq:"",     isha:"8:52",  ishaIq:""},
+    {date:"Mar 16", day:"Mon", fajr:"5:49", fajrIq:"",     sun:"7:18", dhuhr:"1:28", dhuhrIq:"",     asr:"4:57", asrIq:"",     mag:"7:41", magIq:"7:50", isha:"8:51",  ishaIq:""},
+    {date:"Mar 17", day:"Tue", fajr:"5:50", fajrIq:"",     sun:"7:18", dhuhr:"1:28", dhuhrIq:"",     asr:"4:56", asrIq:"",     mag:"7:39", magIq:"",     isha:"8:49",  ishaIq:"9:00"},
+    {date:"Mar 18", day:"Wed", fajr:"5:51", fajrIq:"6:20", sun:"7:19", dhuhr:"1:27", dhuhrIq:"",     asr:"4:55", asrIq:"",     mag:"7:38", magIq:"",     isha:"8:48",  ishaIq:""},
+    {date:"Mar 19", day:"Thu", fajr:"5:52", fajrIq:"",     sun:"7:20", dhuhr:"1:27", dhuhrIq:"",     asr:"4:54", asrIq:"",     mag:"7:36", magIq:"",     isha:"8:46",  ishaIq:""},
+    {date:"Mar 20", day:"Fri", fajr:"5:53", fajrIq:"",     sun:"7:21", dhuhr:"1:27", dhuhrIq:"",     asr:"4:53", asrIq:"",     mag:"7:34", magIq:"7:45", isha:"8:44",  ishaIq:""},
+    {date:"Mar 21", day:"Sat", fajr:"5:54", fajrIq:"",     sun:"7:22", dhuhr:"1:26", dhuhrIq:"",     asr:"4:52", asrIq:"",     mag:"7:33", magIq:"",     isha:"8:43",  ishaIq:""},
+    {date:"Mar 22", day:"Sun", fajr:"5:55", fajrIq:"",     sun:"7:23", dhuhr:"1:26", dhuhrIq:"",     asr:"4:51", asrIq:"",     mag:"7:29", magIq:"",     isha:"8:41",  ishaIq:""},
+    {date:"Mar 23", day:"Mon", fajr:"5:56", fajrIq:"",     sun:"7:24", dhuhr:"1:26", dhuhrIq:"",     asr:"4:50", asrIq:"5:00", mag:"7:27", magIq:"",     isha:"8:39",  ishaIq:"8:50"},
+    {date:"Mar 24", day:"Tue", fajr:"5:57", fajrIq:"",     sun:"7:25", dhuhr:"1:26", dhuhrIq:"",     asr:"4:49", asrIq:"",     mag:"7:25", magIq:"7:35", isha:"8:38",  ishaIq:""},
+    {date:"Mar 25", day:"Wed", fajr:"5:58", fajrIq:"",     sun:"7:26", dhuhr:"1:25", dhuhrIq:"",     asr:"4:48", asrIq:"",     mag:"7:24", magIq:"",     isha:"8:36",  ishaIq:""},
+    {date:"Mar 26", day:"Thu", fajr:"5:59", fajrIq:"",     sun:"7:27", dhuhr:"1:25", dhuhrIq:"",     asr:"4:47", asrIq:"",     mag:"7:22", magIq:"",     isha:"8:35",  ishaIq:""},
+    {date:"Mar 27", day:"Fri", fajr:"6:00", fajrIq:"",     sun:"7:28", dhuhr:"1:25", dhuhrIq:"",     asr:"4:46", asrIq:"",     mag:"7:21", magIq:"7:30", isha:"8:33",  ishaIq:""},
+    {date:"Mar 28", day:"Sat", fajr:"6:01", fajrIq:"",     sun:"7:29", dhuhr:"1:24", dhuhrIq:"",     asr:"4:45", asrIq:"",     mag:"7:19", magIq:"",     isha:"8:31",  ishaIq:""},
+    {date:"Mar 29", day:"Sun", fajr:"6:02", fajrIq:"",     sun:"7:30", dhuhr:"1:24", dhuhrIq:"",     asr:"4:44", asrIq:"",     mag:"7:18", magIq:"",     isha:"8:30",  ishaIq:""},
+    {date:"Mar 30", day:"Mon", fajr:"6:03", fajrIq:"",     sun:"7:30", dhuhr:"1:24", dhuhrIq:"",     asr:"4:43", asrIq:"",     mag:"7:16", magIq:"7:25", isha:"8:28",  ishaIq:""},
+    {date:"Mar 31", day:"Tue", fajr:"6:04", fajrIq:"",     sun:"7:31", dhuhr:"1:23", dhuhrIq:"",     asr:"4:42", asrIq:"",     mag:"7:15", magIq:"",     isha:"8:27",  ishaIq:""},
+];
+
+function cell(time, iqama, cls) {
+    if (iqama) {
+        return `<td><div class="prayer-pair"><span class="time-cell ${cls}">${time}</span><span class="iqama-cell">${iqama}</span></div></td>`;
+    }
+    return `<td class="time-cell ${cls}">${time}</td>`;
+}
+
+function buildTable(data, tbodyId, todayCardId, todayDateId, todayPrayersId) {
+    const tbody = document.getElementById(tbodyId);
+    const today = new Date();
+
+    // Carry-forward Iqama logic
+    let lastIq = { fajr:'', dhuhr:'', asr:'', mag:'', isha:'' };
+
+    data.forEach(r => {
+        // Determine if iqama is set or carry forward
+        const fIq  = r.fajrIq  || lastIq.fajr;
+        const dIq  = r.dhuhrIq || lastIq.dhuhr;
+        const aIq  = r.asrIq   || lastIq.asr;
+        const mIq  = r.magIq   || lastIq.mag;
+        const iIq  = r.ishaIq  || lastIq.isha;
+
+        // Update carry-forward
+        if (r.fajrIq)  lastIq.fajr  = r.fajrIq;
+        if (r.dhuhrIq) lastIq.dhuhr = r.dhuhrIq;
+        if (r.asrIq)   lastIq.asr   = r.asrIq;
+        if (r.magIq)   lastIq.mag   = r.magIq;
+        if (r.ishaIq)  lastIq.isha  = r.ishaIq;
+
+        // Parse date for today check
+        const [mon, dayNum] = r.date.split(' ');
+        const monthMap = {Feb:1, Mar:2};
+        const rowDate = new Date(2026, monthMap[mon], parseInt(dayNum));
+        const isToday = rowDate.toDateString() === today.toDateString();
+        const isFri = r.day === 'Fri';
+
+        const tr = document.createElement('tr');
+        if (isToday) tr.classList.add('row-today');
+        if (isFri) tr.classList.add('row-friday');
+
+        tr.innerHTML = `
+            <td class="col-date">${r.date}</td>
+            <td class="col-day">${r.day}</td>
+            ${cell(r.fajr, fIq, 'fajr-time')}
+            <td class="time-cell">${r.sun}</td>
+            ${cell(r.dhuhr, dIq, 'dhuhr-time')}
+            ${cell(r.asr, aIq, 'asr-time')}
+            ${cell(r.mag, mIq, 'maghrib-time')}
+            ${cell(r.isha, iIq, 'isha-time')}
+        `;
+        tbody.appendChild(tr);
+
+        // Fill today card
+        if (isToday) {
+            document.getElementById(todayCardId).classList.add('visible');
+            document.getElementById(todayDateId).textContent = `${r.day}, ${r.date}`;
+            document.getElementById(todayPrayersId).innerHTML = `
+                <div class="today-prayer-item">
+                    <div class="today-prayer-name">Fajr</div>
+                    <div class="today-prayer-time" style="color:#7dbde8">${r.fajr}</div>
+                    <div class="today-prayer-iqama">Iqama ${fIq}</div>
+                </div>
+                <div class="today-prayer-item">
+                    <div class="today-prayer-name">Sunrise</div>
+                    <div class="today-prayer-time">${r.sun}</div>
+                </div>
+                <div class="today-prayer-item">
+                    <div class="today-prayer-name">Dhuhr</div>
+                    <div class="today-prayer-time" style="color:#f5c869">${r.dhuhr}</div>
+                    <div class="today-prayer-iqama">Iqama ${dIq}</div>
+                </div>
+                <div class="today-prayer-item">
+                    <div class="today-prayer-name">Asr</div>
+                    <div class="today-prayer-time" style="color:#9dcc78">${r.asr}</div>
+                    <div class="today-prayer-iqama">Iqama ${aIq}</div>
+                </div>
+                <div class="today-prayer-item">
+                    <div class="today-prayer-name">Maghrib</div>
+                    <div class="today-prayer-time" style="color:#f09070">${r.mag}</div>
+                    <div class="today-prayer-iqama">Iqama ${mIq}</div>
+                </div>
+                <div class="today-prayer-item">
+                    <div class="today-prayer-name">Isha</div>
+                    <div class="today-prayer-time" style="color:#b0a0e0">${r.isha}</div>
+                    <div class="today-prayer-iqama">Iqama ${iIq}</div>
+                </div>
+            `;
+        }
+    });
+}
+
+function switchMonth(month) {
+    document.querySelectorAll('.month-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('panel-' + month).classList.add('active');
+    document.getElementById('tab-' + month).classList.add('active');
+}
+
+function autoSelectMonth() {
+    const today = new Date();
+    const m = today.getMonth(); // 0=Jan,1=Feb,2=Mar
+    if (m === 1) switchMonth('feb');
+    else if (m === 2) switchMonth('mar');
+    else switchMonth('feb'); // default
+}
+
+buildTable(feb, 'tbody-feb', 'today-card-feb', 'today-date-feb', 'today-prayers-feb');
+buildTable(mar, 'tbody-mar', 'today-card-mar', 'today-date-mar', 'today-prayers-mar');
+autoSelectMonth();
+</script>
+</body>
+</html>
