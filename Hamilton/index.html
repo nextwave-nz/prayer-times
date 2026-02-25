@@ -77,7 +77,16 @@
         .special-notice{margin-top:10px;padding:7px 12px;border-radius:8px;text-align:center;font-weight:600;font-size:.8em;background:linear-gradient(135deg,#fdf2e9,#fae5d3);color:var(--coral-dark);display:none}
         .special-notice.show{display:block}
 
-        /* ═══ ACTION ROW — elegant inline ═══ */
+        /* ═══ EID INFO ═══ */
+        .eid-info-cards{display:flex;gap:8px;margin-bottom:14px}
+        .eid-card{flex:1;display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:12px;font-size:.82em;line-height:1.4;color:var(--text-dark)}
+        .eid-card .eid-icon{font-size:1.3em;flex-shrink:0}
+        .eid-card .eid-sub{font-size:.85em;color:var(--text-light);font-style:italic}
+        .eid-card.zakat-card{background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border:1px solid rgba(76,175,80,.15)}
+        .eid-card.eid-salaat-card{background:linear-gradient(135deg,#e3f2fd,#bbdefb);border:1px solid rgba(33,150,243,.12)}
+        @media(max-width:480px){.eid-info-cards{flex-direction:column}}
+
+        /* ═══ ACTION ROW ═══ */
         .action-row{display:flex;gap:8px;margin-bottom:14px}
         .action-pill{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:12px 14px;border-radius:12px;border:none;font-family:'DM Sans',sans-serif;font-size:.82em;font-weight:600;cursor:pointer;transition:all .25s ease;text-decoration:none;color:inherit}
         .action-pill:active{transform:scale(.97)}
@@ -260,6 +269,16 @@
         </div>
         <div class="special-notice" id="specialNotice"></div>
     </div>
+    <div class="eid-info-cards" id="eidInfo">
+        <div class="eid-card zakat-card">
+            <span class="eid-icon">💰</span>
+            <div><strong>Zakatul Fitr</strong> — $15 per person</div>
+        </div>
+        <div class="eid-card eid-salaat-card">
+            <span class="eid-icon">🕌</span>
+            <div><strong>Eid ul Fitr Salaat</strong> — Claudelands Event Centre<br><span class="eid-sub">Date & time to be confirmed</span></div>
+        </div>
+    </div>
     <div class="controls-row">
         <div class="view-controls" id="viewControls">
             <button class="view-btn active" id="cardBtn" onclick="switchView('card')">Cards</button>
@@ -362,6 +381,7 @@ document.getElementById('legendBar').style.display=ram?'':'none';
 document.getElementById('calendarAction').style.display=ram?'':'none';
 document.getElementById('viewControls').style.display=ram?'':'none';
 document.getElementById('duaCards').style.display=ram?'':'none';
+document.getElementById('eidInfo').style.display=ram?'':'none';
 document.getElementById('footerMubarak').textContent=ram?'رمضان مبارك':'Hamilton Masjid';
 document.getElementById('footerDua').textContent=ram?'May Allah accept our fasts 🤲':'Prayer Times';
 document.getElementById('cardView').style.display=ram?'':'none';
