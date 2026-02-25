@@ -16,11 +16,11 @@
             --cream: #faf7f2;
             --text: #1a2332;
             --text-muted: #5a6a7a;
-            --fajr: #3d7ab5;
-            --dhuhr: #c8860a;
-            --asr: #6b8e4e;
+            --fajr:    #2e7fd4;
+            --dhuhr:   #c8860a;
+            --asr:     #3a8a3a;
             --maghrib: #c24d2c;
-            --isha: #5c4a8a;
+            --isha:    #7b5ea7;
         }
 
         body {
@@ -92,7 +92,7 @@
             margin-top: 20px;
         }
 
-        /* ── TABS ── */
+        /* ── MONTH TABS ── */
         .tabs-bar {
             background: var(--navy-mid);
             position: sticky;
@@ -126,11 +126,9 @@
         .tab-btn::after {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 50%;
+            bottom: 0; left: 50%;
             transform: translateX(-50%);
-            width: 0;
-            height: 3px;
+            width: 0; height: 3px;
             background: var(--gold);
             border-radius: 3px 3px 0 0;
             transition: width 0.25s ease;
@@ -163,7 +161,7 @@
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
         /* ── TODAY CARD ── */
@@ -211,6 +209,10 @@
             gap: 8px;
         }
 
+        @media (max-width: 640px) {
+            .today-prayers { grid-template-columns: repeat(3, 1fr); }
+        }
+
         .today-prayer-item {
             background: rgba(255,255,255,0.07);
             border-radius: 10px;
@@ -223,7 +225,7 @@
             font-size: 0.68em;
             text-transform: uppercase;
             letter-spacing: 0.06em;
-            opacity: 0.6;
+            opacity: 0.65;
             margin-bottom: 6px;
         }
 
@@ -231,7 +233,15 @@
             font-size: 1.1em;
             font-weight: 700;
             font-variant-numeric: tabular-nums;
+            color: white;
         }
+
+        /* On dark today card, override prayer colours to pastel versions */
+        .today-prayer-item .fajr-c    { color: #7dbde8; }
+        .today-prayer-item .dhuhr-c   { color: #f5c869; }
+        .today-prayer-item .asr-c     { color: #88dd88; }
+        .today-prayer-item .maghrib-c { color: #ff9070; }
+        .today-prayer-item .isha-c    { color: #c8aaff; }
 
         /* ── INFO BANNER ── */
         .info-banner {
@@ -251,19 +261,52 @@
         .info-item { color: rgba(255,255,255,0.8); }
         .info-item strong { color: var(--gold-light); }
 
-        /* ── MOBILE CARD VIEW ── */
-        .card-view { display: none; }
-        .table-view { display: none; }
-
-        @media (max-width: 640px) {
-            .card-view { display: block; }
-            .today-prayers { grid-template-columns: repeat(3, 1fr); }
+        /* ── VIEW TOGGLE (Card / Table) ── */
+        .view-toggle {
+            display: flex;
+            margin-bottom: 16px;
+            background: var(--navy);
+            border-radius: 12px;
+            padding: 5px;
+            gap: 4px;
         }
 
-        @media (min-width: 641px) {
-            .table-view { display: block; }
+        .view-btn {
+            flex: 1;
+            padding: 10px 12px;
+            border: none;
+            background: transparent;
+            color: rgba(255,255,255,0.5);
+            border-radius: 9px;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+            font-size: 0.86em;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            letter-spacing: 0.02em;
         }
 
+        .view-btn.active {
+            background: var(--gold);
+            color: var(--navy);
+            box-shadow: 0 2px 8px rgba(201,168,76,0.4);
+        }
+
+        .view-btn:hover:not(.active) {
+            color: rgba(255,255,255,0.85);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .view-btn:active { transform: scale(0.97); }
+
+        /* ── CARD / TABLE VISIBILITY ── */
+        .card-section  { display: none; }
+        .table-section { display: none; }
+
+        .card-section.active  { display: block; }
+        .table-section.active { display: block; }
+
+        /* ── DAY CARDS ── */
         .day-card {
             background: white;
             margin-bottom: 10px;
@@ -275,7 +318,7 @@
 
         .day-card.row-today {
             border-left: 4px solid var(--gold);
-            box-shadow: 0 4px 16px rgba(201,168,76,0.2);
+            box-shadow: 0 4px 16px rgba(201,168,76,0.25);
         }
 
         .day-header {
@@ -322,7 +365,7 @@
 
         @keyframes expandDown {
             from { opacity: 0; transform: translateY(-6px); }
-            to { opacity: 1; transform: translateY(0); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
         .day-card.row-today .day-content,
@@ -344,60 +387,64 @@
             border: 1px solid #eee;
         }
 
-        .prayer-item-mobile .p-name {
+        .p-name {
             font-size: 0.78em;
             color: var(--text-muted);
             font-weight: 500;
         }
 
-        .prayer-item-mobile .p-time {
+        .p-time {
             font-size: 1em;
             font-weight: 700;
             font-variant-numeric: tabular-nums;
         }
 
-        /* Prayer colours */
+        /* Prayer colours — all strong enough to read */
         .fajr-c    { color: var(--fajr); }
         .dhuhr-c   { color: var(--dhuhr); }
         .asr-c     { color: var(--asr); }
         .maghrib-c { color: var(--maghrib); }
         .isha-c    { color: var(--isha); }
 
-        /* ── DESKTOP TABLE ── */
+        /* ── TABLE ── */
         .table-wrap {
             border-radius: 14px;
-            overflow: hidden;
+            overflow-x: auto;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            -webkit-overflow-scrolling: touch;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             background: white;
-            font-size: 0.9em;
+            font-size: 0.88em;
+            min-width: 420px;
         }
 
         thead tr { background: var(--navy); color: white; }
 
         th {
-            padding: 14px 12px;
+            padding: 14px 10px;
             text-align: center;
             font-weight: 600;
-            font-size: 0.84em;
+            font-size: 0.82em;
             letter-spacing: 0.04em;
             text-transform: uppercase;
+            white-space: nowrap;
         }
 
-        th.prayer-fajr    { color: #7dbde8; }
+        th.prayer-fajr    { color: #6dbfff; }
         th.prayer-dhuhr   { color: #f5c869; }
-        th.prayer-asr     { color: #9dcc78; }
-        th.prayer-maghrib { color: #f09070; }
-        th.prayer-isha    { color: #b0a0e0; }
+        th.prayer-asr     { color: #88dd88; }
+        th.prayer-maghrib { color: #ff9070; }
+        th.prayer-isha    { color: #c8aaff; }
 
         td {
-            padding: 13px 12px;
+            padding: 12px 10px;
             text-align: center;
             border-bottom: 1px solid #f0f0f0;
+            white-space: nowrap;
         }
 
         tbody tr:last-child td { border-bottom: none; }
@@ -415,7 +462,7 @@
         .col-day  { font-size: 0.85em; color: var(--text-muted); }
 
         .time-cell {
-            font-weight: 600;
+            font-weight: 700;
             font-variant-numeric: tabular-nums;
             font-size: 0.97em;
         }
@@ -441,9 +488,9 @@
         }
 
         .legend-dot {
-            width: 10px;
-            height: 10px;
+            width: 12px; height: 12px;
             border-radius: 3px;
+            flex-shrink: 0;
         }
 
         /* ── NOTES ── */
@@ -499,7 +546,7 @@
     </div>
 </div>
 
-<!-- TABS -->
+<!-- MONTH TABS -->
 <div class="tabs-bar">
     <div class="tabs-inner">
         <button class="tab-btn" id="tab-feb" onclick="switchMonth('feb')">
@@ -518,6 +565,7 @@
 
     <!-- ── FEBRUARY ── -->
     <div class="month-panel" id="panel-feb">
+
         <div class="today-card" id="today-card-feb">
             <div class="today-card-header">
                 <span class="today-label">Today</span>
@@ -525,12 +573,25 @@
             </div>
             <div class="today-prayers" id="today-prayers-feb"></div>
         </div>
+
         <div class="info-banner">
             <div class="info-item">📅 <strong>February 2026</strong> — Sha'ban &amp; Ramadan 1447H</div>
             <div class="info-item">All times are <strong>Iqama</strong> times</div>
         </div>
-        <div class="card-view" id="cards-feb"></div>
-        <div class="table-view">
+
+        <!-- View Toggle -->
+        <div class="view-toggle">
+            <button class="view-btn active" id="card-btn-feb" onclick="switchView('feb','card')">📋 Card View</button>
+            <button class="view-btn" id="table-btn-feb" onclick="switchView('feb','table')">📊 Table View</button>
+        </div>
+
+        <!-- Card View -->
+        <div class="card-section active" id="card-feb">
+            <div id="cards-feb"></div>
+        </div>
+
+        <!-- Table View -->
+        <div class="table-section" id="table-feb">
             <div class="table-wrap">
                 <table>
                     <thead>
@@ -548,14 +609,16 @@
                 </table>
             </div>
         </div>
+
         <div class="legend">
-            <div class="legend-item"><div class="legend-dot" style="background:#fffbea;border:1.5px solid #c9a84c;width:14px;height:14px;"></div>Today</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#7dbde8;"></div>Fajr</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#f5c869;"></div>Dhuhr</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#9dcc78;"></div>Asr</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#f09070;"></div>Maghrib</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#b0a0e0;"></div>Isha</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#fffbea;border:1.5px solid #c9a84c;"></div>Today</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#2e7fd4;"></div>Fajr</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#c8860a;"></div>Dhuhr</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#3a8a3a;"></div>Asr</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#c24d2c;"></div>Maghrib</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#7b5ea7;"></div>Isha</div>
         </div>
+
         <div class="notes-box">
             <strong>📌 Notes</strong>
             Iqama times carry forward until the next change. Islamic dates are subject to moon sighting.
@@ -565,6 +628,7 @@
 
     <!-- ── MARCH ── -->
     <div class="month-panel" id="panel-mar">
+
         <div class="today-card" id="today-card-mar">
             <div class="today-card-header">
                 <span class="today-label">Today</span>
@@ -572,12 +636,25 @@
             </div>
             <div class="today-prayers" id="today-prayers-mar"></div>
         </div>
+
         <div class="info-banner">
             <div class="info-item">📅 <strong>March 2026</strong> — Ramadan &amp; Shawwal 1447H</div>
             <div class="info-item">All times are <strong>Iqama</strong> times</div>
         </div>
-        <div class="card-view" id="cards-mar"></div>
-        <div class="table-view">
+
+        <!-- View Toggle -->
+        <div class="view-toggle">
+            <button class="view-btn active" id="card-btn-mar" onclick="switchView('mar','card')">📋 Card View</button>
+            <button class="view-btn" id="table-btn-mar" onclick="switchView('mar','table')">📊 Table View</button>
+        </div>
+
+        <!-- Card View -->
+        <div class="card-section active" id="card-mar">
+            <div id="cards-mar"></div>
+        </div>
+
+        <!-- Table View -->
+        <div class="table-section" id="table-mar">
             <div class="table-wrap">
                 <table>
                     <thead>
@@ -595,14 +672,16 @@
                 </table>
             </div>
         </div>
+
         <div class="legend">
-            <div class="legend-item"><div class="legend-dot" style="background:#fffbea;border:1.5px solid #c9a84c;width:14px;height:14px;"></div>Today</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#7dbde8;"></div>Fajr</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#f5c869;"></div>Dhuhr</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#9dcc78;"></div>Asr</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#f09070;"></div>Maghrib</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#b0a0e0;"></div>Isha</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#fffbea;border:1.5px solid #c9a84c;"></div>Today</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#2e7fd4;"></div>Fajr</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#c8860a;"></div>Dhuhr</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#3a8a3a;"></div>Asr</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#c24d2c;"></div>Maghrib</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#7b5ea7;"></div>Isha</div>
         </div>
+
         <div class="notes-box">
             <strong>📌 Notes</strong>
             Iqama times carry forward until the next change. Asr is based on single shadow (double shadow is 40 mins later).
@@ -619,8 +698,6 @@
 
 <script>
 // ── DATA: Iqama times only ──
-// Empty string = carry forward from previous entry
-
 const feb = [
     {date:"Feb 1",  day:"Sun", fajrIq:"5:20", dhuhrIq:"1:50", asrIq:"5:40", magIq:"8:40",  ishaIq:"10:05"},
     {date:"Feb 2",  day:"Mon", fajrIq:"",      dhuhrIq:"",     asrIq:"",     magIq:"8:35",  ishaIq:""},
@@ -686,7 +763,7 @@ const mar = [
     {date:"Mar 31", day:"Tue", fajrIq:"",     dhuhrIq:"",     asrIq:"",     magIq:"",     ishaIq:""},
 ];
 
-// Carry-forward: fill empty Iqama slots with the last known value
+// Carry-forward Iqama
 function resolveIqama(data) {
     let last = {fajrIq:'—', dhuhrIq:'—', asrIq:'—', magIq:'—', ishaIq:'—'};
     return data.map(r => {
@@ -695,22 +772,14 @@ function resolveIqama(data) {
         if (r.asrIq)   last.asrIq   = r.asrIq;
         if (r.magIq)   last.magIq   = r.magIq;
         if (r.ishaIq)  last.ishaIq  = r.ishaIq;
-        return {
-            date: r.date, day: r.day,
-            fajrIq:  last.fajrIq,
-            dhuhrIq: last.dhuhrIq,
-            asrIq:   last.asrIq,
-            magIq:   last.magIq,
-            ishaIq:  last.ishaIq,
-        };
+        return { date:r.date, day:r.day, ...last };
     });
 }
 
 function isToday(dateStr) {
     const [mon, d] = dateStr.split(' ');
-    const monthMap = {Feb:1, Mar:2};
-    const dt = new Date(2026, monthMap[mon], parseInt(d));
-    return dt.toDateString() === new Date().toDateString();
+    const m = {Feb:1, Mar:2}[mon];
+    return new Date(2026, m, parseInt(d)).toDateString() === new Date().toDateString();
 }
 
 function buildTable(data, tbodyId) {
@@ -807,6 +876,15 @@ function buildTodayCard(data, cardId, dateId, prayersId) {
 
 function toggleCard(header) {
     header.parentElement.classList.toggle('expanded');
+}
+
+function switchView(month, view) {
+    // Update buttons
+    document.getElementById('card-btn-' + month).classList.toggle('active', view === 'card');
+    document.getElementById('table-btn-' + month).classList.toggle('active', view === 'table');
+    // Update sections
+    document.getElementById('card-' + month).classList.toggle('active', view === 'card');
+    document.getElementById('table-' + month).classList.toggle('active', view === 'table');
 }
 
 function switchMonth(month) {
