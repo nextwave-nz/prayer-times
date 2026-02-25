@@ -30,16 +30,16 @@
         *{margin:0;padding:0;box-sizing:border-box}
         body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--cream);min-height:100vh;color:var(--text-dark);-webkit-font-smoothing:antialiased}
 
-        /* ═══ HEADER — uses vh for responsive ═══ */
-        .hero{background:var(--night);color:#fff;text-align:center;padding:clamp(24px,4vh,50px) 16px clamp(18px,3vh,40px);position:relative;overflow:hidden}
+        /* ═══ HEADER ═══ */
+        .hero{background:var(--night);color:#fff;text-align:center;padding:clamp(32px,5.5vh,60px) 16px clamp(24px,4vh,48px);position:relative;overflow:hidden}
         .hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 20% 50%,rgba(212,168,67,.08) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(42,157,143,.06) 0%,transparent 50%);pointer-events:none}
         .hero-stars{position:absolute;top:0;left:0;right:0;bottom:0;overflow:hidden;pointer-events:none}
         .star{position:absolute;width:2px;height:2px;background:rgba(255,255,255,.6);border-radius:50%;animation:twinkle 3s ease-in-out infinite}
         @keyframes twinkle{0%,100%{opacity:.3}50%{opacity:1}}
-        .hero-crescent{font-size:clamp(2em,4.5vw,3.5em);filter:drop-shadow(0 0 15px rgba(212,168,67,.4));animation:gentleFloat 6s ease-in-out infinite;line-height:1;display:block;margin-bottom:clamp(6px,1vh,14px)}
+        .hero-crescent{font-size:clamp(2.4em,5.5vw,4em);filter:drop-shadow(0 0 15px rgba(212,168,67,.4));animation:gentleFloat 6s ease-in-out infinite;line-height:1;display:block;margin-bottom:clamp(8px,1.5vh,16px)}
         @keyframes gentleFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
-        .hero h1{font-family:'DM Serif Display',serif;font-size:clamp(1.6em,4vw,3em);letter-spacing:.02em;color:var(--gold-light);position:relative;margin-bottom:clamp(2px,.5vh,6px)}
-        .hero-ramadan{font-family:'Amiri',serif;font-size:clamp(.95em,2vw,1.4em);color:rgba(255,255,255,.55);margin-bottom:clamp(8px,1.5vh,16px);letter-spacing:.03em}
+        .hero h1{font-family:'DM Serif Display',serif;font-size:clamp(1.8em,5vw,3.2em);letter-spacing:.02em;color:var(--gold-light);position:relative;margin-bottom:clamp(4px,.8vh,8px)}
+        .hero-ramadan{font-family:'Amiri',serif;font-size:clamp(1.05em,2.2vw,1.5em);color:rgba(255,255,255,.55);margin-bottom:clamp(10px,2vh,20px);letter-spacing:.03em}
         .hero-ramadan.hide{display:none}
         .hero-info{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;font-size:clamp(.72em,1.6vw,.9em);color:rgba(255,255,255,.45)}
         .hero-info .sep{opacity:.3}
@@ -50,16 +50,10 @@
         /* ═══ TODAY CARD — compact ═══ */
         .today-card{background:#fff;border-radius:18px;padding:18px 16px;box-shadow:var(--card-shadow);margin-bottom:14px;position:relative;overflow:hidden;border:1px solid rgba(0,0,0,.04)}
         .today-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--teal),var(--gold))}
-        .today-top-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
-        .today-left .today-label{font-size:.68em;text-transform:uppercase;letter-spacing:.12em;color:var(--teal);font-weight:700}
-        .today-left .today-day-title{font-family:'DM Serif Display',serif;font-size:1.25em;color:var(--text-dark);margin-top:2px}
-        .today-left .today-date-text{color:var(--text-light);font-size:.8em;margin-top:1px}
-        .today-actions{display:flex;gap:6px;align-items:flex-start;margin-top:2px}
-        .mini-btn{width:38px;height:38px;border-radius:10px;border:1.5px solid rgba(0,0,0,.08);background:#fff;display:flex;align-items:center;justify-content:center;font-size:1em;cursor:pointer;transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,.04)}
-        .mini-btn:active{transform:scale(.92)}
-        .mini-btn:hover{border-color:var(--gold);box-shadow:0 3px 12px rgba(212,168,67,.15)}
-        .mini-btn.primary{background:var(--night);border-color:var(--night);color:var(--gold-light)}
-        .mini-btn.primary:hover{background:var(--night-light)}
+        .today-top-row{margin-bottom:12px}
+        .today-label{font-size:.68em;text-transform:uppercase;letter-spacing:.12em;color:var(--teal);font-weight:700}
+        .today-day-title{font-family:'DM Serif Display',serif;font-size:1.25em;color:var(--text-dark);margin-top:2px}
+        .today-date-text{color:var(--text-light);font-size:.8em;margin-top:1px}
         .today-hero-times{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
         .hero-time-box{padding:14px 10px;border-radius:12px;text-align:center}
         .hero-time-box.suhoor-box{background:linear-gradient(135deg,#e8f4f8,#d1ecf1);border:1px solid rgba(42,157,143,.12)}
@@ -251,10 +245,6 @@
                 <div class="today-day-title" id="todayDayTitle">Loading...</div>
                 <div class="today-date-text" id="todayDateText"></div>
             </div>
-            <div class="today-actions">
-                <button class="mini-btn primary" onclick="addToCalendar()" title="Add to calendar">📅</button>
-                <button class="mini-btn" onclick="shareApp()" title="Share">📤</button>
-            </div>
         </div>
         <div class="today-hero-times ramadan-only" id="suhoorIftarBoxes">
             <div class="hero-time-box suhoor-box"><div class="ht-label">Suhoor Ends</div><div class="ht-time" id="todaySuhoor">--:--</div><div class="ht-suffix">AM</div></div>
@@ -280,7 +270,6 @@
             <div class="legend-chip" onclick="scrollToDay('today')"><div class="legend-dot" style="background:var(--coral)"></div> Today</div>
             <div class="legend-chip" onclick="scrollToDay('last10')"><div class="legend-dot" style="background:var(--gold)"></div> Last 10</div>
             <div class="legend-chip" onclick="scrollToDay('odd')"><div class="legend-dot" style="background:#9b59b6"></div> Odd</div>
-            <div class="legend-chip" onclick="scrollToDay('halfway')"><div class="legend-dot" style="background:var(--teal)"></div> ½</div>
         </div>
     </div>
     <div class="card-view active" id="cardView"></div>
