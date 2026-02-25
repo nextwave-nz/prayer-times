@@ -54,14 +54,16 @@
         .today-label{font-size:.68em;text-transform:uppercase;letter-spacing:.12em;color:var(--teal);font-weight:700}
         .today-day-title{font-family:'DM Serif Display',serif;font-size:1.25em;color:var(--text-dark);margin-top:2px}
         .today-date-text{color:var(--text-light);font-size:.8em;margin-top:1px}
-        .today-hero-times{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
-        .hero-time-box{padding:14px 10px;border-radius:12px;text-align:center}
+        .today-hero-times{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px}
+        .hero-time-box{padding:14px 8px;border-radius:12px;text-align:center}
         .hero-time-box.suhoor-box{background:linear-gradient(135deg,#e8f4f8,#d1ecf1);border:1px solid rgba(42,157,143,.12)}
         .hero-time-box.iftar-box{background:linear-gradient(135deg,#fdf2e9,#fae5d3);border:1px solid rgba(224,122,95,.12)}
         .hero-time-box .ht-label{font-size:.6em;text-transform:uppercase;letter-spacing:.1em;font-weight:700;margin-bottom:3px}
         .suhoor-box .ht-label{color:var(--teal-dark)} .iftar-box .ht-label{color:var(--coral-dark)}
         .hero-time-box .ht-time{font-family:'DM Serif Display',serif;font-size:clamp(1.7em,5vw,2.4em);line-height:1}
         .suhoor-box .ht-time{color:var(--teal)} .iftar-box .ht-time{color:var(--coral)}
+        .hero-time-box.fasting-box{background:linear-gradient(135deg,#ede7f6,#d1c4e9);border:1px solid rgba(103,58,183,.12)}
+        .fasting-box .ht-label{color:#5e35b1} .fasting-box .ht-time{color:#5e35b1;font-size:clamp(1.2em,3.5vw,1.8em)} .fasting-box .ht-suffix{color:#7e57c2}
         .hero-time-box .ht-suffix{font-size:.6em;opacity:.6;margin-top:1px}
         .ramadan-only{display:grid} .ramadan-only.hide{display:none}
         .countdown-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
@@ -249,6 +251,7 @@
         <div class="today-hero-times ramadan-only" id="suhoorIftarBoxes">
             <div class="hero-time-box suhoor-box"><div class="ht-label">Suhoor Ends</div><div class="ht-time" id="todaySuhoor">--:--</div><div class="ht-suffix">AM</div></div>
             <div class="hero-time-box iftar-box"><div class="ht-label">Break Fast</div><div class="ht-time" id="todayIftar">--:--</div><div class="ht-suffix">PM</div></div>
+            <div class="hero-time-box fasting-box"><div class="ht-label">Fasting Today</div><div class="ht-time" id="todayFastingHrs">--</div><div class="ht-suffix" id="todayFastingMin">hours</div></div>
         </div>
         <div class="countdown-grid" id="countdownGrid">
             <div class="cd-box"><div class="cd-label">Next Prayer</div><div class="cd-value" id="cdNextPrayer">--:--</div><div class="cd-sub" id="cdNextName">...</div></div>
@@ -458,7 +461,14 @@ document.getElementById('todayDateText').textContent=new Date().toLocaleDateStri
 document.getElementById('cdDay').textContent='--';return}
 document.getElementById('todayDayTitle').textContent=ram?'Day '+tp.day+' of Ramadan':'Prayer Times';
 document.getElementById('todayDateText').textContent=tp.wd+', '+tp.date+' 2026';
-if(ram){document.getElementById('todaySuhoor').textContent=tp.suh;document.getElementById('todayIftar').textContent=tp.ift;document.getElementById('cdDay').textContent=tp.day}
+if(ram){document.getElementById('todaySuhoor').textContent=tp.suh;document.getElementById('todayIftar').textContent=tp.ift;document.getElementById('cdDay').textContent=tp.day;
+// Calculate fasting hours
+var sP=tp.suh.split(':'),sH=parseInt(sP[0]),sM=parseInt(sP[1]);
+var iP=tp.ift.split(':'),iH=parseInt(iP[0])+12,iM=parseInt(iP[1]);
+var totalMin=(iH*60+iM)-(sH*60+sM);
+var fH=Math.floor(totalMin/60),fM=totalMin%60;
+document.getElementById('todayFastingHrs').textContent=fH+'h '+fM+'m';
+document.getElementById('todayFastingMin').textContent='total fast'}
 var notice=document.getElementById('specialNotice');
 if(ram){
 if(tp.day===1){notice.textContent='🌟 First day of Ramadan!';notice.classList.add('show')}
