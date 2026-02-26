@@ -6,523 +6,293 @@
     <title>Hamilton Masjid — Prayer Times 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
     <style>
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
         :root {
-            --navy: #0d1b2a;
-            --navy-mid: #1b2d42;
-            --gold: #c9a84c;
-            --gold-light: #e8c97a;
-            --cream: #faf7f2;
-            --text: #1a2332;
-            --text-muted: #5a6a7a;
+            --navy:    #0d1b2a;
+            --navy-mid:#1b2d42;
+            --gold:    #c9a84c;
+            --gold-lt: #e8c97a;
+            --cream:   #faf7f2;
+            --text:    #1a2332;
+            --muted:   #5a6a7a;
             --fajr:    #2e7fd4;
             --dhuhr:   #c8860a;
             --asr:     #3a8a3a;
-            --maghrib: #c24d2c;
+            --mag:     #c24d2c;
             --isha:    #7b5ea7;
+            --fajr-p:  #7dbde8;
+            --dhuhr-p: #f5c869;
+            --asr-p:   #88dd88;
+            --mag-p:   #ff9070;
+            --isha-p:  #c8aaff;
         }
 
         body {
-            font-family: 'DM Sans', sans-serif;
-            background: var(--cream);
-            color: var(--text);
-            min-height: 100vh;
+            font-family:'DM Sans',sans-serif;
+            background:var(--cream);
+            color:var(--text);
+            min-height:100vh;
         }
 
         /* ── HEADER ── */
-        .header {
-            background: var(--navy);
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
+        .header { background:var(--navy); position:relative; overflow:hidden; }
         .header::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(ellipse at 70% 50%, rgba(201,168,76,0.12) 0%, transparent 70%);
-            pointer-events: none;
+            content:''; position:absolute; inset:0;
+            background:radial-gradient(ellipse at 70% 50%, rgba(201,168,76,.12) 0%, transparent 70%);
+            pointer-events:none;
         }
-
         .header-inner {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 28px 16px 20px;
-            position: relative;
-            z-index: 1;
+            max-width:960px; margin:0 auto;
+            padding:28px 16px 20px;
+            position:relative; z-index:1;
         }
-
         .header-arabic {
-            font-family: 'Amiri', serif;
-            font-size: clamp(1em, 2.5vw, 1.4em);
-            color: var(--gold-light);
-            direction: rtl;
-            margin-bottom: 10px;
-            opacity: 0.9;
+            font-family:'Amiri',serif;
+            font-size:clamp(1em,2.5vw,1.4em);
+            color:var(--gold-lt); direction:rtl; margin-bottom:10px;
         }
-
         .header-title {
-            font-family: 'DM Serif Display', serif;
-            font-size: clamp(1.5em, 4vw, 2.4em);
-            color: white;
-            line-height: 1.2;
-            margin-bottom: 10px;
+            font-family:'DM Serif Display',serif;
+            font-size:clamp(1.5em,4vw,2.4em);
+            color:white; line-height:1.2; margin-bottom:10px;
         }
-
-        .header-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 14px;
-            align-items: center;
-        }
-
+        .header-meta { display:flex; flex-wrap:wrap; gap:14px; align-items:center; }
         .meta-pill {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: rgba(255,255,255,0.7);
-            font-size: 0.85em;
+            display:flex; align-items:center; gap:6px;
+            color:rgba(255,255,255,.7); font-size:.85em;
         }
-
         .gold-rule {
-            height: 3px;
-            background: linear-gradient(90deg, var(--gold) 0%, transparent 100%);
-            margin-top: 20px;
+            height:3px;
+            background:linear-gradient(90deg,var(--gold) 0%,transparent 100%);
+            margin-top:20px;
         }
 
         /* ── MONTH TABS ── */
         .tabs-bar {
-            background: var(--navy-mid);
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+            background:var(--navy-mid);
+            position:sticky; top:0; z-index:50;
+            box-shadow:0 2px 12px rgba(0,0,0,.2);
         }
-
-        .tabs-inner {
-            max-width: 960px;
-            margin: 0 auto;
-            display: flex;
-            padding: 0 16px;
-        }
-
+        .tabs-inner { max-width:960px; margin:0 auto; display:flex; padding:0 16px; }
         .tab-btn {
-            flex: 1;
-            padding: 14px 10px;
-            background: none;
-            border: none;
-            color: rgba(255,255,255,0.45);
-            font-family: 'DM Sans', sans-serif;
-            font-size: 0.88em;
-            font-weight: 500;
-            cursor: pointer;
-            position: relative;
-            transition: color 0.2s;
-            text-align: center;
+            flex:1; padding:14px 10px;
+            background:none; border:none;
+            color:rgba(255,255,255,.45);
+            font-family:'DM Sans',sans-serif;
+            font-size:.88em; font-weight:500;
+            cursor:pointer; position:relative;
+            transition:color .2s; text-align:center;
         }
-
         .tab-btn::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 50%;
-            transform: translateX(-50%);
-            width: 0; height: 3px;
-            background: var(--gold);
-            border-radius: 3px 3px 0 0;
-            transition: width 0.25s ease;
+            content:''; position:absolute; bottom:0; left:50%;
+            transform:translateX(-50%);
+            width:0; height:3px; background:var(--gold);
+            border-radius:3px 3px 0 0; transition:width .25s ease;
         }
-
-        .tab-btn.active { color: var(--gold-light); }
-        .tab-btn.active::after { width: calc(100% - 20px); }
-        .tab-btn:hover:not(.active) { color: rgba(255,255,255,0.75); }
-
-        .tab-hijri {
-            display: block;
-            font-size: 0.72em;
-            opacity: 0.65;
-            margin-top: 2px;
-            font-weight: 400;
-        }
+        .tab-btn.active { color:var(--gold-lt); }
+        .tab-btn.active::after { width:calc(100% - 20px); }
+        .tab-btn:hover:not(.active) { color:rgba(255,255,255,.75); }
+        .tab-hijri { display:block; font-size:.72em; opacity:.65; margin-top:2px; font-weight:400; }
 
         /* ── CONTENT ── */
-        .content {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 16px;
-        }
-
-        .month-panel { display: none; }
-        .month-panel.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
+        .content { max-width:960px; margin:0 auto; padding:16px; }
+        .month-panel { display:none; }
+        .month-panel.active { display:block; animation:fadeIn .3s ease; }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to   { opacity: 1; transform: translateY(0); }
+            from { opacity:0; transform:translateY(6px); }
+            to   { opacity:1; transform:translateY(0); }
         }
 
         /* ── TODAY CARD ── */
         .today-card {
-            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
-            border: 1px solid rgba(201,168,76,0.3);
-            border-radius: 14px;
-            padding: 18px;
-            margin-bottom: 16px;
-            color: white;
-            display: none;
+            background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);
+            border:1px solid rgba(201,168,76,.3);
+            border-radius:14px; padding:18px;
+            margin-bottom:16px; color:white; display:none;
         }
-
-        .today-card.visible { display: block; }
-
+        .today-card.visible { display:block; }
         .today-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 14px;
-            flex-wrap: wrap;
-            gap: 8px;
+            display:flex; justify-content:space-between;
+            align-items:center; margin-bottom:14px;
+            flex-wrap:wrap; gap:8px;
         }
-
         .today-label {
-            background: var(--gold);
-            color: var(--navy);
-            font-size: 0.7em;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            padding: 4px 12px;
-            border-radius: 20px;
+            background:var(--gold); color:var(--navy);
+            font-size:.7em; font-weight:700;
+            letter-spacing:.1em; text-transform:uppercase;
+            padding:4px 12px; border-radius:20px;
         }
-
         .today-date-text {
-            font-family: 'DM Serif Display', serif;
-            font-size: 1.1em;
-            color: var(--gold-light);
+            font-family:'DM Serif Display',serif;
+            font-size:1.1em; color:var(--gold-lt);
         }
-
-        .today-prayers {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 8px;
-        }
-
-        @media (max-width: 640px) {
-            .today-prayers { grid-template-columns: repeat(3, 1fr); }
-        }
-
+        .today-prayers { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; }
+        @media(max-width:500px) { .today-prayers { grid-template-columns:repeat(3,1fr); } }
         .today-prayer-item {
-            background: rgba(255,255,255,0.07);
-            border-radius: 10px;
-            padding: 12px 6px;
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.08);
+            background:rgba(255,255,255,.07);
+            border-radius:10px; padding:12px 6px;
+            text-align:center; border:1px solid rgba(255,255,255,.08);
         }
-
         .today-prayer-name {
-            font-size: 0.68em;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            opacity: 0.65;
-            margin-bottom: 6px;
+            font-size:.68em; text-transform:uppercase;
+            letter-spacing:.06em; opacity:.65; margin-bottom:6px;
         }
-
         .today-prayer-time {
-            font-size: 1.1em;
-            font-weight: 700;
-            font-variant-numeric: tabular-nums;
-            color: white;
+            font-size:1.05em; font-weight:700;
+            font-variant-numeric:tabular-nums; line-height:1.2;
         }
-
-        /* On dark today card, override prayer colours to pastel versions */
-        .today-prayer-item .fajr-c    { color: #7dbde8; }
-        .today-prayer-item .dhuhr-c   { color: #f5c869; }
-        .today-prayer-item .asr-c     { color: #88dd88; }
-        .today-prayer-item .maghrib-c { color: #ff9070; }
-        .today-prayer-item .isha-c    { color: #c8aaff; }
+        .today-prayer-ampm { font-size:.68em; font-weight:500; opacity:.75; margin-top:3px; }
+        /* Bright pastels on dark today card */
+        .today-prayer-item .fajr-c    { color:var(--fajr-p); }
+        .today-prayer-item .dhuhr-c   { color:var(--dhuhr-p); }
+        .today-prayer-item .asr-c     { color:var(--asr-p); }
+        .today-prayer-item .maghrib-c { color:var(--mag-p); }
+        .today-prayer-item .isha-c    { color:var(--isha-p); }
 
         /* ── INFO BANNER ── */
         .info-banner {
-            background: var(--navy);
-            color: white;
-            border-radius: 10px;
-            padding: 12px 16px;
-            margin-bottom: 14px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 0.83em;
+            background:var(--navy-mid); color:white;
+            border-radius:10px; padding:12px 16px; margin-bottom:14px;
+            display:flex; flex-wrap:wrap; gap:10px;
+            align-items:center; justify-content:space-between; font-size:.83em;
         }
+        .info-item { color:rgba(255,255,255,.8); }
+        .info-item strong { color:var(--gold-lt); }
 
-        .info-item { color: rgba(255,255,255,0.8); }
-        .info-item strong { color: var(--gold-light); }
-
-        /* ── VIEW TOGGLE (Card / Table) ── */
+        /* ── VIEW TOGGLE ── */
         .view-toggle {
-            display: flex;
-            margin-bottom: 16px;
-            background: var(--navy);
-            border-radius: 12px;
-            padding: 5px;
-            gap: 4px;
+            display:flex; margin-bottom:16px;
+            background:var(--navy-mid);
+            border-radius:12px; padding:5px; gap:4px;
         }
-
         .view-btn {
-            flex: 1;
-            padding: 10px 12px;
-            border: none;
-            background: transparent;
-            color: rgba(255,255,255,0.5);
-            border-radius: 9px;
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 600;
-            font-size: 0.86em;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            letter-spacing: 0.02em;
+            flex:1; padding:10px 12px; border:none;
+            background:transparent; color:rgba(255,255,255,.5);
+            border-radius:9px; font-family:'DM Sans',sans-serif;
+            font-weight:600; font-size:.86em; cursor:pointer;
+            transition:all .25s ease; letter-spacing:.02em;
+            display:flex; align-items:center; justify-content:center; gap:7px;
         }
-
+        .btn-icon { width:18px; height:18px; flex-shrink:0; }
         .view-btn.active {
-            background: var(--gold);
-            color: var(--navy);
-            box-shadow: 0 2px 8px rgba(201,168,76,0.4);
+            background:var(--gold); color:var(--navy);
+            box-shadow:0 2px 8px rgba(201,168,76,.4);
         }
-
-        .view-btn:hover:not(.active) {
-            color: rgba(255,255,255,0.85);
-            background: rgba(255,255,255,0.08);
-        }
-
-        .view-btn:active { transform: scale(0.97); }
+        .view-btn:hover:not(.active) { color:rgba(255,255,255,.85); background:rgba(255,255,255,.08); }
+        .view-btn:active { transform:scale(.97); }
 
         /* ── CARD / TABLE VISIBILITY ── */
-        .card-section  { display: none; }
-        .table-section { display: none; }
-
-        .card-section.active  { display: block; }
-        .table-section.active { display: block; }
+        .card-section  { display:none; }
+        .table-section { display:none; }
+        .card-section.active  { display:block; }
+        .table-section.active { display:block; }
 
         /* ── DAY CARDS ── */
         .day-card {
-            background: white;
-            margin-bottom: 10px;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            border-left: 4px solid #e0e0e0;
+            background:white; margin-bottom:10px;
+            border-radius:12px; overflow:hidden;
+            box-shadow:0 2px 8px rgba(0,0,0,.08);
+            border-left:4px solid #e0e0e0;
         }
-
         .day-card.row-today {
-            border-left: 4px solid var(--gold);
-            box-shadow: 0 4px 16px rgba(201,168,76,0.25);
+            border-left:4px solid var(--gold);
+            box-shadow:0 4px 16px rgba(201,168,76,.25);
         }
-
         .day-header {
-            background: #f8f9fa;
-            padding: 13px 14px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            user-select: none;
+            background:#f8f9fa; padding:13px 14px;
+            display:flex; justify-content:space-between;
+            align-items:center; cursor:pointer; user-select:none;
         }
-
-        .day-card.row-today .day-header {
-            background: linear-gradient(90deg, #fffbea, #fff5cc);
-        }
-
-        .day-title {
-            font-weight: 600;
-            color: var(--navy);
-            font-size: 0.95em;
-        }
-
-        .day-card.row-today .day-title { color: #1a1200; }
-
-        .day-subtitle {
-            font-size: 0.78em;
-            color: var(--text-muted);
-            margin-top: 2px;
-        }
-
-        .expand-icon {
-            font-size: 1em;
-            transition: transform 0.3s;
-            color: var(--gold);
-        }
-
-        .day-card.expanded .expand-icon { transform: rotate(180deg); }
-
-        .day-content {
-            display: none;
-            padding: 12px 14px;
-            animation: expandDown 0.25s ease;
-        }
-
+        .day-card.row-today .day-header { background:linear-gradient(90deg,#fffbea,#fff5cc); }
+        .day-title { font-weight:600; color:var(--navy); font-size:.95em; }
+        .day-card.row-today .day-title { color:#1a1200; }
+        .day-subtitle { font-size:.78em; color:var(--muted); margin-top:2px; }
+        .expand-icon { font-size:1em; transition:transform .3s; color:var(--gold); }
+        .day-card.expanded .expand-icon { transform:rotate(180deg); }
+        .day-content { display:none; padding:12px 14px; animation:expandDown .25s ease; }
         @keyframes expandDown {
-            from { opacity: 0; transform: translateY(-6px); }
-            to   { opacity: 1; transform: translateY(0); }
+            from { opacity:0; transform:translateY(-6px); }
+            to   { opacity:1; transform:translateY(0); }
         }
-
         .day-card.row-today .day-content,
-        .day-card.expanded .day-content { display: block; }
-
-        .prayer-grid-mobile {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-        }
-
+        .day-card.expanded  .day-content { display:block; }
+        .prayer-grid-mobile { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; }
         .prayer-item-mobile {
-            padding: 10px 12px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid #eee;
+            padding:10px 12px; background:#f8f9fa;
+            border-radius:8px; display:flex;
+            justify-content:space-between; align-items:center;
+            border:1px solid #eee;
         }
+        .p-name { font-size:.78em; color:var(--muted); font-weight:500; }
+        .p-time { font-size:1em; font-weight:700; font-variant-numeric:tabular-nums; }
+        .p-ampm { font-size:.72em; color:var(--muted); margin-left:2px; font-weight:400; }
 
-        .p-name {
-            font-size: 0.78em;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
+        /* Prayer colours */
+        .fajr-c    { color:var(--fajr); }
+        .dhuhr-c   { color:var(--dhuhr); }
+        .asr-c     { color:var(--asr); }
+        .maghrib-c { color:var(--mag); }
+        .isha-c    { color:var(--isha); }
 
-        .p-time {
-            font-size: 1em;
-            font-weight: 700;
-            font-variant-numeric: tabular-nums;
-        }
-
-        /* Prayer colours — all strong enough to read */
-        .fajr-c    { color: var(--fajr); }
-        .dhuhr-c   { color: var(--dhuhr); }
-        .asr-c     { color: var(--asr); }
-        .maghrib-c { color: var(--maghrib); }
-        .isha-c    { color: var(--isha); }
-
-        /* ── TABLE ── */
-        .table-wrap {
-            border-radius: 14px;
-            overflow-x: auto;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            -webkit-overflow-scrolling: touch;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            font-size: 0.88em;
-            min-width: 420px;
-        }
-
-        thead tr { background: var(--navy); color: white; }
-
+        /* ── TABLE — fully responsive, no horizontal scroll ── */
+        .table-wrap { border-radius:14px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,.08); }
+        table { width:100%; border-collapse:collapse; background:white; table-layout:fixed; }
+        thead tr { background:var(--navy-mid); color:white; }
         th {
-            padding: 14px 10px;
-            text-align: center;
-            font-weight: 600;
-            font-size: 0.82em;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            white-space: nowrap;
+            padding:12px 4px; text-align:center;
+            font-weight:600; font-size:.75em;
+            letter-spacing:.03em; text-transform:uppercase;
         }
+        th.col-date-th { width:24%; text-align:left; padding-left:10px; }
+        th.prayer-fajr    { color:#6dbfff; }
+        th.prayer-dhuhr   { color:#f5c869; }
+        th.prayer-asr     { color:#88dd88; }
+        th.prayer-maghrib { color:#ff9070; }
+        th.prayer-isha    { color:#c8aaff; }
 
-        th.prayer-fajr    { color: #6dbfff; }
-        th.prayer-dhuhr   { color: #f5c869; }
-        th.prayer-asr     { color: #88dd88; }
-        th.prayer-maghrib { color: #ff9070; }
-        th.prayer-isha    { color: #c8aaff; }
-
-        td {
-            padding: 12px 10px;
-            text-align: center;
-            border-bottom: 1px solid #f0f0f0;
-            white-space: nowrap;
-        }
-
-        tbody tr:last-child td { border-bottom: none; }
-        tbody tr:nth-child(even) { background: #fafafa; }
-
+        td { padding:11px 4px; text-align:center; border-bottom:1px solid #f0f0f0; }
+        tbody tr:last-child td { border-bottom:none; }
+        tbody tr:nth-child(even) { background:#fafafa; }
         tbody tr.row-today {
-            background: linear-gradient(90deg, #fffbea, #fff5cc) !important;
-            border-left: 4px solid var(--gold);
+            background:linear-gradient(90deg,#fffbea,#fff5cc) !important;
+            border-left:4px solid var(--gold);
         }
+        tbody tr.row-today td { font-weight:600; color:#1a1200; }
+        tbody tr.row-friday .col-date { color:var(--mag); }
 
-        tbody tr.row-today td { font-weight: 600; color: #1a1200; }
-        tbody tr.row-friday td:first-child { color: var(--maghrib); font-weight: 700; }
-
-        .col-date { font-weight: 600; color: var(--text); font-size: 0.9em; }
-        .col-day  { font-size: 0.85em; color: var(--text-muted); }
-
-        .time-cell {
-            font-weight: 700;
-            font-variant-numeric: tabular-nums;
-            font-size: 0.97em;
-        }
+        .col-date { font-weight:600; color:var(--text); font-size:.82em; text-align:left; padding-left:10px; }
+        .day-abbr { font-weight:400; color:var(--muted); font-size:.85em; }
+        .time-cell { font-weight:700; font-variant-numeric:tabular-nums; font-size:.85em; }
+        .time-ampm { display:block; font-size:.72em; font-weight:400; color:var(--muted); margin-top:1px; }
+        tbody tr.row-today .time-ampm { color:rgba(26,18,0,.5); }
 
         /* ── LEGEND ── */
         .legend {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 16px;
-            padding: 14px 16px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            display:flex; flex-wrap:wrap; gap:10px;
+            margin-top:16px; padding:14px 16px;
+            background:white; border-radius:10px;
+            box-shadow:0 2px 8px rgba(0,0,0,.05);
         }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            font-size: 0.78em;
-            color: var(--text-muted);
-        }
-
-        .legend-dot {
-            width: 12px; height: 12px;
-            border-radius: 3px;
-            flex-shrink: 0;
-        }
+        .legend-item { display:flex; align-items:center; gap:7px; font-size:.78em; color:var(--muted); }
+        .legend-dot { width:12px; height:12px; border-radius:3px; flex-shrink:0; }
 
         /* ── NOTES ── */
         .notes-box {
-            margin-top: 16px;
-            background: #fffdf5;
-            border: 1px solid #e8d99a;
-            border-left: 4px solid var(--gold);
-            border-radius: 10px;
-            padding: 14px 16px;
-            font-size: 0.83em;
-            color: #5a4a10;
-            line-height: 1.7;
+            margin-top:16px; background:#fffdf5;
+            border:1px solid #e8d99a; border-left:4px solid var(--gold);
+            border-radius:10px; padding:14px 16px;
+            font-size:.83em; color:#5a4a10; line-height:1.7;
         }
-
-        .notes-box strong {
-            color: #3a2e08;
-            display: block;
-            margin-bottom: 5px;
-        }
+        .notes-box strong { color:#3a2e08; display:block; margin-bottom:5px; }
 
         /* ── FOOTER ── */
         .footer {
-            background: var(--navy);
-            color: rgba(255,255,255,0.5);
-            text-align: center;
-            padding: 22px 16px;
-            font-size: 0.8em;
-            margin-top: 36px;
+            background:var(--navy); color:rgba(255,255,255,.5);
+            text-align:center; padding:22px 16px;
+            font-size:.8em; margin-top:36px;
         }
-
-        .footer strong { color: rgba(255,255,255,0.8); }
+        .footer strong { color:rgba(255,255,255,.8); }
     </style>
 </head>
 <body>
@@ -565,7 +335,6 @@
 
     <!-- ── FEBRUARY ── -->
     <div class="month-panel" id="panel-feb">
-
         <div class="today-card" id="today-card-feb">
             <div class="today-card-header">
                 <span class="today-label">Today</span>
@@ -573,52 +342,44 @@
             </div>
             <div class="today-prayers" id="today-prayers-feb"></div>
         </div>
-
         <div class="info-banner">
             <div class="info-item">📅 <strong>February 2026</strong> — Sha'ban &amp; Ramadan 1447H</div>
             <div class="info-item">All times are <strong>Iqama</strong> times</div>
         </div>
-
-        <!-- View Toggle -->
         <div class="view-toggle">
-            <button class="view-btn active" id="card-btn-feb" onclick="switchView('feb','card')">📋 Card View</button>
-            <button class="view-btn" id="table-btn-feb" onclick="switchView('feb','table')">📊 Table View</button>
+            <button class="view-btn active" id="card-btn-feb" onclick="switchView('feb','card')">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                Card View
+            </button>
+            <button class="view-btn" id="table-btn-feb" onclick="switchView('feb','table')">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+                Table View
+            </button>
         </div>
-
-        <!-- Card View -->
-        <div class="card-section active" id="card-feb">
-            <div id="cards-feb"></div>
-        </div>
-
-        <!-- Table View -->
+        <div class="card-section active" id="card-feb"><div id="cards-feb"></div></div>
         <div class="table-section" id="table-feb">
             <div class="table-wrap">
                 <table>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Day</th>
-                            <th class="prayer-fajr">Fajr</th>
-                            <th class="prayer-dhuhr">Dhuhr</th>
-                            <th class="prayer-asr">Asr</th>
-                            <th class="prayer-maghrib">Maghrib</th>
-                            <th class="prayer-isha">Isha</th>
-                        </tr>
-                    </thead>
+                    <thead><tr>
+                        <th class="col-date-th">Date</th>
+                        <th class="prayer-fajr">Fajr</th>
+                        <th class="prayer-dhuhr">Dhuhr</th>
+                        <th class="prayer-asr">Asr</th>
+                        <th class="prayer-maghrib">Maghrib</th>
+                        <th class="prayer-isha">Isha</th>
+                    </tr></thead>
                     <tbody id="tbody-feb"></tbody>
                 </table>
             </div>
         </div>
-
         <div class="legend">
             <div class="legend-item"><div class="legend-dot" style="background:#fffbea;border:1.5px solid #c9a84c;"></div>Today</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#2e7fd4;"></div>Fajr</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#c8860a;"></div>Dhuhr</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#3a8a3a;"></div>Asr</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#c24d2c;"></div>Maghrib</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#7b5ea7;"></div>Isha</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--fajr);"></div>Fajr</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--dhuhr);"></div>Dhuhr</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--asr);"></div>Asr</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--mag);"></div>Maghrib</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--isha);"></div>Isha</div>
         </div>
-
         <div class="notes-box">
             <strong>📌 Notes</strong>
             Iqama times carry forward until the next change. Islamic dates are subject to moon sighting.
@@ -628,7 +389,6 @@
 
     <!-- ── MARCH ── -->
     <div class="month-panel" id="panel-mar">
-
         <div class="today-card" id="today-card-mar">
             <div class="today-card-header">
                 <span class="today-label">Today</span>
@@ -636,52 +396,44 @@
             </div>
             <div class="today-prayers" id="today-prayers-mar"></div>
         </div>
-
         <div class="info-banner">
             <div class="info-item">📅 <strong>March 2026</strong> — Ramadan &amp; Shawwal 1447H</div>
             <div class="info-item">All times are <strong>Iqama</strong> times</div>
         </div>
-
-        <!-- View Toggle -->
         <div class="view-toggle">
-            <button class="view-btn active" id="card-btn-mar" onclick="switchView('mar','card')">📋 Card View</button>
-            <button class="view-btn" id="table-btn-mar" onclick="switchView('mar','table')">📊 Table View</button>
+            <button class="view-btn active" id="card-btn-mar" onclick="switchView('mar','card')">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                Card View
+            </button>
+            <button class="view-btn" id="table-btn-mar" onclick="switchView('mar','table')">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+                Table View
+            </button>
         </div>
-
-        <!-- Card View -->
-        <div class="card-section active" id="card-mar">
-            <div id="cards-mar"></div>
-        </div>
-
-        <!-- Table View -->
+        <div class="card-section active" id="card-mar"><div id="cards-mar"></div></div>
         <div class="table-section" id="table-mar">
             <div class="table-wrap">
                 <table>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Day</th>
-                            <th class="prayer-fajr">Fajr</th>
-                            <th class="prayer-dhuhr">Dhuhr</th>
-                            <th class="prayer-asr">Asr</th>
-                            <th class="prayer-maghrib">Maghrib</th>
-                            <th class="prayer-isha">Isha</th>
-                        </tr>
-                    </thead>
+                    <thead><tr>
+                        <th class="col-date-th">Date</th>
+                        <th class="prayer-fajr">Fajr</th>
+                        <th class="prayer-dhuhr">Dhuhr</th>
+                        <th class="prayer-asr">Asr</th>
+                        <th class="prayer-maghrib">Maghrib</th>
+                        <th class="prayer-isha">Isha</th>
+                    </tr></thead>
                     <tbody id="tbody-mar"></tbody>
                 </table>
             </div>
         </div>
-
         <div class="legend">
             <div class="legend-item"><div class="legend-dot" style="background:#fffbea;border:1.5px solid #c9a84c;"></div>Today</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#2e7fd4;"></div>Fajr</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#c8860a;"></div>Dhuhr</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#3a8a3a;"></div>Asr</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#c24d2c;"></div>Maghrib</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#7b5ea7;"></div>Isha</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--fajr);"></div>Fajr</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--dhuhr);"></div>Dhuhr</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--asr);"></div>Asr</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--mag);"></div>Maghrib</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--isha);"></div>Isha</div>
         </div>
-
         <div class="notes-box">
             <strong>📌 Notes</strong>
             Iqama times carry forward until the next change. Asr is based on single shadow (double shadow is 40 mins later).
@@ -697,7 +449,7 @@
 </div>
 
 <script>
-// ── DATA: Iqama times only ──
+// ── DATA: Iqama times only, empty = carry forward ──
 const feb = [
     {date:"Feb 1",  day:"Sun", fajrIq:"5:20", dhuhrIq:"1:50", asrIq:"5:40", magIq:"8:40",  ishaIq:"10:05"},
     {date:"Feb 2",  day:"Mon", fajrIq:"",      dhuhrIq:"",     asrIq:"",     magIq:"8:35",  ishaIq:""},
@@ -763,7 +515,14 @@ const mar = [
     {date:"Mar 31", day:"Tue", fajrIq:"",     dhuhrIq:"",     asrIq:"",     magIq:"",     ishaIq:""},
 ];
 
-// Carry-forward Iqama
+// AM/PM: Fajr is 4–6 AM, everything else is PM
+function ampm(t) {
+    if (!t || t === '—') return '';
+    const h = parseInt(t.split(':')[0]);
+    return (h >= 4 && h <= 6) ? 'AM' : 'PM';
+}
+
+// Carry-forward Iqama times
 function resolveIqama(data) {
     let last = {fajrIq:'—', dhuhrIq:'—', asrIq:'—', magIq:'—', ishaIq:'—'};
     return data.map(r => {
@@ -790,13 +549,12 @@ function buildTable(data, tbodyId) {
         if (today) tr.classList.add('row-today');
         if (r.day === 'Fri') tr.classList.add('row-friday');
         tr.innerHTML = `
-            <td class="col-date">${r.date}</td>
-            <td class="col-day">${r.day}</td>
-            <td class="time-cell fajr-c">${r.fajrIq}</td>
-            <td class="time-cell dhuhr-c">${r.dhuhrIq}</td>
-            <td class="time-cell asr-c">${r.asrIq}</td>
-            <td class="time-cell maghrib-c">${r.magIq}</td>
-            <td class="time-cell isha-c">${r.ishaIq}</td>
+            <td class="col-date">${r.date} <span class="day-abbr">${r.day}</span></td>
+            <td class="time-cell fajr-c">${r.fajrIq}<span class="time-ampm">${ampm(r.fajrIq)}</span></td>
+            <td class="time-cell dhuhr-c">${r.dhuhrIq}<span class="time-ampm">${ampm(r.dhuhrIq)}</span></td>
+            <td class="time-cell asr-c">${r.asrIq}<span class="time-ampm">${ampm(r.asrIq)}</span></td>
+            <td class="time-cell maghrib-c">${r.magIq}<span class="time-ampm">${ampm(r.magIq)}</span></td>
+            <td class="time-cell isha-c">${r.ishaIq}<span class="time-ampm">${ampm(r.ishaIq)}</span></td>
         `;
         tbody.appendChild(tr);
     });
@@ -811,8 +569,7 @@ function buildCards(data, containerId) {
         div.innerHTML = `
             <div class="day-header" onclick="toggleCard(this)">
                 <div>
-                    <div class="day-title">${r.date}</div>
-                    <div class="day-subtitle">${r.day}</div>
+                    <div class="day-title">${r.date} <span style="font-weight:400;color:var(--muted);font-size:.88em;">${r.day}</span></div>
                 </div>
                 <div class="expand-icon">▼</div>
             </div>
@@ -820,23 +577,23 @@ function buildCards(data, containerId) {
                 <div class="prayer-grid-mobile">
                     <div class="prayer-item-mobile">
                         <span class="p-name">Fajr</span>
-                        <span class="p-time fajr-c">${r.fajrIq}</span>
+                        <span class="p-time fajr-c">${r.fajrIq} <span class="p-ampm">${ampm(r.fajrIq)}</span></span>
                     </div>
                     <div class="prayer-item-mobile">
                         <span class="p-name">Dhuhr</span>
-                        <span class="p-time dhuhr-c">${r.dhuhrIq}</span>
+                        <span class="p-time dhuhr-c">${r.dhuhrIq} <span class="p-ampm">${ampm(r.dhuhrIq)}</span></span>
                     </div>
                     <div class="prayer-item-mobile">
                         <span class="p-name">Asr</span>
-                        <span class="p-time asr-c">${r.asrIq}</span>
+                        <span class="p-time asr-c">${r.asrIq} <span class="p-ampm">${ampm(r.asrIq)}</span></span>
                     </div>
                     <div class="prayer-item-mobile">
                         <span class="p-name">Maghrib</span>
-                        <span class="p-time maghrib-c">${r.magIq}</span>
+                        <span class="p-time maghrib-c">${r.magIq} <span class="p-ampm">${ampm(r.magIq)}</span></span>
                     </div>
                     <div class="prayer-item-mobile" style="grid-column:1/-1;">
                         <span class="p-name">Isha</span>
-                        <span class="p-time isha-c">${r.ishaIq}</span>
+                        <span class="p-time isha-c">${r.ishaIq} <span class="p-ampm">${ampm(r.ishaIq)}</span></span>
                     </div>
                 </div>
             </div>
@@ -850,40 +607,28 @@ function buildTodayCard(data, cardId, dateId, prayersId) {
     if (!r) return;
     document.getElementById(cardId).classList.add('visible');
     document.getElementById(dateId).textContent = `${r.day}, ${r.date}`;
-    document.getElementById(prayersId).innerHTML = `
+    const prayers = [
+        {name:'Fajr',    time:r.fajrIq,  cls:'fajr-c'},
+        {name:'Dhuhr',   time:r.dhuhrIq, cls:'dhuhr-c'},
+        {name:'Asr',     time:r.asrIq,   cls:'asr-c'},
+        {name:'Maghrib', time:r.magIq,   cls:'maghrib-c'},
+        {name:'Isha',    time:r.ishaIq,  cls:'isha-c'},
+    ];
+    document.getElementById(prayersId).innerHTML = prayers.map(p => `
         <div class="today-prayer-item">
-            <div class="today-prayer-name">Fajr</div>
-            <div class="today-prayer-time fajr-c">${r.fajrIq}</div>
+            <div class="today-prayer-name">${p.name}</div>
+            <div class="today-prayer-time ${p.cls}">${p.time}</div>
+            <div class="today-prayer-ampm">${ampm(p.time)}</div>
         </div>
-        <div class="today-prayer-item">
-            <div class="today-prayer-name">Dhuhr</div>
-            <div class="today-prayer-time dhuhr-c">${r.dhuhrIq}</div>
-        </div>
-        <div class="today-prayer-item">
-            <div class="today-prayer-name">Asr</div>
-            <div class="today-prayer-time asr-c">${r.asrIq}</div>
-        </div>
-        <div class="today-prayer-item">
-            <div class="today-prayer-name">Maghrib</div>
-            <div class="today-prayer-time maghrib-c">${r.magIq}</div>
-        </div>
-        <div class="today-prayer-item">
-            <div class="today-prayer-name">Isha</div>
-            <div class="today-prayer-time isha-c">${r.ishaIq}</div>
-        </div>
-    `;
+    `).join('');
 }
 
-function toggleCard(header) {
-    header.parentElement.classList.toggle('expanded');
-}
+function toggleCard(header) { header.parentElement.classList.toggle('expanded'); }
 
 function switchView(month, view) {
-    // Update buttons
-    document.getElementById('card-btn-' + month).classList.toggle('active', view === 'card');
+    document.getElementById('card-btn-'  + month).classList.toggle('active', view === 'card');
     document.getElementById('table-btn-' + month).classList.toggle('active', view === 'table');
-    // Update sections
-    document.getElementById('card-' + month).classList.toggle('active', view === 'card');
+    document.getElementById('card-'  + month).classList.toggle('active', view === 'card');
     document.getElementById('table-' + month).classList.toggle('active', view === 'table');
 }
 
@@ -891,7 +636,7 @@ function switchMonth(month) {
     document.querySelectorAll('.month-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('panel-' + month).classList.add('active');
-    document.getElementById('tab-' + month).classList.add('active');
+    document.getElementById('tab-'   + month).classList.add('active');
 }
 
 function autoSelectMonth() {
@@ -899,7 +644,6 @@ function autoSelectMonth() {
     switchMonth(m === 1 ? 'feb' : m === 2 ? 'mar' : 'feb');
 }
 
-// Build all
 buildTable(feb, 'tbody-feb');
 buildTable(mar, 'tbody-mar');
 buildCards(feb, 'cards-feb');
