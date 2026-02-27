@@ -1,7 +1,7 @@
 {
-  "name": "Hamilton Masjid",
-  "short_name": "Hamilton Masjid",
-  "description": "Prayer times & Ramadan calendar for Hamilton Masjid, NZ",
+  "name": "Waikato Prayer Times",
+  "short_name": "Waikato Prayer",
+  "description": "Prayer times & Ramadan calendar — Hamilton Jamia Mosque, Waikato NZ",
   "start_url": "/prayer-times/",
   "display": "standalone",
   "background_color": "#0d0d1a",
