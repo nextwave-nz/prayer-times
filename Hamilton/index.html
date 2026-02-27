@@ -128,6 +128,7 @@
         th .th-sub{display:block;font-weight:400;opacity:.6;font-size:.85em;margin-top:2px}
         th.th-suhoor{background:rgba(42,157,143,.3)} th.th-iftar{background:rgba(224,122,95,.35)}
         td{padding:9px 6px;text-align:center;border-bottom:1px solid rgba(0,0,0,.04)}
+        td small{font-size:.7em;opacity:.5;font-weight:400;text-transform:uppercase;margin-left:1px}
         tbody tr:hover{background:rgba(0,0,0,.02)}
         tr.row-today{background:linear-gradient(90deg,#fef3cd,#fdf6e3,#fef3cd)!important}
         tr.row-today td{font-weight:700;color:var(--text-dark);border-top:2px solid var(--gold);border-bottom:2px solid var(--gold)}
@@ -197,6 +198,26 @@
         .notif-btn.primary{background:var(--night);color:var(--gold-light)}
         .notif-btn.secondary{background:var(--cream);color:var(--text-mid)}
         .notif-btn:active{transform:scale(.97)}
+        /* Install Instructions Modal */
+        .install-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:300;display:none;align-items:center;justify-content:center;padding:20px}
+        .install-overlay.show{display:flex}
+        .install-modal{background:#fff;border-radius:20px;padding:28px 24px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);text-align:center}
+        .install-modal h3{font-family:'DM Serif Display',serif;font-size:1.2em;color:var(--night);margin-bottom:12px}
+        .install-modal .im-icon{font-size:2.5em;margin-bottom:10px;display:block}
+        .install-tabs{display:flex;gap:3px;background:var(--cream);padding:3px;border-radius:10px;margin-bottom:16px}
+        .install-tab{flex:1;padding:8px 10px;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.8em;cursor:pointer;background:transparent;color:var(--text-mid);transition:all .2s}
+        .install-tab.active{background:var(--night);color:var(--gold-light)}
+        .install-steps{text-align:left;margin-bottom:16px}
+        .install-step{display:none;padding:0}
+        .install-step.active{display:block}
+        .install-step ol{margin:0;padding:0 0 0 20px;list-style:none;counter-reset:steps}
+        .install-step ol li{counter-increment:steps;padding:10px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:.85em;color:var(--text-mid);line-height:1.5;position:relative;padding-left:32px}
+        .install-step ol li:last-child{border:none}
+        .install-step ol li::before{content:counter(steps);position:absolute;left:0;top:10px;width:24px;height:24px;background:var(--cream);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.75em;color:var(--night)}
+        .install-step ol li strong{color:var(--night)}
+        .install-step .step-icon{display:inline-block;background:var(--cream);padding:2px 6px;border-radius:4px;font-size:.9em}
+        .install-close{width:100%;padding:12px;border-radius:10px;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.88em;cursor:pointer;border:none;background:var(--night);color:var(--gold-light)}
+        .install-close:active{transform:scale(.97)}
         @media(min-width:769px){
             .hero{padding:44px 24px 36px}
             .hero h1{font-size:2.8em}.hero-crescent{font-size:3.5em}.hero-ramadan{font-size:1.35em}
@@ -251,9 +272,9 @@
             <span class="eid-icon">💰</span>
             <div><strong>Zakatul Fitr</strong> — $15 per person<br><span class="eid-sub">Pay by March 15</span></div>
         </div>
-        <div class="eid-card eid-salaat-card">
+        <div class="eid-card eid-salaat-card" id="eidSalaatCard">
             <span class="eid-icon">🕌</span>
-            <div><strong>Eid ul Fitr Salaat</strong> — Claudelands Event Centre<br><span class="eid-sub">Date & time to be confirmed</span></div>
+            <div id="eidSalaatContent"><strong>Eid ul Fitr Salaat</strong> — Claudelands Event Centre<br><span class="eid-sub">Date & time to be confirmed</span></div>
         </div>
     </div>
     <div class="controls-row">
@@ -327,6 +348,37 @@
     </div>
 </div>
 
+<!-- Install Instructions Modal -->
+<div class="install-overlay" id="installOverlay" onclick="if(event.target===this)this.classList.remove('show')">
+    <div class="install-modal">
+        <span class="im-icon">📲</span>
+        <h3>Add to Home Screen</h3>
+        <div class="install-tabs">
+            <button class="install-tab active" onclick="switchInstallTab('safari',this)">Safari (iPhone)</button>
+            <button class="install-tab" onclick="switchInstallTab('chrome',this)">Chrome (Android)</button>
+        </div>
+        <div class="install-steps">
+            <div class="install-step active" id="installSafari">
+                <ol>
+                    <li>Tap the <strong>Share</strong> button <span class="step-icon">↑</span> at the bottom of Safari</li>
+                    <li>Scroll down and tap <strong>"Add to Home Screen"</strong></li>
+                    <li>Tap <strong>"Add"</strong> in the top right corner</li>
+                    <li>The app icon 🌙 will appear on your home screen!</li>
+                </ol>
+            </div>
+            <div class="install-step" id="installChrome">
+                <ol>
+                    <li>Tap the <strong>three dots</strong> <span class="step-icon">⋮</span> menu in the top right</li>
+                    <li>Tap <strong>"Add to Home screen"</strong> or <strong>"Install app"</strong></li>
+                    <li>Tap <strong>"Add"</strong> to confirm</li>
+                    <li>The app icon 🌙 will appear on your home screen!</li>
+                </ol>
+            </div>
+        </div>
+        <button class="install-close" onclick="document.getElementById('installOverlay').classList.remove('show')">Got it!</button>
+    </div>
+</div>
+
 <script>
 // Service Worker - register for PWA + clear old caches
 if('serviceWorker' in navigator){
@@ -342,11 +394,21 @@ window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();def
 function installApp(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(function(){deferredPrompt=null;document.getElementById('installBanner').classList.remove('show')})}}
 function handleInstall(){
 if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(function(){deferredPrompt=null});return}
+// Show instructions modal
+var overlay=document.getElementById('installOverlay');
+overlay.classList.add('show');
+// Auto-select the right tab
 var isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent);
-if(isIOS){showToast('Tap the Share button ↑ then "Add to Home Screen"')}
-else{showToast('Tap your browser menu ⋮ then "Add to Home Screen"')}
+if(isIOS){switchInstallTab('safari',document.querySelector('.install-tab'))}
+else{var tabs=document.querySelectorAll('.install-tab');switchInstallTab('chrome',tabs[1])}
 }
-// Hide install row if already standalone
+function switchInstallTab(tab,el){
+document.querySelectorAll('.install-tab').forEach(function(t){t.classList.remove('active')});
+document.querySelectorAll('.install-step').forEach(function(s){s.classList.remove('active')});
+el.classList.add('active');
+document.getElementById(tab==='safari'?'installSafari':'installChrome').classList.add('active')
+}
+// Hide install button if already standalone
 if(window.matchMedia('(display-mode:standalone)').matches||window.navigator.standalone===true){var ib=document.getElementById('installBtn');if(ib)ib.style.display='none'}
 
 // Stars
@@ -476,8 +538,8 @@ function dayMarker(d){if(d===1)return' 🌟';if(d===15)return' 🎉';if(d===27)r
 function scrollToDay(target){var dayNum;if(target==='today'){var tp=getToday();dayNum=tp?tp.day:1}else if(target==='last10'){dayNum=21}else if(target==='odd'){dayNum=23}else if(target==='halfway'){dayNum=15}var allEls=document.querySelectorAll('[data-day="'+dayNum+'"]');var el=null;for(var i=0;i<allEls.length;i++){if(allEls[i].offsetParent!==null){el=allEls[i];break}}if(!el)return;window.scrollTo({top:el.getBoundingClientRect().top+window.pageYOffset-80,behavior:'smooth'});el.style.transition='box-shadow .3s,outline .3s';el.style.boxShadow='0 0 0 3px var(--gold),0 4px 24px rgba(212,168,67,.3)';el.style.outline='2px solid #d4a843';setTimeout(function(){el.style.boxShadow='';el.style.outline=''},2500)}
 function buildHeaders(){var ram=isRamadan();document.getElementById('desktopThead').innerHTML=ram?'<th>Day</th><th>Date</th><th class="th-suhoor">Suhoor<br>Ends</th><th>Fajr <span class="th-sub">Iqama</span></th><th>Dhuhr <span class="th-sub">Iqama</span></th><th>Asr <span class="th-sub">Iqama</span></th><th>Maghrib <span class="th-sub">Iqama</span></th><th class="th-iftar">Iftar</th><th>Isha <span class="th-sub">Iqama</span></th>':'<th>Date</th><th>Fajr</th><th>Sunrise</th><th>Dhuhr</th><th>Asr</th><th>Maghrib</th><th>Isha</th>';document.getElementById('mobileThead').innerHTML=ram?'<th>Day</th><th class="th-suhoor">Suh<br>Ends</th><th>Fajr</th><th>Dhuhr</th><th>Asr</th><th>Mag</th><th class="th-iftar">Iftar</th><th>Isha</th>':'<th>Date</th><th>Fajr</th><th>Dhuhr</th><th>Asr</th><th>Mag</th><th>Isha</th>'}
 function populateCards(){var c=document.getElementById('cardView');var ram=isRamadan();PT.forEach(function(p){var iT=isToday(p),isO=[23,25,27,29].indexOf(p.day)!==-1,isL=p.day>=21;var cls='day-card';if(iT)cls+=' is-today';if(isO)cls+=' is-odd';if(isL)cls+=' is-last-ten';var d=document.createElement('div');d.className=cls;d.setAttribute('data-day',p.day);var sP=ram?'<div class="prayer-pill pill-suhoor"><div class="pp-name">Suhoor Ends</div><div class="pp-time">'+p.suh+' AM</div></div>':'';var iP=ram?'<div class="prayer-pill pill-iftar"><div class="pp-name">🌙 Iftar Time</div><div class="pp-time">'+p.ift+' PM</div></div>':'';var iQ=ram?'<div class="card-iftar-quick"><div class="ciq-label">Iftar</div><div class="ciq-time">'+p.ift+'</div></div>':'<div class="card-iftar-quick"><div class="ciq-label">Maghrib</div><div class="ciq-time">'+p.mag+'</div></div>';d.innerHTML='<div class="card-header" onclick="this.parentElement.classList.toggle(\'expanded\')"><div class="card-header-left"><div class="card-day-num">'+p.day+'</div><div class="card-header-info"><div class="card-title">Day '+p.day+dayMarker(p.day)+'</div><div class="card-subtitle">'+p.wd+', '+p.date+'</div></div></div><div style="display:flex;align-items:center">'+iQ+'<span class="chevron">▼</span></div></div><div class="card-body"><div class="prayer-pills">'+sP+'<div class="prayer-pill"><div class="pp-name">Fajr</div><div class="pp-time">'+p.faj+' AM</div></div><div class="prayer-pill"><div class="pp-name">Sunrise</div><div class="pp-time">'+p.sun+' AM</div></div><div class="prayer-pill"><div class="pp-name">Dhuhr</div><div class="pp-time">'+p.dhu+' PM</div></div><div class="prayer-pill"><div class="pp-name">Asr</div><div class="pp-time">'+p.asr+' PM</div></div><div class="prayer-pill"><div class="pp-name">Maghrib</div><div class="pp-time">'+p.mag+' PM</div></div><div class="prayer-pill"><div class="pp-name">Isha</div><div class="pp-time">'+p.ish+' PM</div></div>'+iP+'</div></div>';c.appendChild(d)})}
-function populateDesktopTable(){var tb=document.getElementById('tableBody');var ram=isRamadan();PT.forEach(function(p){var r=document.createElement('tr');r.className=rowClasses(p);r.setAttribute('data-day',p.day);r.innerHTML=ram?'<td class="td-day">'+p.day+dayMarker(p.day)+'</td><td><strong>'+p.date+'</strong></td><td class="td-suhoor">'+p.suh+'</td><td>'+p.faj+'</td><td>'+p.dhu+'</td><td>'+p.asr+'</td><td>'+p.mag+'</td><td class="td-iftar">'+p.ift+'</td><td>'+p.ish+'</td>':'<td><strong>'+p.date+'</strong></td><td>'+p.faj+'</td><td>'+p.sun+'</td><td>'+p.dhu+'</td><td>'+p.asr+'</td><td>'+p.mag+'</td><td>'+p.ish+'</td>';tb.appendChild(r)})}
-function populateMobileTable(){var tb=document.getElementById('mobileTableBody');var ram=isRamadan();PT.forEach(function(p){var iT=isToday(p);var r=document.createElement('tr');r.className=rowClasses(p);r.setAttribute('data-day',p.day);r.innerHTML=ram?'<td class="td-day">'+p.day+'<span class="mob-date">'+p.wd.substring(0,2)+'</span></td><td class="td-suhoor">'+p.suh+'</td><td>'+p.faj+'</td><td>'+p.dhu+'</td><td>'+p.asr+'</td><td>'+p.mag+'</td><td class="td-iftar">'+p.ift+'</td><td>'+p.ish+'</td>':'<td class="td-day">'+p.date+'<span class="mob-date">'+p.wd.substring(0,2)+'</span></td><td>'+p.faj+'</td><td>'+p.dhu+'</td><td>'+p.asr+'</td><td>'+p.mag+'</td><td>'+p.ish+'</td>';tb.appendChild(r);if(iT&&ram){var dr=document.createElement('tr');dr.className='today-detail-row';dr.innerHTML='<td colspan="8"><div class="today-detail-card"><div class="tdc-title">📍 Today — Day '+p.day+' — '+p.wd+', '+p.date+'</div><div class="tdc-grid"><div class="tdc-item tdc-suhoor"><div class="tdc-label">Suhoor</div><div class="tdc-time">'+p.suh+' AM</div></div><div class="tdc-item"><div class="tdc-label">Fajr</div><div class="tdc-time">'+p.faj+' AM</div></div><div class="tdc-item"><div class="tdc-label">Sunrise</div><div class="tdc-time">'+p.sun+' AM</div></div><div class="tdc-item"><div class="tdc-label">Dhuhr</div><div class="tdc-time">'+p.dhu+' PM</div></div><div class="tdc-item"><div class="tdc-label">Asr</div><div class="tdc-time">'+p.asr+' PM</div></div><div class="tdc-item"><div class="tdc-label">Maghrib</div><div class="tdc-time">'+p.mag+' PM</div></div><div class="tdc-item tdc-iftar"><div class="tdc-label">🌙 Iftar</div><div class="tdc-time">'+p.ift+' PM</div></div><div class="tdc-item"><div class="tdc-label">Isha</div><div class="tdc-time">'+p.ish+' PM</div></div></div></div></td>';tb.appendChild(dr)}})}
+function populateDesktopTable(){var tb=document.getElementById('tableBody');var ram=isRamadan();PT.forEach(function(p){var r=document.createElement('tr');r.className=rowClasses(p);r.setAttribute('data-day',p.day);r.innerHTML=ram?'<td class="td-day">'+p.day+dayMarker(p.day)+'</td><td><strong>'+p.date+'</strong></td><td class="td-suhoor">'+p.suh+' <small>AM</small></td><td>'+p.faj+' <small>AM</small></td><td>'+p.dhu+' <small>PM</small></td><td>'+p.asr+' <small>PM</small></td><td>'+p.mag+' <small>PM</small></td><td class="td-iftar">'+p.ift+' <small>PM</small></td><td>'+p.ish+' <small>PM</small></td>':'<td><strong>'+p.date+'</strong></td><td>'+p.faj+'</td><td>'+p.sun+'</td><td>'+p.dhu+'</td><td>'+p.asr+'</td><td>'+p.mag+'</td><td>'+p.ish+'</td>';tb.appendChild(r)})}
+function populateMobileTable(){var tb=document.getElementById('mobileTableBody');var ram=isRamadan();PT.forEach(function(p){var iT=isToday(p);var r=document.createElement('tr');r.className=rowClasses(p);r.setAttribute('data-day',p.day);r.innerHTML=ram?'<td class="td-day">'+p.day+'<span class="mob-date">'+p.wd.substring(0,2)+'</span></td><td class="td-suhoor">'+p.suh+'<small>am</small></td><td>'+p.faj+'<small>am</small></td><td>'+p.dhu+'<small>pm</small></td><td>'+p.asr+'<small>pm</small></td><td>'+p.mag+'<small>pm</small></td><td class="td-iftar">'+p.ift+'<small>pm</small></td><td>'+p.ish+'<small>pm</small></td>':'<td class="td-day">'+p.date+'<span class="mob-date">'+p.wd.substring(0,2)+'</span></td><td>'+p.faj+'</td><td>'+p.dhu+'</td><td>'+p.asr+'</td><td>'+p.mag+'</td><td>'+p.ish+'</td>';tb.appendChild(r);if(iT&&ram){var dr=document.createElement('tr');dr.className='today-detail-row';dr.innerHTML='<td colspan="8"><div class="today-detail-card"><div class="tdc-title">📍 Today — Day '+p.day+' — '+p.wd+', '+p.date+'</div><div class="tdc-grid"><div class="tdc-item tdc-suhoor"><div class="tdc-label">Suhoor</div><div class="tdc-time">'+p.suh+' AM</div></div><div class="tdc-item"><div class="tdc-label">Fajr</div><div class="tdc-time">'+p.faj+' AM</div></div><div class="tdc-item"><div class="tdc-label">Sunrise</div><div class="tdc-time">'+p.sun+' AM</div></div><div class="tdc-item"><div class="tdc-label">Dhuhr</div><div class="tdc-time">'+p.dhu+' PM</div></div><div class="tdc-item"><div class="tdc-label">Asr</div><div class="tdc-time">'+p.asr+' PM</div></div><div class="tdc-item"><div class="tdc-label">Maghrib</div><div class="tdc-time">'+p.mag+' PM</div></div><div class="tdc-item tdc-iftar"><div class="tdc-label">🌙 Iftar</div><div class="tdc-time">'+p.ift+' PM</div></div><div class="tdc-item"><div class="tdc-label">Isha</div><div class="tdc-time">'+p.ish+' PM</div></div></div></div></td>';tb.appendChild(dr)}})}
 function updateCountdowns(){var now=new Date(),tp=getToday(),ram=isRamadan();if(!tp){document.getElementById('todayDayTitle').textContent=ram?'Ramadan not active today':'Prayer Times';document.getElementById('todayDateText').textContent=new Date().toLocaleDateString('en-NZ',{weekday:'long',day:'numeric',month:'long',year:'numeric'});return}
 document.getElementById('todayDayTitle').textContent=ram?'Day '+tp.day+' of Ramadan':'Prayer Times';document.getElementById('todayDateText').textContent=tp.wd+', '+tp.date+' 2026';
 if(ram){document.getElementById('todaySuhoor').textContent=tp.suh;document.getElementById('todayIftar').textContent=tp.ift;document.getElementById('cdDay').textContent=tp.day;
@@ -495,6 +557,19 @@ window.addEventListener('scroll',function(){document.getElementById('scrollTopBt
 applyMode();buildHeaders();populateCards();populateDesktopTable();populateMobileTable();
 if(window.innerWidth<769)switchView('card');else switchView('table');
 updateCountdowns();setInterval(updateCountdowns,1000);
+
+// Load Eid config if available
+(function(){try{fetch('eid-config.json?t='+Date.now()).then(function(r){if(r.ok)return r.json();throw''}).then(function(cfg){
+if(cfg&&cfg.location){var h='<strong>Eid ul Fitr Salaat</strong>';
+h+=' — '+cfg.location;
+var sub=[];
+if(cfg.date)sub.push(cfg.date);
+if(cfg.time)sub.push(cfg.time);
+if(cfg.parking)sub.push('🅿️ '+cfg.parking);
+if(sub.length)h+='<br><span class="eid-sub">'+sub.join(' · ')+'</span>';
+else h+='<br><span class="eid-sub">Details to be confirmed</span>';
+document.getElementById('eidSalaatContent').innerHTML=h}
+}).catch(function(){})}catch(e){}})();
 </script>
 </body>
 </html>
