@@ -333,9 +333,9 @@
             </div>
             <div class="hl-card suhoor" id="suhoorCard" style="display:none">
                 <div>
-                    <div class="hl-lbl">🌅 Suhoor Ends Tomorrow</div>
+                    <div class="hl-lbl">🌅 Suhoor Ends</div>
                     <div class="hl-time" id="suhoorTimeDisplay">--:--</div>
-                    <div class="hl-sub">Stop eating before Fajr</div>
+                    <div class="hl-sub">Today's last time to eat before Fajr</div>
                 </div>
                 <div class="hl-icon">🌙</div>
             </div>
@@ -355,7 +355,7 @@
             <div class="prayers-list" id="prayerList"></div>
             <div class="gap"></div>
             <!-- Add to Home Screen bottom button -->
-            <div class="hs-bottom-bar" id="hsBottomBar" onclick="showHSModal()" style="display:none">
+            <div class="hs-bottom-bar" id="hsBottomBar" onclick="showHSModal()">
                 <div class="hs-bar-icon">📲</div>
                 <div>
                     <div class="hs-bar-title">Add to Home Screen</div>
@@ -438,7 +438,6 @@
                     <div class="info-title">🕌 Hamilton Masjid</div>
                     <div class="info-body">
                         <p>📍 921 Heaphy Terrace, Hamilton</p>
-                        <p>📞 07 855 0567</p>
                         <div class="info-div"></div>
                         <p>🕌 <strong>Friday Khutbah:</strong> 1:40 PM</p>
                         <p>🌙 <strong>Taraweeh:</strong> After Isha nightly in Ramadan</p>
@@ -529,7 +528,7 @@ const FEB_DATA=[
  {date:"Feb 27",day:"Fri",ramadanDay:9, fajr:"5:29",fajrIq:null,  shuruq:"7:01",dhuhr:"1:32",dhuhrIq:null,  asr:"5:11",asrIq:null,  magh:"8:05",maghIq:null,  isha:"9:19",ishaIq:"9:30", ramadan:true,suhoor:"5:24",iftar:"8:07"},
  // WMA Feb 28: new maghrib iqama 8:15, new isha iqama 9:55 (from WMA PDF bolded)
  // FIANZ: suhoor 5:25, iftar 8:06
- {date:"Feb 28",day:"Sat",ramadanDay:10,fajr:"5:30",fajrIq:null,  shuruq:"7:02",dhuhr:"1:32",dhuhrIq:null,  asr:"5:11",asrIq:null,  magh:"8:04",maghIq:"8:15",isha:"9:17",ishaIq:"9:55", ramadan:true,suhoor:"5:25",iftar:"8:06"},
+ {date:"Feb 28",day:"Sat",ramadanDay:10,fajr:"5:30",fajrIq:null,  shuruq:"7:02",dhuhr:"1:32",dhuhrIq:null,  asr:"5:11",asrIq:null,  magh:"8:04",maghIq:"8:15",isha:"9:17",ishaIq:null,  ramadan:true,suhoor:"5:25",iftar:"8:06"},
 ];
 
 // WMA March data — verified from PDF
@@ -703,9 +702,8 @@ function updateHome(now){
         const diff=iftDt-now;
         document.getElementById('iftarCountSub').textContent=diff>0?`${fmtCd(diff)} remaining`:'✅ Iftar time has passed';
     }
-    // Suhoor
-    const sRec=tmr&&tmr.ramadan?tmr:(rec.ramadan?rec:null);
-    if(sRec&&sRec.suhoor)document.getElementById('suhoorTimeDisplay').textContent=`${sRec.suhoor} AM`;
+    // Suhoor — always show TODAY's suhoor time only
+    if(rec.ramadan&&rec.suhoor)document.getElementById('suhoorTimeDisplay').textContent=`${rec.suhoor} AM`;
 
     // Prayer list
     const list=document.getElementById('prayerList');
@@ -723,15 +721,12 @@ function updateHome(now){
         row.innerHTML=`<div class="pr-left"><div class="pr-emoji">${p.emoji}</div><div><div class="pr-name">${p.name}${extra}${tw}</div><div class="pr-sub">Congregation time</div></div></div><div class="pr-right"><div class="pr-iqama">${p.iqama} ${p.pm?'PM':'AM'}</div>${isCur?'<div class="now-pill">NEXT ›</div>':''}</div>`;
         list.appendChild(row);
     }
-    if(rec.ramadan){
-        const st=sRec?sRec.suhoor:null;
-        if(st){
-            const row=document.createElement('div');
-            row.className='pr-row';
-            row.style.cssText='border-color:rgba(15,155,142,.3);background:linear-gradient(135deg,rgba(15,155,142,.07),rgba(255,255,255,.04))';
-            row.innerHTML=`<div class="pr-left"><div class="pr-emoji">🌙</div><div><div class="pr-name" style="color:var(--teal)">Suhoor Ends${sRec!==rec?' (Tomorrow)':''}</div><div class="pr-sub">Stop eating before Fajr</div></div></div><div class="pr-right"><div class="pr-iqama" style="color:var(--teal)">${st} AM</div></div>`;
-            list.appendChild(row);
-        }
+    if(rec.ramadan&&rec.suhoor){
+        const row=document.createElement('div');
+        row.className='pr-row';
+        row.style.cssText='border-color:rgba(15,155,142,.3);background:linear-gradient(135deg,rgba(15,155,142,.07),rgba(255,255,255,.04))';
+        row.innerHTML=`<div class="pr-left"><div class="pr-emoji">🌙</div><div><div class="pr-name" style="color:var(--teal)">Suhoor Ends</div><div class="pr-sub">Today's last time to eat</div></div></div><div class="pr-right"><div class="pr-iqama" style="color:var(--teal)">${rec.suhoor} AM</div></div>`;
+        list.appendChild(row);
     }
 }
 
@@ -852,10 +847,10 @@ window.hsShowPlatform=function(p,el){
     document.getElementById('hsIOSSteps').style.flexDirection='column';
 };
 
-// Show bottom bar on iOS (not installed)
-if(isIOS&&!isStandalone){
+// Hide bottom bar only if already installed as PWA
+if(isStandalone){
     document.addEventListener('DOMContentLoaded',()=>{
-        document.getElementById('hsBottomBar').style.display='flex';
+        document.getElementById('hsBottomBar').style.display='none';
     });
 }
 
