@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin — Hamilton Masjid</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <style>
+        :root{--night:#0c1a2e;--gold:#d4a843;--gold-light:#e8c876;--cream:#f5f0e8;--teal:#2a9d8f;--coral:#e07a5f;--text-dark:#1a1a2e;--text-mid:#4a4a6a;--text-light:#8a8aa0}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'DM Sans',sans-serif;background:var(--cream);min-height:100vh;color:var(--text-dark)}
+        .admin-header{background:var(--night);color:#fff;padding:24px 20px;text-align:center}
+        .admin-header h1{font-family:'DM Serif Display',serif;font-size:1.5em;color:var(--gold-light);margin-bottom:4px}
+        .admin-header p{font-size:.82em;opacity:.5}
+        .admin-content{max-width:600px;margin:24px auto;padding:0 16px}
+        .card{background:#fff;border-radius:16px;padding:24px;margin-bottom:16px;box-shadow:0 4px 24px rgba(12,26,46,.06);border:1px solid rgba(0,0,0,.04)}
+        .card h2{font-family:'DM Serif Display',serif;font-size:1.15em;color:var(--night);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+        .form-group{margin-bottom:16px}
+        .form-group label{display:block;font-size:.78em;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text-light);margin-bottom:6px}
+        .form-group input,.form-group textarea{width:100%;padding:12px 14px;border:2px solid rgba(0,0,0,.08);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.92em;color:var(--text-dark);transition:border-color .2s;background:#fff}
+        .form-group input:focus,.form-group textarea:focus{outline:none;border-color:var(--teal)}
+        .form-group .hint{font-size:.72em;color:var(--text-light);margin-top:4px}
+        .btn-row{display:flex;gap:10px;margin-top:20px}
+        .btn{flex:1;padding:14px;border-radius:12px;font-family:'DM Sans',sans-serif;font-weight:700;font-size:.88em;cursor:pointer;border:none;transition:all .2s;text-align:center}
+        .btn:active{transform:scale(.97)}
+        .btn-primary{background:var(--night);color:var(--gold-light)}
+        .btn-secondary{background:var(--cream);color:var(--text-mid);border:2px solid rgba(0,0,0,.08)}
+        .btn-success{background:var(--teal);color:#fff}
+        .btn-danger{background:var(--coral);color:#fff}
+        .preview{background:var(--cream);border-radius:12px;padding:16px;margin-top:16px}
+        .preview h3{font-size:.78em;text-transform:uppercase;letter-spacing:.08em;color:var(--text-light);font-weight:600;margin-bottom:8px}
+        .preview-card{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:12px;background:linear-gradient(135deg,#e3f2fd,#bbdefb);border:1px solid rgba(33,150,243,.12);font-size:.82em;line-height:1.4}
+        .preview-card .pc-icon{font-size:1.3em;flex-shrink:0}
+        .preview-card .pc-sub{font-size:.85em;color:var(--text-light);font-style:italic}
+        .status{padding:10px 14px;border-radius:8px;margin-top:12px;font-size:.82em;font-weight:600;display:none}
+        .status.show{display:block}
+        .status.success{background:#e8f5e9;color:#2e7d32}
+        .status.error{background:#fde8e2;color:#c62828}
+        .code-block{background:var(--night);color:#e0e0e0;padding:14px;border-radius:10px;margin-top:12px;font-family:'Courier New',monospace;font-size:.78em;line-height:1.6;overflow-x:auto;white-space:pre;max-height:200px;overflow-y:auto}
+        .instructions{background:#fffbf0;border:2px solid rgba(212,168,67,.2);border-radius:12px;padding:16px;margin-bottom:16px}
+        .instructions h3{font-size:.88em;color:var(--night);margin-bottom:8px}
+        .instructions ol{margin:0;padding:0 0 0 20px;font-size:.82em;color:var(--text-mid);line-height:1.8}
+        .instructions ol li strong{color:var(--night)}
+        .current-config{padding:12px;background:var(--cream);border-radius:8px;margin-bottom:12px;font-size:.82em;color:var(--text-mid)}
+        .current-config strong{color:var(--night)}
+    </style>
+</head>
+<body>
+    <div class="admin-header">
+        <h1>🕌 Admin Panel</h1>
+        <p>Hamilton Masjid — Eid & Announcements</p>
+    </div>
+
+    <div class="admin-content">
+        <div class="instructions">
+            <h3>📋 How to update the live site</h3>
+            <ol>
+                <li>Fill in the Eid details below</li>
+                <li>Click <strong>"Generate Config"</strong> to create the JSON</li>
+                <li>Click <strong>"Download JSON"</strong> to save the file</li>
+                <li>Upload <strong>eid-config.json</strong> to your GitHub repo at <strong>/Hamilton/eid-config.json</strong></li>
+                <li>Changes go live instantly!</li>
+            </ol>
+        </div>
+
+        <div class="card">
+            <h2>🕌 Eid ul Fitr Salaat</h2>
+            
+            <div id="currentConfig" class="current-config" style="display:none">
+                <strong>Current config loaded:</strong> <span id="currentConfigText"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Location / Venue</label>
+                <input type="text" id="eidLocation" value="Claudelands Event Centre" placeholder="e.g. Claudelands Event Centre">
+                <div class="hint">Where the Eid Salaat will be held</div>
+            </div>
+
+            <div class="form-group">
+                <label>Date</label>
+                <input type="text" id="eidDate" placeholder="e.g. Sunday, March 22, 2026">
+                <div class="hint">Leave empty if not confirmed yet</div>
+            </div>
+
+            <div class="form-group">
+                <label>Time</label>
+                <input type="text" id="eidTime" placeholder="e.g. 8:30 AM">
+                <div class="hint">Leave empty if not confirmed yet</div>
+            </div>
+
+            <div class="form-group">
+                <label>Parking Information</label>
+                <input type="text" id="eidParking" placeholder="e.g. Free parking at Brooklyn Road entrance">
+                <div class="hint">Leave empty if not applicable</div>
+            </div>
+
+            <div class="form-group">
+                <label>Additional Notes (optional)</label>
+                <textarea id="eidNotes" rows="3" placeholder="e.g. Bring your own prayer mat. Eid breakfast provided."></textarea>
+            </div>
+
+            <div class="preview">
+                <h3>Live Preview</h3>
+                <div class="preview-card" id="previewCard">
+                    <span class="pc-icon">🕌</span>
+                    <div id="previewContent">
+                        <strong>Eid ul Fitr Salaat</strong> — Claudelands Event Centre<br>
+                        <span class="pc-sub">Date & time to be confirmed</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="btn-row">
+                <button class="btn btn-primary" onclick="generateConfig()">⚙️ Generate Config</button>
+                <button class="btn btn-secondary" onclick="resetForm()">🔄 Reset</button>
+            </div>
+
+            <div class="status" id="statusMsg"></div>
+        </div>
+
+        <div class="card" id="outputCard" style="display:none">
+            <h2>📄 Generated Config</h2>
+            <div class="code-block" id="jsonOutput"></div>
+            <div class="btn-row">
+                <button class="btn btn-success" onclick="downloadConfig()">⬇️ Download JSON</button>
+                <button class="btn btn-secondary" onclick="copyConfig()">📋 Copy</button>
+            </div>
+            <div class="status" id="downloadStatus"></div>
+        </div>
+    </div>
+
+    <script>
+        var generatedJSON = '';
+
+        // Live preview
+        ['eidLocation','eidDate','eidTime','eidParking'].forEach(function(id){
+            document.getElementById(id).addEventListener('input', updatePreview);
+        });
+
+        function updatePreview(){
+            var loc = document.getElementById('eidLocation').value || 'Claudelands Event Centre';
+            var date = document.getElementById('eidDate').value;
+            var time = document.getElementById('eidTime').value;
+            var parking = document.getElementById('eidParking').value;
+            
+            var html = '<strong>Eid ul Fitr Salaat</strong> — ' + loc;
+            var subs = [];
+            if(date) subs.push(date);
+            if(time) subs.push(time);
+            if(parking) subs.push('🅿️ ' + parking);
+            
+            if(subs.length){
+                html += '<br><span class="pc-sub">' + subs.join(' · ') + '</span>';
+            } else {
+                html += '<br><span class="pc-sub">Date & time to be confirmed</span>';
+            }
+            document.getElementById('previewContent').innerHTML = html;
+        }
+
+        function generateConfig(){
+            var config = {
+                location: document.getElementById('eidLocation').value || 'Claudelands Event Centre',
+                date: document.getElementById('eidDate').value || '',
+                time: document.getElementById('eidTime').value || '',
+                parking: document.getElementById('eidParking').value || '',
+                notes: document.getElementById('eidNotes').value || '',
+                updated: new Date().toISOString()
+            };
+
+            generatedJSON = JSON.stringify(config, null, 2);
+            document.getElementById('jsonOutput').textContent = generatedJSON;
+            document.getElementById('outputCard').style.display = 'block';
+            
+            showStatus('statusMsg', 'success', '✅ Config generated! Download and upload to GitHub.');
+            document.getElementById('outputCard').scrollIntoView({behavior:'smooth'});
+        }
+
+        function downloadConfig(){
+            var blob = new Blob([generatedJSON], {type: 'application/json'});
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'eid-config.json';
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(url)},200);
+            showStatus('downloadStatus', 'success', '✅ Downloaded! Upload to /Hamilton/eid-config.json on GitHub.');
+        }
+
+        function copyConfig(){
+            navigator.clipboard.writeText(generatedJSON);
+            showStatus('downloadStatus', 'success', '✅ Copied to clipboard!');
+        }
+
+        function resetForm(){
+            document.getElementById('eidLocation').value = 'Claudelands Event Centre';
+            document.getElementById('eidDate').value = '';
+            document.getElementById('eidTime').value = '';
+            document.getElementById('eidParking').value = '';
+            document.getElementById('eidNotes').value = '';
+            document.getElementById('outputCard').style.display = 'none';
+            updatePreview();
+            showStatus('statusMsg', '', '');
+        }
+
+        function showStatus(id, type, msg){
+            var el = document.getElementById(id);
+            el.className = 'status ' + type + ' show';
+            el.textContent = msg;
+            if(msg) setTimeout(function(){el.classList.remove('show')}, 5000);
+        }
+
+        // Try to load current config
+        try {
+            fetch('eid-config.json?t=' + Date.now()).then(function(r){
+                if(r.ok) return r.json(); throw '';
+            }).then(function(cfg){
+                if(cfg.location) document.getElementById('eidLocation').value = cfg.location;
+                if(cfg.date) document.getElementById('eidDate').value = cfg.date;
+                if(cfg.time) document.getElementById('eidTime').value = cfg.time;
+                if(cfg.parking) document.getElementById('eidParking').value = cfg.parking;
+                if(cfg.notes) document.getElementById('eidNotes').value = cfg.notes;
+                updatePreview();
+                
+                var configEl = document.getElementById('currentConfig');
+                configEl.style.display = 'block';
+                var parts = [];
+                if(cfg.location) parts.push(cfg.location);
+                if(cfg.date) parts.push(cfg.date);
+                if(cfg.time) parts.push(cfg.time);
+                if(cfg.updated) parts.push('Last updated: ' + new Date(cfg.updated).toLocaleDateString());
+                document.getElementById('currentConfigText').textContent = parts.join(' · ') || 'Default values';
+            }).catch(function(){});
+        } catch(e){}
+    </script>
+</body>
+</html>
