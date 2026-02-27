@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hamilton Masjid — Data Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --midnight: #0d0d1a;
+            --navy: #111128;
+            --navy2: #161630;
+            --gold: #c9a84c;
+            --gold-light: #f0d080;
+            --gold-dim: rgba(201,168,76,0.12);
+            --gold-border: rgba(201,168,76,0.25);
+            --teal: #0f9b8e;
+            --red: #e74c3c;
+            --text: #e8e8f0;
+            --text-dim: rgba(232,232,240,0.6);
+            --text-muted: rgba(232,232,240,0.3);
+            --glass: rgba(255,255,255,0.04);
+            --glass-border: rgba(255,255,255,0.08);
+            --radius: 16px;
+            --radius-sm: 10px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--midnight);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 40% at 50% -10%, rgba(201,168,76,0.06) 0%, transparent 60%),
+                radial-gradient(1px 1px at 15% 10%, rgba(255,255,255,.3) 0%, transparent 100%),
+                radial-gradient(1.5px 1.5px at 70% 8%, rgba(255,255,255,.35) 0%, transparent 100%),
+                radial-gradient(1px 1px at 40% 20%, rgba(255,255,255,.2) 0%, transparent 100%),
+                radial-gradient(1px 1px at 85% 15%, rgba(255,255,255,.25) 0%, transparent 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .wrap {
+            position: relative;
+            z-index: 1;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 30px 20px 60px;
+        }
+
+        /* ─── HEADER ─── */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 28px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .header-icon {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            display: block;
+            filter: drop-shadow(0 0 14px rgba(201,168,76,0.5));
+        }
+        .header h1 {
+            font-family: 'Scheherazade New', serif;
+            font-size: 2em;
+            color: var(--gold);
+            margin-bottom: 4px;
+        }
+        .header p {
+            color: var(--text-dim);
+            font-size: 0.88em;
+            font-weight: 300;
+        }
+        .header-badge {
+            display: inline-block;
+            margin-top: 10px;
+            background: var(--gold-dim);
+            border: 1px solid var(--gold-border);
+            color: var(--gold);
+            font-size: 0.68em;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 4px 14px;
+            border-radius: 20px;
+        }
+
+        /* ─── WORKFLOW STEPS ─── */
+        .steps-row {
+            display: flex;
+            gap: 0;
+            margin-bottom: 36px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .step-item {
+            flex: 1;
+            padding: 14px 10px;
+            text-align: center;
+            position: relative;
+        }
+        .step-item:not(:last-child)::after {
+            content: '›';
+            position: absolute;
+            right: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.2em;
+            z-index: 2;
+        }
+        .step-item.active { background: var(--gold-dim); }
+        .step-item.done { background: rgba(15,155,142,0.08); }
+        .step-num {
+            width: 24px; height: 24px;
+            border-radius: 50%;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            font-size: 0.7em;
+            font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 6px;
+        }
+        .step-item.active .step-num { background: var(--gold); color: #1a1100; border-color: var(--gold); }
+        .step-item.done .step-num { background: var(--teal); color: white; border-color: var(--teal); }
+        .step-label {
+            font-size: 0.7em;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        .step-item.active .step-label { color: var(--gold); }
+        .step-item.done .step-label { color: var(--teal); }
+
+        /* ─── SECTION CARDS ─── */
+        .section {
+            background: var(--navy);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .section-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section-num {
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold), #8B6914);
+            color: #1a1100;
+            font-weight: 700;
+            font-size: 0.8em;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .section-title { font-weight: 600; font-size: 0.95em; }
+        .section-sub { font-size: 0.75em; color: var(--text-dim); margin-top: 1px; }
+        .section-body { padding: 20px; }
+
+        /* ─── UPLOAD ZONE ─── */
+        .upload-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+        .upload-zone {
+            border: 2px dashed var(--glass-border);
+            border-radius: var(--radius-sm);
+            padding: 24px 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s;
+            position: relative;
+        }
+        .upload-zone:hover { border-color: var(--gold-border); background: var(--gold-dim); }
+        .upload-zone.has-file { border-color: rgba(15,155,142,0.5); background: rgba(15,155,142,0.06); border-style: solid; }
+        .upload-zone.wma { border-color: rgba(201,168,76,0.2); }
+        .upload-zone.fianz { border-color: rgba(15,155,142,0.2); }
+        .upload-zone input[type="file"] {
+            position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+        }
+        .upload-icon { font-size: 2em; margin-bottom: 8px; display: block; }
+        .upload-title { font-weight: 600; font-size: 0.88em; color: var(--text); margin-bottom: 4px; }
+        .upload-desc { font-size: 0.72em; color: var(--text-dim); line-height: 1.5; }
+        .upload-types { font-size: 0.66em; color: var(--text-muted); margin-top: 6px; }
+        .file-badge {
+            display: none;
+            margin-top: 8px;
+            background: rgba(15,155,142,0.15);
+            border: 1px solid rgba(15,155,142,0.3);
+            border-radius: 6px;
+            padding: 4px 10px;
+            font-size: 0.7em;
+            color: var(--teal);
+            font-weight: 500;
+        }
+        .upload-zone.has-file .file-badge { display: inline-block; }
+
+        /* Month selector */
+        .month-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+        .month-chip {
+            padding: 7px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            background: transparent;
+            color: var(--text-dim);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.78em;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        .month-chip.selected {
+            background: var(--gold-dim);
+            border-color: var(--gold-border);
+            color: var(--gold);
+        }
+        .month-chip:hover { border-color: var(--gold-border); }
+
+        /* Year row */
+        .year-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .year-row label { font-size: 0.8em; color: var(--text-dim); font-weight: 500; }
+        .year-input {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: var(--text);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.88em;
+            padding: 7px 12px;
+            width: 90px;
+        }
+        .year-input:focus { outline: none; border-color: var(--gold-border); }
+
+        .ramadan-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 14px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            margin-bottom: 16px;
+        }
+        .toggle-switch {
+            width: 40px; height: 22px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 11px;
+            position: relative;
+            transition: background 0.2s;
+            flex-shrink: 0;
+        }
+        .toggle-switch.on { background: linear-gradient(135deg, var(--gold), #8B6914); }
+        .toggle-knob {
+            width: 16px; height: 16px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 3px; left: 3px;
+            transition: left 0.2s;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+        }
+        .toggle-switch.on .toggle-knob { left: 21px; }
+        .toggle-label { font-size: 0.82em; font-weight: 500; }
+        .toggle-sub { font-size: 0.7em; color: var(--text-dim); }
+
+        /* Extract button */
+        .extract-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--gold), #8B6914);
+            color: #1a1100;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95em;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.2s;
+        }
+        .extract-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(201,168,76,0.3); }
+        .extract-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        /* ─── PROGRESS ─── */
+        .progress-bar-wrap {
+            background: var(--glass);
+            border-radius: 4px;
+            height: 4px;
+            margin: 14px 0;
+            overflow: hidden;
+            display: none;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+        .progress-label {
+            font-size: 0.75em;
+            color: var(--text-dim);
+            text-align: center;
+            display: none;
+            margin-bottom: 8px;
+        }
+
+        /* ─── PREVIEW TABLE ─── */
+        .preview-section { display: none; }
+        .table-scroll { overflow-x: auto; border-radius: var(--radius-sm); border: 1px solid var(--glass-border); }
+        table.preview {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.72em;
+            min-width: 700px;
+        }
+        table.preview thead {
+            background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(201,168,76,0.05));
+        }
+        table.preview th {
+            padding: 10px 8px;
+            text-align: center;
+            color: var(--gold);
+            font-weight: 600;
+            font-size: 0.82em;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--glass-border);
+            white-space: nowrap;
+        }
+        table.preview td {
+            padding: 0;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        table.preview td input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: var(--text-dim);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.95em;
+            text-align: center;
+            padding: 8px 4px;
+            min-width: 52px;
+        }
+        table.preview td input:focus {
+            background: rgba(201,168,76,0.08);
+            color: var(--gold-light);
+            outline: none;
+        }
+        table.preview td.iqama-cell input { color: var(--gold); font-weight: 600; }
+        table.preview td.iftar-cell input { color: var(--red); font-weight: 600; }
+        table.preview td.suhoor-cell input { color: var(--teal); }
+        table.preview td.date-cell {
+            padding: 8px 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.88em;
+            color: var(--text);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        table.preview tr.odd-row { background: rgba(255,255,255,0.01); }
+        table.preview tr:hover td { background: rgba(255,255,255,0.02); }
+        .iqama-legend {
+            font-size: 0.68em;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            background: var(--glass);
+            border-radius: 8px;
+            border: 1px solid var(--glass-border);
+        }
+        .iqama-legend span { color: var(--gold); }
+
+        /* ─── AI LOG ─── */
+        .ai-log {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.72em;
+            color: var(--text-dim);
+            max-height: 120px;
+            overflow-y: auto;
+            margin-bottom: 16px;
+            display: none;
+            line-height: 1.7;
+        }
+        .ai-log .log-ok { color: var(--teal); }
+        .ai-log .log-err { color: var(--red); }
+        .ai-log .log-info { color: var(--gold); }
+
+        /* ─── OUTPUT CODE BLOCK ─── */
+        .output-section { display: none; }
+        .code-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            gap: 10px;
+        }
+        .code-toolbar-title { font-size: 0.8em; color: var(--text-dim); font-weight: 500; }
+        .copy-btn {
+            padding: 7px 18px;
+            background: linear-gradient(135deg, var(--gold), #8B6914);
+            color: #1a1100;
+            border: none;
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.78em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .copy-btn:hover { transform: translateY(-1px); }
+        .copy-btn.copied { background: linear-gradient(135deg, var(--teal), #0a7a70); color: white; }
+        .code-block {
+            background: rgba(0,0,0,0.4);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.72em;
+            color: #a8d8a8;
+            max-height: 320px;
+            overflow-y: auto;
+            white-space: pre;
+            line-height: 1.65;
+        }
+        .code-block::-webkit-scrollbar { width: 6px; }
+        .code-block::-webkit-scrollbar-track { background: transparent; }
+        .code-block::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 3px; }
+
+        /* ─── INSTRUCTIONS ─── */
+        .instructions {
+            background: linear-gradient(135deg, rgba(201,168,76,0.06), var(--glass));
+            border: 1px solid var(--gold-border);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .instructions h3 { color: var(--gold); font-size: 0.88em; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 1px; }
+        .inst-step {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+            align-items: flex-start;
+        }
+        .inst-num {
+            width: 22px; height: 22px; min-width: 22px;
+            border-radius: 50%;
+            background: var(--gold-dim);
+            border: 1px solid var(--gold-border);
+            color: var(--gold);
+            font-size: 0.7em;
+            font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            margin-top: 1px;
+        }
+        .inst-text { font-size: 0.8em; color: var(--text-dim); line-height: 1.6; }
+        .inst-text strong { color: var(--text); }
+        .inst-text code {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 4px;
+            padding: 1px 6px;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.9em;
+            color: var(--gold-light);
+        }
+
+        /* ─── ERROR STATE ─── */
+        .error-box {
+            background: rgba(231,76,60,0.08);
+            border: 1px solid rgba(231,76,60,0.3);
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            font-size: 0.8em;
+            color: #ff9999;
+            display: none;
+            margin-bottom: 14px;
+        }
+
+        /* ─── REGENERATE BUTTON ─── */
+        .regen-btn {
+            padding: 10px 20px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: var(--text-dim);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8em;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-right: 10px;
+        }
+        .regen-btn:hover { border-color: var(--gold-border); color: var(--gold); }
+
+        /* ─── TOAST ─── */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: var(--navy2);
+            border: 1px solid var(--gold-border);
+            color: var(--text);
+            padding: 10px 22px;
+            border-radius: 24px;
+            font-size: 0.82em;
+            font-weight: 500;
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .upload-grid { grid-template-columns: 1fr; }
+            .steps-row { display: none; }
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div class="toast" id="toast"></div>
+
+    <!-- HEADER -->
+    <div class="header">
+        <span class="header-icon">🕌</span>
+        <h1>Hamilton Masjid — Data Admin</h1>
+        <p>Upload WMA or FIANZ prayer time files to generate app-ready data</p>
+        <div class="header-badge">🔒 Local Tool — No Data Stored</div>
+    </div>
+
+    <!-- WORKFLOW STEPS -->
+    <div class="steps-row">
+        <div class="step-item active" id="step1Item">
+            <div class="step-num">1</div>
+            <div class="step-label">Upload Files</div>
+        </div>
+        <div class="step-item" id="step2Item">
+            <div class="step-num">2</div>
+            <div class="step-label">AI Extracts</div>
+        </div>
+        <div class="step-item" id="step3Item">
+            <div class="step-num">3</div>
+            <div class="step-label">Review Data</div>
+        </div>
+        <div class="step-item" id="step4Item">
+            <div class="step-num">4</div>
+            <div class="step-label">Generate Code</div>
+        </div>
+        <div class="step-item" id="step5Item">
+            <div class="step-num">5</div>
+            <div class="step-label">Copy & Paste</div>
+        </div>
+    </div>
+
+    <!-- SECTION 1: UPLOAD -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-num">1</div>
+            <div>
+                <div class="section-title">Upload Prayer Time Files</div>
+                <div class="section-sub">Upload one or both source files — AI will read and extract all times</div>
+            </div>
+        </div>
+        <div class="section-body">
+
+            <!-- Year + Month -->
+            <div class="year-row">
+                <label>Year:</label>
+                <input type="number" class="year-input" id="yearInput" value="2026" min="2025" max="2035">
+                <label style="margin-left:8px">Month:</label>
+            </div>
+            <div class="month-row" id="monthRow">
+                <button class="month-chip" onclick="selectMonth('January',this)">January</button>
+                <button class="month-chip" onclick="selectMonth('February',this)">February</button>
+                <button class="month-chip" onclick="selectMonth('March',this)">March</button>
+                <button class="month-chip" onclick="selectMonth('April',this)">April</button>
+                <button class="month-chip" onclick="selectMonth('May',this)">May</button>
+                <button class="month-chip" onclick="selectMonth('June',this)">June</button>
+                <button class="month-chip" onclick="selectMonth('July',this)">July</button>
+                <button class="month-chip" onclick="selectMonth('August',this)">August</button>
+                <button class="month-chip" onclick="selectMonth('September',this)">September</button>
+                <button class="month-chip" onclick="selectMonth('October',this)">October</button>
+                <button class="month-chip" onclick="selectMonth('November',this)">November</button>
+                <button class="month-chip" onclick="selectMonth('December',this)">December</button>
+            </div>
+
+            <!-- Ramadan toggle -->
+            <div class="ramadan-toggle" onclick="toggleRamadan()">
+                <div class="toggle-switch" id="ramadanToggle">
+                    <div class="toggle-knob"></div>
+                </div>
+                <div>
+                    <div class="toggle-label">🌙 This month includes Ramadan</div>
+                    <div class="toggle-sub">Enable to include Suhoor ends & Iftar times from FIANZ</div>
+                </div>
+            </div>
+
+            <!-- Upload zones -->
+            <div class="upload-grid">
+                <div class="upload-zone wma" id="wmaZone">
+                    <input type="file" id="wmaFile" accept=".pdf,image/*" onchange="handleFile('wma',this)">
+                    <span class="upload-icon">📄</span>
+                    <div class="upload-title">WMA Timetable</div>
+                    <div class="upload-desc">Waikato Muslim Association monthly prayer schedule</div>
+                    <div class="upload-types">PDF or image • Contains Iqama times</div>
+                    <div class="file-badge" id="wmaBadge">✓ File ready</div>
+                </div>
+                <div class="upload-zone fianz" id="fianzZone">
+                    <input type="file" id="fianzFile" accept=".pdf,image/*" onchange="handleFile('fianz',this)">
+                    <span class="upload-icon">🖼️</span>
+                    <div class="upload-title">FIANZ Calendar</div>
+                    <div class="upload-desc">Federation of Islamic Associations NZ — Hamilton regional times</div>
+                    <div class="upload-types">PDF or image • Contains Suhoor & Iftar</div>
+                    <div class="file-badge" id="fianzBadge">✓ File ready</div>
+                </div>
+            </div>
+
+            <div class="error-box" id="errorBox"></div>
+
+            <button class="extract-btn" id="extractBtn" onclick="extractData()" disabled>
+                <span id="extractBtnIcon">✨</span>
+                <span id="extractBtnText">Upload at least one file to continue</span>
+            </button>
+
+            <div class="progress-bar-wrap" id="progressWrap">
+                <div class="progress-bar-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-label" id="progressLabel"></div>
+            <div class="ai-log" id="aiLog"></div>
+        </div>
+    </div>
+
+    <!-- SECTION 2: PREVIEW & EDIT -->
+    <div class="section preview-section" id="previewSection">
+        <div class="section-header">
+            <div class="section-num">2</div>
+            <div>
+                <div class="section-title">Review & Edit Extracted Data</div>
+                <div class="section-sub">All fields are editable — click any cell to correct a time. Iqama times highlighted in gold.</div>
+            </div>
+        </div>
+        <div class="section-body">
+            <div class="iqama-legend">
+                <span>Gold</span> = Iqama (congregation) times &nbsp;|&nbsp;
+                <span style="color:var(--red)">Red</span> = Iftar times &nbsp;|&nbsp;
+                <span style="color:var(--teal)">Teal</span> = Suhoor times &nbsp;|&nbsp;
+                Empty iqama = carries forward from previous row
+            </div>
+            <div class="table-scroll">
+                <table class="preview">
+                    <thead id="previewHead"></thead>
+                    <tbody id="previewBody"></tbody>
+                </table>
+            </div>
+            <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+                <button class="regen-btn" onclick="resetAll()">↺ Start Over</button>
+                <button class="extract-btn" style="flex:1;max-width:240px" onclick="generateCode()">
+                    ⚡ Generate Code Block →
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 3: OUTPUT CODE -->
+    <div class="section output-section" id="outputSection">
+        <div class="section-header">
+            <div class="section-num">3</div>
+            <div>
+                <div class="section-title">Generated Code — Ready to Paste</div>
+                <div class="section-sub">Copy this block and paste it into index.html</div>
+            </div>
+        </div>
+        <div class="section-body">
+            <div class="code-toolbar">
+                <div class="code-toolbar-title" id="codeTitle">— data block</div>
+                <div style="display:flex;gap:8px">
+                    <button class="regen-btn" onclick="showPreview()">← Edit Data</button>
+                    <button class="copy-btn" id="copyBtn" onclick="copyCode()">📋 Copy Code</button>
+                </div>
+            </div>
+            <div class="code-block" id="codeBlock"></div>
+        </div>
+    </div>
+
+    <!-- INSTRUCTIONS -->
+    <div class="instructions">
+        <h3>📌 How to Add New Month Data to the App</h3>
+        <div class="inst-step">
+            <div class="inst-num">1</div>
+            <div class="inst-text">Upload your WMA PDF and/or FIANZ image above, select the month and year, then click <strong>Extract Data</strong>.</div>
+        </div>
+        <div class="inst-step">
+            <div class="inst-num">2</div>
+            <div class="inst-text">Review the extracted table — click any cell to fix a time if needed. Empty iqama cells are intentional (they carry forward).</div>
+        </div>
+        <div class="inst-step">
+            <div class="inst-num">3</div>
+            <div class="inst-text">Click <strong>Generate Code Block</strong>, then <strong>Copy Code</strong>.</div>
+        </div>
+        <div class="inst-step">
+            <div class="inst-num">4</div>
+            <div class="inst-text">Open <code>index.html</code> in a text editor. Find the line <code>const FEB_DATA=[</code> (or MAR_DATA etc). Replace the entire data array with your new one.</div>
+        </div>
+        <div class="inst-step">
+            <div class="inst-num">5</div>
+            <div class="inst-text">Also update <code>ALL_DATA</code> at the bottom — add your new array to the <code>resolveIqamas([...FEB_DATA, ...MAR_DATA])</code> call, e.g. <code>...APR_DATA</code>.</div>
+        </div>
+        <div class="inst-step">
+            <div class="inst-num">6</div>
+            <div class="inst-text">Save and push to GitHub. Done! 🎉</div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════
+let state = {
+    selectedMonth: null,
+    selectedYear: 2026,
+    isRamadan: false,
+    wmaFile: null,
+    wmaType: null,  // 'pdf' or 'image'
+    fianzFile: null,
+    fianzType: null,
+    extractedRows: [],  // array of row objects
+};
+
+const MONTHS = ['January','February','March','April','May','June',
+                'July','August','September','October','November','December'];
+const MONTH_SHORT = ['Jan','Feb','Mar','Apr','May','Jun',
+                     'Jul','Aug','Sep','Oct','Nov','Dec'];
+const DAYS_IN_MONTH = [31,28,31,30,31,30,31,31,30,31,30,31];
+
+// Detect Ramadan months roughly (will vary by year)
+const RAMADAN_MONTHS_2026 = ['February','March'];
+
+// ═══════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════
+function selectMonth(m, el) {
+    state.selectedMonth = m;
+    document.querySelectorAll('.month-chip').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    // Auto-suggest Ramadan toggle
+    const yr = parseInt(document.getElementById('yearInput').value);
+    if(yr === 2026 && RAMADAN_MONTHS_2026.includes(m)) {
+        setRamadan(true);
+    } else {
+        setRamadan(false);
+    }
+    updateExtractBtn();
+}
+
+function setRamadan(val) {
+    state.isRamadan = val;
+    const t = document.getElementById('ramadanToggle');
+    if(val) t.classList.add('on'); else t.classList.remove('on');
+}
+
+function toggleRamadan() {
+    setRamadan(!state.isRamadan);
+}
+
+function handleFile(source, input) {
+    const file = input.files[0];
+    if(!file) return;
+    const isPDF = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
+    if(source === 'wma') {
+        state.wmaFile = file;
+        state.wmaType = isPDF ? 'pdf' : 'image';
+        document.getElementById('wmaZone').classList.add('has-file');
+        document.getElementById('wmaBadge').textContent = `✓ ${file.name.substring(0,28)}`;
+    } else {
+        state.fianzFile = file;
+        state.fianzType = isPDF ? 'pdf' : 'image';
+        document.getElementById('fianzZone').classList.add('has-file');
+        document.getElementById('fianzBadge').textContent = `✓ ${file.name.substring(0,28)}`;
+    }
+    updateExtractBtn();
+}
+
+function updateExtractBtn() {
+    const hasFile = state.wmaFile || state.fianzFile;
+    const hasMonth = !!state.selectedMonth;
+    const btn = document.getElementById('extractBtn');
+    const txt = document.getElementById('extractBtnText');
+    if(!hasMonth) { txt.textContent = 'Select a month to continue'; btn.disabled = true; return; }
+    if(!hasFile)  { txt.textContent = 'Upload at least one file to continue'; btn.disabled = true; return; }
+    txt.textContent = `✨ Extract ${state.selectedMonth} ${document.getElementById('yearInput').value} Data`;
+    btn.disabled = false;
+}
+
+function setProgress(pct, label) {
+    document.getElementById('progressWrap').style.display = 'block';
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressLabel').style.display = 'block';
+    document.getElementById('progressLabel').textContent = label;
+}
+
+function addLog(msg, type='info') {
+    const log = document.getElementById('aiLog');
+    log.style.display = 'block';
+    const line = document.createElement('div');
+    line.className = `log-${type}`;
+    line.textContent = msg;
+    log.appendChild(line);
+    log.scrollTop = log.scrollHeight;
+}
+
+function clearLog() {
+    const log = document.getElementById('aiLog');
+    log.innerHTML = '';
+    log.style.display = 'none';
+}
+
+function showError(msg) {
+    const box = document.getElementById('errorBox');
+    box.textContent = '⚠️ ' + msg;
+    box.style.display = 'block';
+}
+
+function hideError() {
+    document.getElementById('errorBox').style.display = 'none';
+}
+
+function showToast(msg, dur=3000) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), dur);
+}
+
+function setStep(n) {
+    for(let i=1;i<=5;i++) {
+        const el = document.getElementById(`step${i}Item`);
+        el.classList.remove('active','done');
+        if(i < n) el.classList.add('done');
+        else if(i === n) el.classList.add('active');
+    }
+}
+
+// ═══════════════════════════════════════════════════
+// FILE → BASE64
+// ═══════════════════════════════════════════════════
+function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(',')[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+}
+
+// ═══════════════════════════════════════════════════
+// BUILD SYSTEM PROMPT
+// ═══════════════════════════════════════════════════
+function buildSystemPrompt() {
+    const month = state.selectedMonth;
+    const year = document.getElementById('yearInput').value;
+    const monthIdx = MONTHS.indexOf(month);
+    const daysInMonth = DAYS_IN_MONTH[monthIdx]; // approximate, doesn't handle leap year edge but fine
+
+    return `You are an expert at extracting Islamic prayer time data from WMA (Waikato Muslim Association) timetables and FIANZ (Federation of Islamic Associations NZ) calendars for Hamilton, New Zealand.
+
+Extract prayer times for ${month} ${year} from the provided document(s).
+
+CRITICAL RULES:
+1. Extract ALL days in the month (1 through ${daysInMonth})
+2. Times are in 24h format NZ time — but displayed as h:mm (e.g. 8:15 means 8:15 AM if morning, or 8:15 PM if evening — you must determine AM/PM from context)
+3. For WMA timetables: there are TWO columns per prayer — "Time" (adhan) and "Iqama" (congregation). The Iqama column is BOLD in the PDF. Iqama times only appear on certain rows when they change — blank iqama means carry forward from the last stated iqama
+4. For FIANZ calendar: extract Suhoor Ends and Maghrib/Iftar times
+5. All times should be stored as h:mm (no leading zero, e.g. "5:30" not "05:30")
+
+Return ONLY valid JSON (no markdown, no explanation) in this exact format:
+{
+  "month": "${month}",
+  "year": "${year}",
+  "isRamadan": ${state.isRamadan},
+  "source": "wma" or "fianz" or "both",
+  "days": [
+    {
+      "date": 1,
+      "dayName": "Mon",
+      "fajrAdhan": "5:31",
+      "fajrIqama": "5:50",
+      "sunrise": "7:03",
+      "dhuhrAdhan": "1:32",
+      "dhuhrIqama": "1:50",
+      "asrAdhan": "5:10",
+      "asrIqama": "5:20",
+      "maghribAdhan": "8:02",
+      "maghribIqama": "8:15",
+      "ishaAdhan": "9:16",
+      "ishaIqama": "9:30",
+      "suhoorEnds": "5:26",
+      "iftar": "8:04",
+      "isRamadan": true,
+      "ramadanDay": 11
+    }
+  ]
+}
+
+IMPORTANT:
+- If a field is not available from the source, use null
+- For iqama times: only include the value when it CHANGES (new row in the table). Otherwise null (carry forward logic is handled by the app)
+- "isRamadan" per day should be true only for actual Ramadan days
+- "ramadanDay" starts at 1 for the first day of Ramadan
+- dayName must be the correct 3-letter abbreviation: Mon, Tue, Wed, Thu, Fri, Sat, Sun
+- All evening times (Dhuhr, Asr, Maghrib, Isha, Iftar) are PM. All morning times (Fajr, Suhoor, Sunrise) are AM.
+- Double-check your extraction carefully — prayer time accuracy is critical for the Muslim community`;
+}
+
+// ═══════════════════════════════════════════════════
+// CALL CLAUDE API
+// ═══════════════════════════════════════════════════
+async function callClaudeAPI(content) {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            model: 'claude-sonnet-4-20250514',
+            max_tokens: 4000,
+            system: buildSystemPrompt(),
+            messages: [{ role: 'user', content }]
+        })
+    });
+    if(!response.ok) {
+        const err = await response.json().catch(() => ({}));
+        throw new Error(err.error?.message || `API error ${response.status}`);
+    }
+    const data = await response.json();
+    return data.content.find(b => b.type === 'text')?.text || '';
+}
+
+// ═══════════════════════════════════════════════════
+// EXTRACT DATA — MAIN FLOW
+// ═══════════════════════════════════════════════════
+async function extractData() {
+    hideError();
+    clearLog();
+    setStep(2);
+
+    const btn = document.getElementById('extractBtn');
+    btn.disabled = true;
+    document.getElementById('extractBtnIcon').textContent = '⏳';
+    document.getElementById('extractBtnText').textContent = 'Extracting...';
+
+    setProgress(10, 'Reading files...');
+    addLog(`📂 Processing ${state.selectedMonth} ${document.getElementById('yearInput').value}`, 'info');
+
+    try {
+        // Build message content array
+        const contentParts = [];
+
+        // Add files
+        if(state.wmaFile) {
+            addLog(`📄 Loading WMA file: ${state.wmaFile.name}`, 'info');
+            const b64 = await fileToBase64(state.wmaFile);
+            if(state.wmaType === 'pdf') {
+                contentParts.push({
+                    type: 'document',
+                    source: { type: 'base64', media_type: 'application/pdf', data: b64 }
+                });
+            } else {
+                const mimeType = state.wmaFile.type || 'image/jpeg';
+                contentParts.push({
+                    type: 'image',
+                    source: { type: 'base64', media_type: mimeType, data: b64 }
+                });
+            }
+            addLog(`✓ WMA file loaded (${Math.round(state.wmaFile.size/1024)}KB)`, 'ok');
+        }
+
+        if(state.fianzFile) {
+            addLog(`🖼️ Loading FIANZ file: ${state.fianzFile.name}`, 'info');
+            const b64 = await fileToBase64(state.fianzFile);
+            if(state.fianzType === 'pdf') {
+                contentParts.push({
+                    type: 'document',
+                    source: { type: 'base64', media_type: 'application/pdf', data: b64 }
+                });
+            } else {
+                const mimeType = state.fianzFile.type || 'image/jpeg';
+                contentParts.push({
+                    type: 'image',
+                    source: { type: 'base64', media_type: mimeType, data: b64 }
+                });
+            }
+            addLog(`✓ FIANZ file loaded (${Math.round(state.fianzFile.size/1024)}KB)`, 'ok');
+        }
+
+        contentParts.push({
+            type: 'text',
+            text: `Please extract all prayer times from the provided document(s) for ${state.selectedMonth} ${document.getElementById('yearInput').value}. Return only the JSON as specified.`
+        });
+
+        setProgress(35, 'Sending to AI...');
+        addLog('🤖 Sending to Claude AI for extraction...', 'info');
+
+        const rawText = await callClaudeAPI(contentParts);
+
+        setProgress(75, 'Parsing response...');
+        addLog('📊 Parsing extracted data...', 'info');
+
+        // Parse JSON — strip markdown if present
+        let jsonText = rawText.replace(/```json\s*/g,'').replace(/```\s*/g,'').trim();
+        // Find the first { and last }
+        const start = jsonText.indexOf('{');
+        const end = jsonText.lastIndexOf('}');
+        if(start === -1 || end === -1) throw new Error('AI did not return valid JSON. Try again.');
+        jsonText = jsonText.substring(start, end+1);
+
+        const parsed = JSON.parse(jsonText);
+        if(!parsed.days || !Array.isArray(parsed.days)) throw new Error('No days array in response');
+
+        state.extractedRows = parsed.days;
+        state.selectedYear = parseInt(document.getElementById('yearInput').value);
+
+        addLog(`✅ Extracted ${parsed.days.length} days of data`, 'ok');
+        if(parsed.source) addLog(`📋 Source: ${parsed.source}`, 'info');
+
+        setProgress(100, `✅ ${parsed.days.length} days extracted successfully`);
+
+        setTimeout(() => {
+            renderPreviewTable();
+            document.getElementById('previewSection').style.display = 'block';
+            document.getElementById('previewSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            setStep(3);
+        }, 600);
+
+    } catch(err) {
+        setProgress(0, '');
+        document.getElementById('progressWrap').style.display = 'none';
+        addLog(`❌ Error: ${err.message}`, 'err');
+        showError(err.message);
+        setStep(1);
+    } finally {
+        btn.disabled = false;
+        document.getElementById('extractBtnIcon').textContent = '✨';
+        document.getElementById('extractBtnText').textContent = `Extract ${state.selectedMonth} Data`;
+    }
+}
+
+// ═══════════════════════════════════════════════════
+// RENDER PREVIEW TABLE
+// ═══════════════════════════════════════════════════
+function renderPreviewTable() {
+    const hasRamadan = state.isRamadan || state.extractedRows.some(r => r.isRamadan);
+    const head = document.getElementById('previewHead');
+    const body = document.getElementById('previewBody');
+
+    // Build header
+    let ths = `<tr>
+        <th>Date</th>
+        <th>Fajr<br>Adhan</th>
+        <th style="color:var(--gold)">Fajr<br>Iqama</th>
+        <th>Dhuhr<br>Adhan</th>
+        <th style="color:var(--gold)">Dhuhr<br>Iqama</th>
+        <th>Asr<br>Adhan</th>
+        <th style="color:var(--gold)">Asr<br>Iqama</th>
+        <th>Maghrib<br>Adhan</th>
+        <th style="color:var(--gold)">Maghrib<br>Iqama</th>
+        <th>Isha<br>Adhan</th>
+        <th style="color:var(--gold)">Isha<br>Iqama</th>`;
+    if(hasRamadan) {
+        ths += `<th style="color:var(--teal)">Suhoor<br>Ends</th>
+                <th style="color:var(--red)">Iftar</th>`;
+    }
+    ths += '</tr>';
+    head.innerHTML = ths;
+
+    // Build rows
+    body.innerHTML = '';
+    state.extractedRows.forEach((row, i) => {
+        const tr = document.createElement('tr');
+        tr.className = i % 2 === 0 ? '' : 'odd-row';
+        tr.dataset.idx = i;
+
+        const monthShort = MONTH_SHORT[MONTHS.indexOf(state.selectedMonth)];
+        const dateLabel = `${row.dayName || ''} ${monthShort} ${row.date}`;
+
+        let html = `<td class="date-cell">${dateLabel}${row.ramadanDay ? `<br><span style="font-size:0.7em;color:var(--gold)">R${row.ramadanDay}</span>` : ''}</td>`;
+
+        const fields = [
+            { key: 'fajrAdhan',    cls: '' },
+            { key: 'fajrIqama',    cls: 'iqama-cell' },
+            { key: 'dhuhrAdhan',   cls: '' },
+            { key: 'dhuhrIqama',   cls: 'iqama-cell' },
+            { key: 'asrAdhan',     cls: '' },
+            { key: 'asrIqama',     cls: 'iqama-cell' },
+            { key: 'maghribAdhan', cls: '' },
+            { key: 'maghribIqama', cls: 'iqama-cell' },
+            { key: 'ishaAdhan',    cls: '' },
+            { key: 'ishaIqama',    cls: 'iqama-cell' },
+        ];
+
+        if(hasRamadan) {
+            fields.push({ key: 'suhoorEnds', cls: 'suhoor-cell' });
+            fields.push({ key: 'iftar',      cls: 'iftar-cell' });
+        }
+
+        fields.forEach(f => {
+            const val = row[f.key] || '';
+            html += `<td class="${f.cls}"><input type="text" value="${val}" data-row="${i}" data-field="${f.key}" oninput="updateCell(this)"></td>`;
+        });
+
+        tr.innerHTML = html;
+        body.appendChild(tr);
+    });
+}
+
+function updateCell(input) {
+    const idx = parseInt(input.dataset.row);
+    const field = input.dataset.field;
+    state.extractedRows[idx][field] = input.value.trim();
+}
+
+// ═══════════════════════════════════════════════════
+// GENERATE CODE BLOCK
+// ═══════════════════════════════════════════════════
+function generateCode() {
+    setStep(4);
+    const month = state.selectedMonth;
+    const year = state.selectedYear;
+    const monthShort = MONTH_SHORT[MONTHS.indexOf(month)];
+    const varName = monthShort.toUpperCase() + '_DATA';
+
+    const lines = state.extractedRows.map(row => {
+        const dateStr = `${monthShort} ${row.date}`;
+        const isRam = row.isRamadan ? 'true' : 'false';
+
+        const f = (v) => v ? `"${v}"` : 'null';
+        const fq = (v) => v ? `"${v}"` : 'null ';  // extra space for alignment
+
+        let line = ` {date:"${dateStr}", day:"${row.dayName||'?'}",`;
+        if(row.ramadanDay) line += `ramadanDay:${row.ramadanDay},`;
+        line += ` fajr:${f(row.fajrAdhan)},fajrIq:${fq(row.fajrIqama)}, shuruq:${f(row.sunrise)},`;
+        line += ` dhuhr:${f(row.dhuhrAdhan)},dhuhrIq:${fq(row.dhuhrIqama)},`;
+        line += ` asr:${f(row.asrAdhan)},asrIq:${fq(row.asrIqama)},`;
+        line += ` magh:${f(row.maghribAdhan)},maghIq:${fq(row.maghribIqama)},`;
+        line += ` isha:${f(row.ishaAdhan)},ishaIq:${fq(row.ishaIqama)},`;
+        line += ` ramadan:${isRam},suhoor:${f(row.suhoorEnds)},iftar:${f(row.iftar)}},`;
+        return line;
+    });
+
+    // Remove trailing comma from last line
+    if(lines.length) lines[lines.length-1] = lines[lines.length-1].replace(/,$/, '');
+
+    const code = `// ${month} ${year} — Extracted from WMA/FIANZ sources\nconst ${varName}=[\n${lines.join('\n')}\n];`;
+
+    document.getElementById('codeBlock').textContent = code;
+    document.getElementById('codeTitle').textContent = `${varName} — ${lines.length} days`;
+    document.getElementById('outputSection').style.display = 'block';
+    document.getElementById('outputSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    setStep(5);
+}
+
+function copyCode() {
+    const code = document.getElementById('codeBlock').textContent;
+    navigator.clipboard.writeText(code).then(() => {
+        const btn = document.getElementById('copyBtn');
+        btn.textContent = '✅ Copied!';
+        btn.classList.add('copied');
+        showToast('✅ Code copied to clipboard!');
+        setTimeout(() => {
+            btn.textContent = '📋 Copy Code';
+            btn.classList.remove('copied');
+        }, 2500);
+    }).catch(() => {
+        // Fallback
+        const ta = document.createElement('textarea');
+        ta.value = code;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+        showToast('✅ Copied!');
+    });
+}
+
+function showPreview() {
+    document.getElementById('outputSection').style.display = 'none';
+    document.getElementById('previewSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setStep(3);
+}
+
+function resetAll() {
+    state.extractedRows = [];
+    state.wmaFile = null;
+    state.fianzFile = null;
+    document.getElementById('wmaFile').value = '';
+    document.getElementById('fianzFile').value = '';
+    document.getElementById('wmaZone').classList.remove('has-file');
+    document.getElementById('fianzZone').classList.remove('has-file');
+    document.getElementById('previewSection').style.display = 'none';
+    document.getElementById('outputSection').style.display = 'none';
+    document.getElementById('progressWrap').style.display = 'none';
+    document.getElementById('progressLabel').style.display = 'none';
+    clearLog();
+    hideError();
+    updateExtractBtn();
+    setStep(1);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Init
+document.getElementById('yearInput').addEventListener('input', updateExtractBtn);
+</script>
+</body>
+</html>
