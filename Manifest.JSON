@@ -1,27 +1,26 @@
 {
-  "name": "Hamilton Masjid — Prayer Times",
+  "name": "Hamilton Masjid",
   "short_name": "Hamilton Masjid",
-  "description": "Prayer times, Ramadan calendar & Hadith for Hamilton Masjid NZ",
+  "description": "Prayer times & Ramadan calendar for Hamilton Masjid, NZ",
   "start_url": "/prayer-times/",
-  "scope": "/prayer-times/",
   "display": "standalone",
   "background_color": "#0d0d1a",
   "theme_color": "#0d0d1a",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "/prayer-times/icons/icon-192.png",
+      "src": "/prayer-times/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/prayer-times/icons/icon-512.png",
+      "src": "/prayer-times/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }
   ],
-  "categories": ["lifestyle", "utilities", "religion"],
+  "categories": ["lifestyle", "religion"],
   "lang": "en-NZ"
 }
