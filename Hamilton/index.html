@@ -169,19 +169,7 @@
         .info-list li{padding:6px 0;font-size:.82em;color:var(--text-mid);line-height:1.4;border-bottom:1px solid rgba(0,0,0,.04);display:flex;align-items:flex-start;gap:8px}
         .info-list li:last-child{border:none}
         .info-list .li-icon{flex-shrink:0;width:20px;height:20px;background:var(--cream);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.6em;margin-top:1px}
-        /* ═══ HOMESCREEN INSTALL ═══ */
-        .homescreen-section{background:linear-gradient(135deg,var(--night),var(--night-light));padding:32px 20px;text-align:center;margin-top:24px}
-        .hs-inner{max-width:400px;margin:0 auto}
-        .hs-icon{font-size:2.5em;margin-bottom:10px}
-        .hs-title{font-family:'DM Serif Display',serif;font-size:1.2em;color:var(--gold-light);margin-bottom:6px}
-        .hs-desc{font-size:.82em;color:rgba(255,255,255,.5);margin-bottom:16px;line-height:1.4}
-        .hs-btn{background:linear-gradient(135deg,var(--gold),var(--gold-dim));color:var(--night);border:none;padding:14px 32px;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:.92em;font-weight:700;cursor:pointer;box-shadow:0 4px 20px rgba(212,168,67,.3);transition:all .25s ease;display:inline-flex;align-items:center;gap:8px}
-        .hs-btn:active{transform:scale(.96)}
-        .hs-btn:hover{box-shadow:0 6px 28px rgba(212,168,67,.4)}
-        .hs-steps{font-size:.75em;color:rgba(255,255,255,.4);margin-top:14px;line-height:1.6}
-        .hs-steps strong{color:var(--gold-light)}
-        .homescreen-section.hs-hidden{display:none}
-        .footer{background:var(--night);color:#fff;text-align:center;padding:24px 16px;margin-top:0}
+        .footer{background:var(--night);color:#fff;text-align:center;padding:24px 16px;margin-top:28px}
         .footer-mubarak{font-family:'Amiri',serif;font-size:1.3em;color:var(--gold-light);margin-bottom:4px}
         .footer-dua{font-size:.82em;opacity:.6;margin-bottom:14px}
         .footer-source{font-size:.72em;opacity:.4;padding-top:12px;border-top:1px solid rgba(255,255,255,.1)}
@@ -285,9 +273,9 @@
         <div class="table-wrapper mobile-table"><table><thead><tr id="mobileThead"></tr></thead><tbody id="mobileTableBody"></tbody></table></div>
     </div>
     <div class="action-row" id="calendarAction">
-        <button class="action-pill ap-calendar" onclick="addToCalendar()"><span class="ap-icon">📅</span> Add to Calendar</button>
+        <button class="action-pill ap-calendar" onclick="addToCalendar()"><span class="ap-icon">📅</span> Calendar</button>
         <button class="action-pill ap-share" onclick="shareApp()"><span class="ap-icon">📤</span> Share</button>
-        <button class="action-pill ap-install" id="installBtn" onclick="installApp()" style="display:none"><span class="ap-icon">📲</span> Add to Home</button>
+        <button class="action-pill ap-install" id="installBtn" onclick="handleInstall()"><span class="ap-icon">📲</span> Add to Home</button>
     </div>
     <div class="dua-cards" id="duaCards">
         <div class="dua-card"><h3>🤲 Suhoor Intention</h3><div class="dua-arabic">اللَّهُمَّ إِنِّي نَوَيْتُ لَكَ صَوْمَ رَمَضَانَ</div><div class="dua-translit">Allahumma inni nawaytu laka sauma ramadhan</div><div class="dua-meaning">"Oh Allah! I intend to keep the fast of Ramadhan for Your pleasure"</div></div>
@@ -302,18 +290,6 @@
             <li><span class="li-icon">🤲</span> Taraweeh follows Isha prayer nightly</li>
             <li><span class="li-icon">🕌</span> Prayer times sourced from <strong>Waikato Muslim Association</strong></li>
         </ul>
-    </div>
-</div>
-<!-- Add to Home Screen Section -->
-<div class="homescreen-section" id="homescreenSection">
-    <div class="hs-inner">
-        <div class="hs-icon">📲</div>
-        <h3 class="hs-title">Add to Home Screen</h3>
-        <p class="hs-desc">Get instant access like a native app — no download needed</p>
-        <button class="hs-btn" id="hsBtn" onclick="handleHomescreen()">
-            <span id="hsBtnText">Add to Home Screen</span>
-        </button>
-        <p class="hs-steps" id="hsSteps"></p>
     </div>
 </div>
 <div class="footer">
@@ -362,34 +338,16 @@ if(window.caches){caches.keys().then(function(n){n.forEach(function(k){if(k!=='h
 
 // PWA Install
 var deferredPrompt;
-window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;document.getElementById('installBanner').classList.add('show');document.getElementById('installBtn').style.display='flex'});
-function installApp(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(function(){deferredPrompt=null;document.getElementById('installBanner').classList.remove('show');document.getElementById('installBtn').style.display='none'})}}
-
-// Homescreen install section
-(function(){
-var isStandalone=window.matchMedia('(display-mode:standalone)').matches||window.navigator.standalone===true;
-if(isStandalone){document.getElementById('homescreenSection').classList.add('hs-hidden');return}
-var ua=navigator.userAgent;
-var isIOS=/iPad|iPhone|iPod/.test(ua)&&!window.MSStream;
-var isSafari=isIOS&&/Safari/.test(ua)&&!/CriOS|FxiOS/.test(ua);
-var isChrome=/Chrome/.test(ua)&&!/Edge/.test(ua);
-var isAndroid=/Android/.test(ua);
-var btn=document.getElementById('hsBtn');
-var steps=document.getElementById('hsSteps');
-var btnText=document.getElementById('hsBtnText');
-if(isIOS){
-btnText.textContent='How to Add';
-steps.innerHTML='Tap the <strong>Share button</strong> (box with arrow ↑) at the bottom of Safari, then tap <strong>"Add to Home Screen"</strong>';
-btn.onclick=function(){steps.style.color='rgba(255,255,255,.7)';steps.style.fontSize='.82em'}}
-else if(isAndroid&&isChrome){
-btnText.textContent='Install App';
-steps.innerHTML='Or tap <strong>⋮ Menu</strong> → <strong>"Add to Home screen"</strong>';
-btn.onclick=function(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(function(){deferredPrompt=null})}else{steps.style.color='rgba(255,255,255,.7)';steps.style.fontSize='.82em'}}}
-else{
-btnText.textContent='Add to Home Screen';
-steps.innerHTML='Use your browser menu to <strong>"Add to Home Screen"</strong> or <strong>"Install App"</strong>';
-btn.onclick=function(){if(deferredPrompt){deferredPrompt.prompt()}else{steps.style.color='rgba(255,255,255,.7)';steps.style.fontSize='.82em'}}}
-})();
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;document.getElementById('installBanner').classList.add('show')});
+function installApp(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(function(){deferredPrompt=null;document.getElementById('installBanner').classList.remove('show')})}}
+function handleInstall(){
+if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(function(){deferredPrompt=null});return}
+var isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent);
+if(isIOS){showToast('Tap the Share button ↑ then "Add to Home Screen"')}
+else{showToast('Tap your browser menu ⋮ then "Add to Home Screen"')}
+}
+// Hide install row if already standalone
+if(window.matchMedia('(display-mode:standalone)').matches||window.navigator.standalone===true){var ib=document.getElementById('installBtn');if(ib)ib.style.display='none'}
 
 // Stars
 (function(){var c=document.getElementById('heroStars');for(var i=0;i<30;i++){var s=document.createElement('div');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=Math.random()*3+'s';var sz=(Math.random()*2+1)+'px';s.style.width=sz;s.style.height=sz;c.appendChild(s)}})();
