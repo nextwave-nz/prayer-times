@@ -498,8 +498,8 @@
 // FIANZ = Suhoor ends, Fajr (adhan), Shuruq, Zuhr, Asr, Iftar/Maghrib, Isha
 // WMA   = Iqama (congregation) times — carry forward when null
 //
-// Ramadan 1447H starts Feb 19, 2026 (Day 1 = Thu Feb 19)
-// Feb 28 = Day 10, Iftar = 8:06 PM ✓
+// Ramadan 1447H starts Feb 20, 2026 (Day 1 = Fri Feb 20) — NZ moon sighting
+// Feb 28 = Day 9, Iftar = 8:06 PM ✓
 // ═══════════════════════════════════════════════════════════
 
 // WMA Feb iqama data: fajrIq dhuhrIq asrIq maghIq ishaIq (null = carry forward)
@@ -526,58 +526,58 @@ const FEB_DATA=[
  // RAMADAN STARTS — Day 1 = Feb 19
  // WMA Feb 19: fajr 5:18 (no new iqama listed, carries 5:40), maghrib 8:16
  // FIANZ: suhoor 5:13, fajr adhan 5:18, iftar/maghrib 8:18
- {date:"Feb 19",day:"Thu",ramadanDay:1, fajr:"5:18",fajrIq:null,  shuruq:"6:52",dhuhr:"1:33",dhuhrIq:null,  asr:"5:16",asrIq:null,  magh:"8:16",maghIq:null,  isha:"9:33",ishaIq:null,   ramadan:true,suhoor:"5:13",iftar:"8:18"},
- {date:"Feb 20",day:"Fri",ramadanDay:2, fajr:"5:19",fajrIq:null,  shuruq:"6:53",dhuhr:"1:33",dhuhrIq:null,  asr:"5:16",asrIq:null,  magh:"8:15",maghIq:null,  isha:"9:32",ishaIq:null,   ramadan:true,suhoor:"5:14",iftar:"8:17"},
+ {date:"Feb 19",day:"Thu",             fajr:"5:18",fajrIq:null,  shuruq:"6:52",dhuhr:"1:33",dhuhrIq:null,  asr:"5:16",asrIq:null,  magh:"8:16",maghIq:null,  isha:"9:33",ishaIq:null,   ramadan:false,suhoor:null, iftar:null},
+ {date:"Feb 20",day:"Fri",ramadanDay:1, fajr:"5:19",fajrIq:null,  shuruq:"6:53",dhuhr:"1:33",dhuhrIq:null,  asr:"5:16",asrIq:null,  magh:"8:15",maghIq:null,  isha:"9:32",ishaIq:null,   ramadan:true,suhoor:"5:14",iftar:"8:17"},
  // WMA Feb 21: new fajr iqama 5:50, new isha iqama 9:40
- {date:"Feb 21",day:"Sat",ramadanDay:3, fajr:"5:20",fajrIq:"5:50",shuruq:"6:55",dhuhr:"1:33",dhuhrIq:null,  asr:"5:15",asrIq:null,  magh:"8:13",maghIq:null,  isha:"9:30",ishaIq:"9:40", ramadan:true,suhoor:"5:15",iftar:"8:15"},
- {date:"Feb 22",day:"Sun",ramadanDay:4, fajr:"5:22",fajrIq:null,  shuruq:"6:56",dhuhr:"1:33",dhuhrIq:null,  asr:"5:14",asrIq:null,  magh:"8:12",maghIq:null,  isha:"9:28",ishaIq:null,   ramadan:true,suhoor:"5:17",iftar:"8:14"},
+ {date:"Feb 21",day:"Sat",ramadanDay:2, fajr:"5:20",fajrIq:"5:50",shuruq:"6:55",dhuhr:"1:33",dhuhrIq:null,  asr:"5:15",asrIq:null,  magh:"8:13",maghIq:null,  isha:"9:30",ishaIq:"9:40", ramadan:true,suhoor:"5:15",iftar:"8:15"},
+ {date:"Feb 22",day:"Sun",ramadanDay:3, fajr:"5:22",fajrIq:null,  shuruq:"6:56",dhuhr:"1:33",dhuhrIq:null,  asr:"5:14",asrIq:null,  magh:"8:12",maghIq:null,  isha:"9:28",ishaIq:null,   ramadan:true,suhoor:"5:17",iftar:"8:14"},
  // WMA Feb 23: new maghrib iqama 8:20
- {date:"Feb 23",day:"Mon",ramadanDay:5, fajr:"5:23",fajrIq:null,  shuruq:"6:57",dhuhr:"1:32",dhuhrIq:null,  asr:"5:14",asrIq:null,  magh:"8:11",maghIq:"8:20",isha:"9:27",ishaIq:null,   ramadan:true,suhoor:"5:18",iftar:"8:13"},
- {date:"Feb 24",day:"Tue",ramadanDay:6, fajr:"5:25",fajrIq:null,  shuruq:"6:58",dhuhr:"1:32",dhuhrIq:null,  asr:"5:13",asrIq:null,  magh:"8:09",maghIq:null,  isha:"9:25",ishaIq:null,   ramadan:true,suhoor:"5:20",iftar:"8:11"},
- {date:"Feb 25",day:"Wed",ramadanDay:7, fajr:"5:26",fajrIq:null,  shuruq:"6:59",dhuhr:"1:32",dhuhrIq:null,  asr:"5:13",asrIq:null,  magh:"8:08",maghIq:null,  isha:"9:22",ishaIq:null,   ramadan:true,suhoor:"5:21",iftar:"8:10"},
- {date:"Feb 26",day:"Thu",ramadanDay:8, fajr:"5:27",fajrIq:null,  shuruq:"7:00",dhuhr:"1:32",dhuhrIq:null,  asr:"5:12",asrIq:null,  magh:"8:07",maghIq:null,  isha:"9:21",ishaIq:null,   ramadan:true,suhoor:"5:22",iftar:"8:09"},
+ {date:"Feb 23",day:"Mon",ramadanDay:4, fajr:"5:23",fajrIq:null,  shuruq:"6:57",dhuhr:"1:32",dhuhrIq:null,  asr:"5:14",asrIq:null,  magh:"8:11",maghIq:"8:20",isha:"9:27",ishaIq:null,   ramadan:true,suhoor:"5:18",iftar:"8:13"},
+ {date:"Feb 24",day:"Tue",ramadanDay:5, fajr:"5:25",fajrIq:null,  shuruq:"6:58",dhuhr:"1:32",dhuhrIq:null,  asr:"5:13",asrIq:null,  magh:"8:09",maghIq:null,  isha:"9:25",ishaIq:null,   ramadan:true,suhoor:"5:20",iftar:"8:11"},
+ {date:"Feb 25",day:"Wed",ramadanDay:6, fajr:"5:26",fajrIq:null,  shuruq:"6:59",dhuhr:"1:32",dhuhrIq:null,  asr:"5:13",asrIq:null,  magh:"8:08",maghIq:null,  isha:"9:22",ishaIq:null,   ramadan:true,suhoor:"5:21",iftar:"8:10"},
+ {date:"Feb 26",day:"Thu",ramadanDay:7, fajr:"5:27",fajrIq:null,  shuruq:"7:00",dhuhr:"1:32",dhuhrIq:null,  asr:"5:12",asrIq:null,  magh:"8:07",maghIq:null,  isha:"9:21",ishaIq:null,   ramadan:true,suhoor:"5:22",iftar:"8:09"},
  // WMA Feb 27: new isha iqama 9:30
- {date:"Feb 27",day:"Fri",ramadanDay:9, fajr:"5:29",fajrIq:null,  shuruq:"7:01",dhuhr:"1:32",dhuhrIq:null,  asr:"5:11",asrIq:null,  magh:"8:05",maghIq:null,  isha:"9:19",ishaIq:"9:30", ramadan:true,suhoor:"5:24",iftar:"8:07"},
+ {date:"Feb 27",day:"Fri",ramadanDay:8, fajr:"5:29",fajrIq:null,  shuruq:"7:01",dhuhr:"1:32",dhuhrIq:null,  asr:"5:11",asrIq:null,  magh:"8:05",maghIq:null,  isha:"9:19",ishaIq:"9:30", ramadan:true,suhoor:"5:24",iftar:"8:07"},
  // WMA Feb 28: new maghrib iqama 8:15, new isha iqama 9:55 (from WMA PDF bolded)
  // FIANZ: suhoor 5:25, iftar 8:06
- {date:"Feb 28",day:"Sat",ramadanDay:10,fajr:"5:30",fajrIq:null,  shuruq:"7:02",dhuhr:"1:32",dhuhrIq:null,  asr:"5:11",asrIq:null,  magh:"8:04",maghIq:"8:15",isha:"9:17",ishaIq:null,  ramadan:true,suhoor:"5:25",iftar:"8:06"},
+ {date:"Feb 28",day:"Sat",ramadanDay:9,fajr:"5:30",fajrIq:null,  shuruq:"7:02",dhuhr:"1:32",dhuhrIq:null,  asr:"5:11",asrIq:null,  magh:"8:04",maghIq:"8:15",isha:"9:17",ishaIq:null,  ramadan:true,suhoor:"5:25",iftar:"8:06"},
 ];
 
 // WMA March data — verified from PDF
 const MAR_DATA=[
  // WMA Mar 1: fajrIq 5:50, dhuhrIq 1:50, asrIq 5:20, maghIq 8:15, ishaIq 9:30
- {date:"Mar 1", day:"Sun",ramadanDay:11,fajr:"5:31",fajrIq:"5:50",shuruq:"7:03",dhuhr:"1:32",dhuhrIq:"1:50",asr:"5:10",asrIq:"5:20",magh:"8:02",maghIq:"8:15",isha:"9:16",ishaIq:"9:30", ramadan:true,suhoor:"5:26",iftar:"8:04"},
+ {date:"Mar 1", day:"Sun",ramadanDay:10,fajr:"5:31",fajrIq:"5:50",shuruq:"7:03",dhuhr:"1:32",dhuhrIq:"1:50",asr:"5:10",asrIq:"5:20",magh:"8:02",maghIq:"8:15",isha:"9:16",ishaIq:"9:30", ramadan:true,suhoor:"5:26",iftar:"8:04"},
  // WMA Mar 2: new fajrIq 6:00
- {date:"Mar 2", day:"Mon",ramadanDay:12,fajr:"5:33",fajrIq:"6:00",shuruq:"7:04",dhuhr:"1:31",dhuhrIq:null,  asr:"5:09",asrIq:null,  magh:"8:01",maghIq:null,  isha:"9:14",ishaIq:null,   ramadan:true,suhoor:"5:28",iftar:"8:03"},
+ {date:"Mar 2", day:"Mon",ramadanDay:11,fajr:"5:33",fajrIq:"6:00",shuruq:"7:04",dhuhr:"1:31",dhuhrIq:null,  asr:"5:09",asrIq:null,  magh:"8:01",maghIq:null,  isha:"9:14",ishaIq:null,   ramadan:true,suhoor:"5:28",iftar:"8:03"},
  // WMA Mar 3: new maghIq 8:10
- {date:"Mar 3", day:"Tue",ramadanDay:13,fajr:"5:34",fajrIq:null,  shuruq:"7:05",dhuhr:"1:31",dhuhrIq:null,  asr:"5:08",asrIq:null,  magh:"8:00",maghIq:"8:10",isha:"9:12",ishaIq:null,   ramadan:true,suhoor:"5:29",iftar:"8:02"},
- {date:"Mar 4", day:"Wed",ramadanDay:14,fajr:"5:35",fajrIq:null,  shuruq:"7:06",dhuhr:"1:31",dhuhrIq:null,  asr:"5:08",asrIq:null,  magh:"7:58",maghIq:null,  isha:"9:11",ishaIq:null,   ramadan:true,suhoor:"5:30",iftar:"8:00"},
+ {date:"Mar 3", day:"Tue",ramadanDay:12,fajr:"5:34",fajrIq:null,  shuruq:"7:05",dhuhr:"1:31",dhuhrIq:null,  asr:"5:08",asrIq:null,  magh:"8:00",maghIq:"8:10",isha:"9:12",ishaIq:null,   ramadan:true,suhoor:"5:29",iftar:"8:02"},
+ {date:"Mar 4", day:"Wed",ramadanDay:13,fajr:"5:35",fajrIq:null,  shuruq:"7:06",dhuhr:"1:31",dhuhrIq:null,  asr:"5:08",asrIq:null,  magh:"7:58",maghIq:null,  isha:"9:11",ishaIq:null,   ramadan:true,suhoor:"5:30",iftar:"8:00"},
  // WMA Mar 5: new ishaIq 9:20
- {date:"Mar 5", day:"Thu",ramadanDay:15,fajr:"5:36",fajrIq:null,  shuruq:"7:07",dhuhr:"1:31",dhuhrIq:null,  asr:"5:07",asrIq:null,  magh:"7:57",maghIq:null,  isha:"9:09",ishaIq:"9:20", ramadan:true,suhoor:"5:31",iftar:"7:59"},
+ {date:"Mar 5", day:"Thu",ramadanDay:14,fajr:"5:36",fajrIq:null,  shuruq:"7:07",dhuhr:"1:31",dhuhrIq:null,  asr:"5:07",asrIq:null,  magh:"7:57",maghIq:null,  isha:"9:09",ishaIq:"9:20", ramadan:true,suhoor:"5:31",iftar:"7:59"},
  // WMA Mar 6: new maghIq 8:05
- {date:"Mar 6", day:"Fri",ramadanDay:16,fajr:"5:38",fajrIq:null,  shuruq:"7:08",dhuhr:"1:30",dhuhrIq:null,  asr:"5:06",asrIq:null,  magh:"7:55",maghIq:"8:05",isha:"9:07",ishaIq:null,   ramadan:true,suhoor:"5:33",iftar:"7:57"},
- {date:"Mar 7", day:"Sat",ramadanDay:17,fajr:"5:39",fajrIq:null,  shuruq:"7:09",dhuhr:"1:30",dhuhrIq:null,  asr:"5:05",asrIq:null,  magh:"7:54",maghIq:null,  isha:"9:06",ishaIq:null,   ramadan:true,suhoor:"5:34",iftar:"7:56"},
- {date:"Mar 8", day:"Sun",ramadanDay:18,fajr:"5:40",fajrIq:null,  shuruq:"7:10",dhuhr:"1:30",dhuhrIq:null,  asr:"5:04",asrIq:null,  magh:"7:52",maghIq:null,  isha:"9:04",ishaIq:null,   ramadan:true,suhoor:"5:35",iftar:"7:54"},
+ {date:"Mar 6", day:"Fri",ramadanDay:15,fajr:"5:38",fajrIq:null,  shuruq:"7:08",dhuhr:"1:30",dhuhrIq:null,  asr:"5:06",asrIq:null,  magh:"7:55",maghIq:"8:05",isha:"9:07",ishaIq:null,   ramadan:true,suhoor:"5:33",iftar:"7:57"},
+ {date:"Mar 7", day:"Sat",ramadanDay:16,fajr:"5:39",fajrIq:null,  shuruq:"7:09",dhuhr:"1:30",dhuhrIq:null,  asr:"5:05",asrIq:null,  magh:"7:54",maghIq:null,  isha:"9:06",ishaIq:null,   ramadan:true,suhoor:"5:34",iftar:"7:56"},
+ {date:"Mar 8", day:"Sun",ramadanDay:17,fajr:"5:40",fajrIq:null,  shuruq:"7:10",dhuhr:"1:30",dhuhrIq:null,  asr:"5:04",asrIq:null,  magh:"7:52",maghIq:null,  isha:"9:04",ishaIq:null,   ramadan:true,suhoor:"5:35",iftar:"7:54"},
  // WMA Mar 9: new fajrIq 6:10
- {date:"Mar 9", day:"Mon",ramadanDay:19,fajr:"5:41",fajrIq:"6:10",shuruq:"7:11",dhuhr:"1:30",dhuhrIq:null,  asr:"5:04",asrIq:null,  magh:"7:51",maghIq:null,  isha:"9:02",ishaIq:null,   ramadan:true,suhoor:"5:36",iftar:"7:53"},
+ {date:"Mar 9", day:"Mon",ramadanDay:18,fajr:"5:41",fajrIq:"6:10",shuruq:"7:11",dhuhr:"1:30",dhuhrIq:null,  asr:"5:04",asrIq:null,  magh:"7:51",maghIq:null,  isha:"9:02",ishaIq:null,   ramadan:true,suhoor:"5:36",iftar:"7:53"},
  // WMA Mar 10: new maghIq 8:00
- {date:"Mar 10",day:"Tue",ramadanDay:20,fajr:"5:42",fajrIq:null,  shuruq:"7:12",dhuhr:"1:29",dhuhrIq:null,  asr:"5:03",asrIq:null,  magh:"7:49",maghIq:"8:00",isha:"9:01",ishaIq:null,   ramadan:true,suhoor:"5:37",iftar:"7:51"},
+ {date:"Mar 10",day:"Tue",ramadanDay:19,fajr:"5:42",fajrIq:null,  shuruq:"7:12",dhuhr:"1:29",dhuhrIq:null,  asr:"5:03",asrIq:null,  magh:"7:49",maghIq:"8:00",isha:"9:01",ishaIq:null,   ramadan:true,suhoor:"5:37",iftar:"7:51"},
  // WMA Mar 11: new ishaIq 9:10
- {date:"Mar 11",day:"Wed",ramadanDay:21,fajr:"5:43",fajrIq:null,  shuruq:"7:13",dhuhr:"1:29",dhuhrIq:null,  asr:"5:02",asrIq:null,  magh:"7:48",maghIq:null,  isha:"8:59",ishaIq:"9:10", ramadan:true,suhoor:"5:38",iftar:"7:50"},
- {date:"Mar 12",day:"Thu",ramadanDay:22,fajr:"5:45",fajrIq:null,  shuruq:"7:14",dhuhr:"1:29",dhuhrIq:null,  asr:"5:01",asrIq:null,  magh:"7:46",maghIq:null,  isha:"8:57",ishaIq:null,   ramadan:true,suhoor:"5:40",iftar:"7:48"},
+ {date:"Mar 11",day:"Wed",ramadanDay:20,fajr:"5:43",fajrIq:null,  shuruq:"7:13",dhuhr:"1:29",dhuhrIq:null,  asr:"5:02",asrIq:null,  magh:"7:48",maghIq:null,  isha:"8:59",ishaIq:"9:10", ramadan:true,suhoor:"5:38",iftar:"7:50"},
+ {date:"Mar 12",day:"Thu",ramadanDay:21,fajr:"5:45",fajrIq:null,  shuruq:"7:14",dhuhr:"1:29",dhuhrIq:null,  asr:"5:01",asrIq:null,  magh:"7:46",maghIq:null,  isha:"8:57",ishaIq:null,   ramadan:true,suhoor:"5:40",iftar:"7:48"},
  // WMA Mar 13: new asrIq 5:10, new maghIq 7:55
- {date:"Mar 13",day:"Fri",ramadanDay:23,fajr:"5:46",fajrIq:null,  shuruq:"7:15",dhuhr:"1:29",dhuhrIq:null,  asr:"5:00",asrIq:"5:10",magh:"7:45",maghIq:"7:55",isha:"8:56",ishaIq:null,   ramadan:true,suhoor:"5:41",iftar:"7:47"},
- {date:"Mar 14",day:"Sat",ramadanDay:24,fajr:"5:47",fajrIq:null,  shuruq:"7:16",dhuhr:"1:28",dhuhrIq:null,  asr:"4:59",asrIq:null,  magh:"7:43",maghIq:null,  isha:"8:54",ishaIq:null,   ramadan:true,suhoor:"5:42",iftar:"7:45"},
- {date:"Mar 15",day:"Sun",ramadanDay:25,fajr:"5:48",fajrIq:null,  shuruq:"7:17",dhuhr:"1:28",dhuhrIq:null,  asr:"4:58",asrIq:null,  magh:"7:42",maghIq:null,  isha:"8:52",ishaIq:null,   ramadan:true,suhoor:"5:43",iftar:"7:44"},
+ {date:"Mar 13",day:"Fri",ramadanDay:22,fajr:"5:46",fajrIq:null,  shuruq:"7:15",dhuhr:"1:29",dhuhrIq:null,  asr:"5:00",asrIq:"5:10",magh:"7:45",maghIq:"7:55",isha:"8:56",ishaIq:null,   ramadan:true,suhoor:"5:41",iftar:"7:47"},
+ {date:"Mar 14",day:"Sat",ramadanDay:23,fajr:"5:47",fajrIq:null,  shuruq:"7:16",dhuhr:"1:28",dhuhrIq:null,  asr:"4:59",asrIq:null,  magh:"7:43",maghIq:null,  isha:"8:54",ishaIq:null,   ramadan:true,suhoor:"5:42",iftar:"7:45"},
+ {date:"Mar 15",day:"Sun",ramadanDay:24,fajr:"5:48",fajrIq:null,  shuruq:"7:17",dhuhr:"1:28",dhuhrIq:null,  asr:"4:58",asrIq:null,  magh:"7:42",maghIq:null,  isha:"8:52",ishaIq:null,   ramadan:true,suhoor:"5:43",iftar:"7:44"},
  // WMA Mar 16: new maghIq 7:50
- {date:"Mar 16",day:"Mon",ramadanDay:26,fajr:"5:49",fajrIq:null,  shuruq:"7:18",dhuhr:"1:28",dhuhrIq:null,  asr:"4:57",asrIq:null,  magh:"7:41",maghIq:"7:50",isha:"8:51",ishaIq:null,   ramadan:true,suhoor:"5:44",iftar:"7:43"},
+ {date:"Mar 16",day:"Mon",ramadanDay:25,fajr:"5:49",fajrIq:null,  shuruq:"7:18",dhuhr:"1:28",dhuhrIq:null,  asr:"4:57",asrIq:null,  magh:"7:41",maghIq:"7:50",isha:"8:51",ishaIq:null,   ramadan:true,suhoor:"5:44",iftar:"7:43"},
  // WMA Mar 17: new ishaIq 9:00
- {date:"Mar 17",day:"Tue",ramadanDay:27,fajr:"5:50",fajrIq:null,  shuruq:"7:18",dhuhr:"1:28",dhuhrIq:null,  asr:"4:56",asrIq:null,  magh:"7:39",maghIq:null,  isha:"8:49",ishaIq:"9:00", ramadan:true,suhoor:"5:45",iftar:"7:41"},
+ {date:"Mar 17",day:"Tue",ramadanDay:26,fajr:"5:50",fajrIq:null,  shuruq:"7:18",dhuhr:"1:28",dhuhrIq:null,  asr:"4:56",asrIq:null,  magh:"7:39",maghIq:null,  isha:"8:49",ishaIq:"9:00", ramadan:true,suhoor:"5:45",iftar:"7:41"},
  // WMA Mar 18: new fajrIq 6:20
- {date:"Mar 18",day:"Wed",ramadanDay:28,fajr:"5:51",fajrIq:"6:20",shuruq:"7:19",dhuhr:"1:27",dhuhrIq:null,  asr:"4:55",asrIq:null,  magh:"7:38",maghIq:null,  isha:"8:48",ishaIq:null,   ramadan:true,suhoor:"5:46",iftar:"7:40"},
- {date:"Mar 19",day:"Thu",ramadanDay:29,fajr:"5:52",fajrIq:null,  shuruq:"7:20",dhuhr:"1:27",dhuhrIq:null,  asr:"4:54",asrIq:null,  magh:"7:36",maghIq:null,  isha:"8:46",ishaIq:null,   ramadan:true,suhoor:"5:47",iftar:"7:38"},
+ {date:"Mar 18",day:"Wed",ramadanDay:27,fajr:"5:51",fajrIq:"6:20",shuruq:"7:19",dhuhr:"1:27",dhuhrIq:null,  asr:"4:55",asrIq:null,  magh:"7:38",maghIq:null,  isha:"8:48",ishaIq:null,   ramadan:true,suhoor:"5:46",iftar:"7:40"},
+ {date:"Mar 19",day:"Thu",ramadanDay:28,fajr:"5:52",fajrIq:null,  shuruq:"7:20",dhuhr:"1:27",dhuhrIq:null,  asr:"4:54",asrIq:null,  magh:"7:36",maghIq:null,  isha:"8:46",ishaIq:null,   ramadan:true,suhoor:"5:47",iftar:"7:38"},
  // WMA Mar 20: new maghIq 7:45
- {date:"Mar 20",day:"Fri",ramadanDay:30,fajr:"5:53",fajrIq:null,  shuruq:"7:21",dhuhr:"1:27",dhuhrIq:null,  asr:"4:53",asrIq:null,  magh:"7:34",maghIq:"7:45",isha:"8:44",ishaIq:null,   ramadan:true,suhoor:"5:48",iftar:"7:36"},
+ {date:"Mar 20",day:"Fri",ramadanDay:29,fajr:"5:53",fajrIq:null,  shuruq:"7:21",dhuhr:"1:27",dhuhrIq:null,  asr:"4:53",asrIq:null,  magh:"7:34",maghIq:"7:45",isha:"8:44",ishaIq:null,   ramadan:true,suhoor:"5:48",iftar:"7:36"},
  // Post-Ramadan (Shawwal)
  {date:"Mar 21",day:"Sat",fajr:"5:54",fajrIq:null,  shuruq:"7:22",dhuhr:"1:26",dhuhrIq:null,  asr:"4:52",asrIq:null,  magh:"7:33",maghIq:null,  isha:"8:43",ishaIq:null,   ramadan:false,suhoor:null,iftar:null},
  {date:"Mar 22",day:"Sun",fajr:"5:55",fajrIq:null,  shuruq:"7:23",dhuhr:"1:26",dhuhrIq:null,  asr:"4:51",asrIq:null,  magh:"7:29",maghIq:null,  isha:"8:41",ishaIq:null,   ramadan:false,suhoor:null,iftar:null},
