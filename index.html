@@ -238,7 +238,7 @@
         <div class="notif-modal">
             <div class="bell">🔔</div>
             <h2>Prayer Time Alerts</h2>
-            <p>Get notified before each prayer so you never miss Salaat. When would you like to be reminded?</p>
+            <p id="notifModalDesc">Get notified before each prayer so you never miss Salaat. When would you like to be reminded?</p>
             <div class="notif-options">
                 <div class="notif-opt selected" id="opt20" onclick="selectNotifOpt(20)">
                     <div class="notif-opt-icon">⏰</div>
@@ -661,7 +661,7 @@ function updateClock(){
     const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     document.getElementById('liveDate').textContent=`${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]}`;
     updateHome(now);
-    if(notifEnabled&&!notifScheduled)scheduleNotifications();
+    if(notifEnabled&&!notifScheduled)scheduleNotifications().catch(()=>{});
 }
 
 function updateHome(now){
@@ -755,52 +755,152 @@ window.skipNotif=function(){
     document.getElementById('notifModal').style.display='none';
     localStorage.setItem('notifAsked','true');
 };
-window.enableNotifFromModal=function(){
-    notifMinutesBefore=selectedNotifMin;
-    if('Notification' in window){
-        Notification.requestPermission().then(perm=>{
-            document.getElementById('notifModal').style.display='none';
-            localStorage.setItem('notifAsked','true');
-            if(perm==='granted'){
-                notifEnabled=true;
-                localStorage.setItem('notifEnabled','true');
-                localStorage.setItem('notifMinutes',String(notifMinutesBefore));
-                updateNotifBanner(true);
-                scheduleNotifications();
-                showToast(`✅ Notifications set — ${notifMinutesBefore} min before each prayer`);
-            }else{showToast('❌ Permission denied. Enable in phone Settings.');}
-        });
-    }else{
-        document.getElementById('notifModal').style.display='none';
-        showToast('Add app to Home Screen first to enable notifications');
+// ═══════════════════════════════════════
+// NOTIFICATION SYSTEM — iOS Compatible
+// iOS requires notifications go through
+// Service Worker (showNotification), NOT
+// new Notification() which is blocked.
+// Also requires PWA installed (home screen)
+// ═══════════════════════════════════════
+
+async function getSWRegistration() {
+    if (!('serviceWorker' in navigator)) return null;
+    try {
+        const reg = await navigator.serviceWorker.ready;
+        return reg;
+    } catch(e) { return null; }
+}
+
+window.enableNotifFromModal = async function() {
+    notifMinutesBefore = selectedNotifMin;
+    document.getElementById('notifModal').style.display = 'none';
+    localStorage.setItem('notifAsked', 'true');
+
+    // iOS requires PWA installed
+    if (isIOS && !isStandalone) {
+        showToast('📲 Add to Home Screen first, then enable notifications');
+        return;
+    }
+
+    if (!('Notification' in window) && !('serviceWorker' in navigator)) {
+        showToast('❌ Notifications not supported on this browser');
+        return;
+    }
+
+    try {
+        const permission = await Notification.requestPermission();
+        if (permission === 'granted') {
+            notifEnabled = true;
+            localStorage.setItem('notifEnabled', 'true');
+            localStorage.setItem('notifMinutes', String(notifMinutesBefore));
+            updateNotifBanner(true);
+            await scheduleNotifications();
+            showToast(`✅ Notifications set — ${notifMinutesBefore > 0 ? notifMinutesBefore + ' min before' : 'at'} each prayer`);
+        } else if (permission === 'denied') {
+            showToast('❌ Blocked — go to Settings → Safari/App → Notifications to allow');
+        } else {
+            showToast('❌ Permission not granted');
+        }
+    } catch(e) {
+        showToast('❌ Could not enable notifications: ' + e.message);
     }
 };
-function updateNotifBanner(on){
-    const b=document.getElementById('notifBanner');
-    document.getElementById('notifBannerTitle').textContent=on?'🔔 Notifications Active':'Enable Prayer Notifications';
-    document.getElementById('notifBannerSub').textContent=on?`Alerting ${notifMinutesBefore} min before each prayer`:'Tap to get alerted before each prayer';
-    b.className=on?'notif-banner enabled':'notif-banner disabled';
+
+function updateNotifBanner(on) {
+    const b = document.getElementById('notifBanner');
+    document.getElementById('notifBannerTitle').textContent = on ? '🔔 Notifications Active' : 'Enable Prayer Notifications';
+    document.getElementById('notifBannerSub').textContent = on
+        ? `Alerting ${notifMinutesBefore} min before each prayer`
+        : 'Tap to get alerted before each prayer';
+    b.className = on ? 'notif-banner enabled' : 'notif-banner disabled';
 }
-function scheduleNotifications(){
-    if(!notifEnabled||Notification.permission!=='granted')return;
-    notifScheduled=true;
-    const rec=todayRec();if(!rec)return;
-    const now=new Date();
-    [{name:'Fajr',iqama:rec.fajrIqR,pm:false},{name:'Dhuhr',iqama:rec.dhuhrIqR,pm:true},
-     {name:'Asr',iqama:rec.asrIqR,pm:true},{name:'Maghrib',iqama:rec.maghIqR,pm:true},{name:'Isha',iqama:rec.ishaIqR,pm:true}
-    ].forEach(p=>{
-        const t=parseTo24(p.iqama,p.pm);if(!t)return;
-        const pd=makeDate(t.h,t.m);
-        const nt=new Date(pd-notifMinutesBefore*60000),delay=nt-now;
-        if(delay>0&&delay<86400000){
-            setTimeout(()=>{new Notification(`🕌 ${p.name}${notifMinutesBefore>0?` in ${notifMinutesBefore} min`:''}`,{body:`Iqama at ${p.iqama} ${p.pm?'PM':'AM'} — Hamilton Jamia Mosque`,icon:'/prayer-times/icons/icon-192.png',tag:p.name});},delay);
+
+async function scheduleNotifications() {
+    if (!notifEnabled || Notification.permission !== 'granted') return;
+    notifScheduled = true;
+    const rec = todayRec(); if (!rec) return;
+    const now = new Date();
+
+    // Get service worker registration — REQUIRED for iOS
+    const swReg = await getSWRegistration();
+
+    const prayers = [
+        {name:'Fajr',   iqama:rec.fajrIqR, pm:false},
+        {name:'Dhuhr',  iqama:rec.dhuhrIqR,pm:true},
+        {name:'Asr',    iqama:rec.asrIqR,  pm:true},
+        {name:'Maghrib',iqama:rec.maghIqR, pm:true},
+        {name:'Isha',   iqama:rec.ishaIqR, pm:true}
+    ];
+
+    // Build notification list for SW postMessage (iOS method)
+    const swNotifications = [];
+
+    prayers.forEach(p => {
+        const t = parseTo24(p.iqama, p.pm); if (!t) return;
+        const prayerDate = makeDate(t.h, t.m);
+        const notifTime = new Date(prayerDate - notifMinutesBefore * 60000);
+        const delay = notifTime - now;
+
+        if (delay > 0 && delay < 86400000) {
+            const title = `🕌 ${p.name}${notifMinutesBefore > 0 ? ` in ${notifMinutesBefore} min` : ''}`;
+            const body = `Iqama at ${p.iqama} ${p.pm ? 'PM' : 'AM'} — Hamilton Jamia Mosque`;
+
+            // Add to SW schedule (works on iOS)
+            swNotifications.push({ title, body, tag: p.name, delayMs: delay });
+
+            // Also schedule via setTimeout + SW showNotification (belt-and-suspenders)
+            setTimeout(() => {
+                const opts = {
+                    body, icon: '/prayer-times/icon-192.png',
+                    badge: '/prayer-times/icon-192.png',
+                    tag: p.name, renotify: true, vibrate: [200, 100, 200]
+                };
+                if (swReg) {
+                    swReg.showNotification(title, opts).catch(() => {
+                        if (Notification.permission === 'granted') new Notification(title, opts);
+                    });
+                } else if (Notification.permission === 'granted') {
+                    new Notification(title, opts);
+                }
+            }, delay);
         }
     });
-    if(rec.ramadan&&rec.iftar){
-        const t=parseTo24(rec.iftar,true);
-        const iftDt=makeDate(t.h,t.m);
-        const delay=iftDt-5*60000-now;
-        if(delay>0)setTimeout(()=>{new Notification('🌙 Iftar in 5 minutes!',{body:`Break your fast at ${rec.iftar} PM`,icon:'/prayer-times/icons/icon-192.png',tag:'iftar'});},delay);
+
+    // Iftar notification (Ramadan only)
+    if (rec.ramadan && rec.iftar) {
+        const t = parseTo24(rec.iftar, true);
+        if (t) {
+            const iftarDate = makeDate(t.h, t.m);
+            const delay = iftarDate - 5 * 60000 - now;
+            if (delay > 0) {
+                const title = '🌙 Iftar in 5 minutes!';
+                const body = `Break your fast at ${rec.iftar} PM`;
+                swNotifications.push({ title, body, tag: 'iftar', delayMs: delay });
+                setTimeout(() => {
+                    const opts = {
+                        body, icon: '/prayer-times/icon-192.png',
+                        badge: '/prayer-times/icon-192.png',
+                        tag: 'iftar', renotify: true, vibrate: [300, 100, 300]
+                    };
+                    if (swReg) {
+                        swReg.showNotification(title, opts).catch(() => {
+                            if (Notification.permission === 'granted') new Notification(title, opts);
+                        });
+                    } else if (Notification.permission === 'granted') {
+                        new Notification(title, opts);
+                    }
+                }, delay);
+            }
+        }
+    }
+
+    // Send schedule to SW via postMessage — the PRIMARY iOS method
+    // SW receives this and uses its own setTimeout + showNotification
+    if (swReg && swReg.active && swNotifications.length > 0) {
+        swReg.active.postMessage({
+            type: 'SCHEDULE_NOTIFICATIONS',
+            notifications: swNotifications
+        });
     }
 }
 function showToast(msg){
@@ -822,7 +922,7 @@ window.addEventListener('beforeinstallprompt',e=>{
 });
 
 const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream;
-const isStandalone=window.matchMedia('(display-mode: standalone)').matches;
+const isStandalone=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;
 
 window.showHSModal=function(){
     // On Android with native prompt: trigger directly, no modal needed
@@ -1293,6 +1393,12 @@ document.addEventListener('DOMContentLoaded',()=>{
         selectedNotifMin=notifMinutesBefore;
         updateNotifBanner(true);
     }
+    // iOS-specific warning in notification modal
+    if(isIOS && !isStandalone){
+        const p=document.getElementById('notifModalDesc');
+        if(p) p.innerHTML='<strong style="color:var(--gold)">iPhone users:</strong> Notifications only work when this app is installed to your home screen.<br><br>Tap <strong>Share → Add to Home Screen</strong> in Safari first, then open from your home screen and enable notifications here.';
+    }
+
     // Show notification modal on first visit after 2s
     if(!localStorage.getItem('notifAsked')){
         setTimeout(()=>document.getElementById('notifModal').style.display='flex',2000);
