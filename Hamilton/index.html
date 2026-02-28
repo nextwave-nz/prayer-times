@@ -611,6 +611,28 @@ if(sub.length)h+='<br><span class="eid-sub">'+sub.join(' · ')+'</span>';
 else h+='<br><span class="eid-sub">Details to be confirmed</span>';
 document.getElementById('eidSalaatContent').innerHTML=h}
 }).catch(function(){})}catch(e){}})();
+
+// Load Ramadan config — can shorten to 29 days based on moon sighting
+(function(){try{fetch('ramadan-config.json?t='+Date.now()).then(function(r){if(r.ok)return r.json();throw''}).then(function(cfg){
+if(!cfg)return;
+var changed=false;
+// Shorten to 29 days if moon sighted early
+if(cfg.totalDays&&cfg.totalDays===29&&PT.length>29){
+PT.length=29;changed=true;
+}
+// Update end date
+if(cfg.endDate){
+var ep=cfg.endDate.split('-');
+RAMADAN_END=new Date(parseInt(ep[0]),parseInt(ep[1])-1,parseInt(ep[2]));
+changed=true;
+}
+if(changed){
+document.getElementById('cardView').innerHTML='';
+document.getElementById('tableBody').innerHTML='';
+document.getElementById('mobileTableBody').innerHTML='';
+applyMode();buildHeaders();populateCards();populateDesktopTable();populateMobileTable();updateCountdowns();
+}
+}).catch(function(){})}catch(e){}})();
 </script>
 </body>
 </html>
