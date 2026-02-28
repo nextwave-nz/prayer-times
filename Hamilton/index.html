@@ -83,6 +83,18 @@
         .action-pill.ap-calendar{background:var(--night);color:var(--gold-light);box-shadow:0 3px 12px rgba(12,26,46,.18)}
         .action-pill.ap-share{background:#fff;color:var(--text-mid);border:1.5px solid rgba(0,0,0,.08);box-shadow:0 2px 8px rgba(0,0,0,.04)}
         .action-pill.ap-install{background:linear-gradient(135deg,var(--teal),var(--teal-dark));color:#fff;box-shadow:0 3px 12px rgba(42,157,143,.2)}
+        /* Notification Banner */
+        .notif-banner{display:flex;align-items:center;gap:12px;background:var(--night-light);border:1.5px solid rgba(212,168,67,.15);border-radius:14px;padding:14px 16px;margin-bottom:14px;cursor:pointer;transition:all .25s ease;user-select:none;-webkit-tap-highlight-color:transparent}
+        .notif-banner:active{transform:scale(.98);background:rgba(19,34,64,.9)}
+        .notif-banner.nb-enabled{border-color:rgba(42,157,143,.25);background:rgba(42,157,143,.08)}
+        .notif-banner.nb-hidden{display:none}
+        .nb-icon{font-size:1.4em;flex-shrink:0;filter:drop-shadow(0 0 6px rgba(212,168,67,.4))}
+        .nb-text{flex:1}
+        .nb-title{font-weight:600;font-size:.88em;color:var(--gold-light)}
+        .notif-banner.nb-enabled .nb-title{color:var(--teal)}
+        .nb-sub{font-size:.72em;color:rgba(255,255,255,.4);margin-top:2px}
+        .notif-banner.nb-enabled .nb-sub{color:var(--text-light)}
+        .nb-arrow{font-size:1.3em;color:rgba(255,255,255,.2);font-weight:300}
         .controls-row{display:flex;gap:8px;margin-bottom:14px;align-items:stretch}
         .view-controls{display:flex;gap:3px;background:#fff;padding:3px;border-radius:10px;box-shadow:var(--card-shadow);border:1px solid rgba(0,0,0,.04);flex-shrink:0}
         .view-btn{padding:9px 16px;border:none;background:transparent;border-radius:8px;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.8em;color:var(--text-mid);cursor:pointer;transition:all .25s ease}
@@ -298,6 +310,15 @@
         <button class="action-pill ap-share" onclick="shareApp()"><span class="ap-icon">📤</span> Share</button>
         <button class="action-pill ap-install" id="installBtn" onclick="handleInstall()"><span class="ap-icon">📲</span> Add to Home</button>
     </div>
+    <!-- Notification Banner -->
+    <div class="notif-banner" id="notifBanner" onclick="openNotifSettings()">
+        <div class="nb-icon">🔔</div>
+        <div class="nb-text">
+            <div class="nb-title">Enable Prayer Notifications</div>
+            <div class="nb-sub">Tap to get alerted before each prayer</div>
+        </div>
+        <div class="nb-arrow">›</div>
+    </div>
     <div class="dua-cards" id="duaCards">
         <div class="dua-card"><h3>🤲 Suhoor Intention</h3><div class="dua-arabic">اللَّهُمَّ إِنِّي نَوَيْتُ لَكَ صَوْمَ رَمَضَانَ</div><div class="dua-translit">Allahumma inni nawaytu laka sauma ramadhan</div><div class="dua-meaning">"Oh Allah! I intend to keep the fast of Ramadhan for Your pleasure"</div></div>
         <div class="dua-card"><h3>🤲 Iftar Dua</h3><div class="dua-arabic">اللَّهُمَّ إِنِّي لَكَ صُمْتُ وَبِكَ آمَنْتُ وَعَلَى رِزْقِكَ أَفْطَرْتُ</div><div class="dua-translit">Allahumma inni laka sumtu wa bika aamantu wa ala rizq-ika-aftartu</div><div class="dua-meaning">"Oh Allah! I fasted for You and I believe in You and I break my fast with Your sustenance"</div></div>
@@ -419,6 +440,9 @@ function shareApp(){if(navigator.share){navigator.share({title:'Hamilton Masjid 
 
 // ═══ NOTIFICATION SYSTEM ═══
 function toggleNotifOpt(el){el.classList.toggle('selected')}
+function openNotifSettings(){
+document.getElementById('notifOverlay').classList.add('show');
+}
 function closeNotifPrompt(enable){
 document.getElementById('notifOverlay').classList.remove('show');
 localStorage.setItem('notifPromptShown','1');
@@ -429,8 +453,25 @@ var opts=document.querySelectorAll('.notif-opt.selected');
 var mins=[];opts.forEach(function(o){mins.push(parseInt(o.dataset.min))});
 localStorage.setItem('notifMins',JSON.stringify(mins));
 showToast('🔔 Prayer reminders enabled!');
+updateNotifBanner(true);
 scheduleNotifications()}
-else{showToast('Notifications blocked by browser')}})}}
+else{showToast('Notifications blocked by browser');updateNotifBanner(false)}})}}
+
+function updateNotifBanner(enabled){
+var banner=document.getElementById('notifBanner');
+if(enabled){
+banner.classList.add('nb-enabled');
+var mins=JSON.parse(localStorage.getItem('notifMins')||'[]');
+var labels=mins.map(function(m){return m===0?'at prayer time':m+' min before'});
+banner.querySelector('.nb-title').textContent='Prayer Notifications On';
+banner.querySelector('.nb-sub').textContent=labels.join(', ')||'Enabled';
+banner.querySelector('.nb-icon').textContent='✅';
+}else{
+banner.classList.remove('nb-enabled');
+banner.querySelector('.nb-title').textContent='Enable Prayer Notifications';
+banner.querySelector('.nb-sub').textContent='Tap to get alerted before each prayer';
+banner.querySelector('.nb-icon').textContent='🔔';
+}}
 
 function scheduleNotifications(){
 var tp=getToday();if(!tp)return;
@@ -451,10 +492,10 @@ new Notification('🕌 '+pr.n+(minBefore>0?' Soon':''),{body:body,icon:'data:ima
 
 // Show notification prompt for first-time visitors
 setTimeout(function(){
-if(!localStorage.getItem('notifPromptShown')&&'Notification' in window&&Notification.permission==='default'){
-document.getElementById('notifOverlay').classList.add('show')}
-else if(localStorage.getItem('notifMins')&&Notification.permission==='granted'){scheduleNotifications()}
-},3000);
+if(localStorage.getItem('notifMins')&&'Notification' in window&&Notification.permission==='granted'){
+updateNotifBanner(true);scheduleNotifications()}
+else{updateNotifBanner(false)}
+},500);
 
 // ═══ CORRECTED PRAYER DATA ═══
 var PT=[
