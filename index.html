@@ -608,7 +608,41 @@ function resolveIqamas(data){
         return{...r,fajrIqR:lF,dhuhrIqR:lD,asrIqR:lA,maghIqR:lM,ishaIqR:lI};
     });
 }
-const ALL_DATA=resolveIqamas([...FEB_DATA,...MAR_DATA]);
+// ═══════════════════════════════════════
+// RAMADAN CONFIG — set via admin.html
+// Stored in localStorage as 'ramadanConfig'
+// Allows admin to switch 29→30 days and
+// set Day 30 suhoor/iftar without code edits
+// ═══════════════════════════════════════
+function getRamadanConfig(){
+    try{
+        const s=localStorage.getItem('ramadanConfig');
+        if(s)return JSON.parse(s);
+    }catch(e){}
+    return{totalDays:29,day30Suhoor:'5:49',day30Iftar:'7:33'};
+}
+
+function buildAllData(){
+    const base=resolveIqamas([...FEB_DATA,...MAR_DATA]);
+    const cfg=getRamadanConfig();
+    if(cfg.totalDays===30){
+        // Patch Mar 21 to be Ramadan Day 30
+        return base.map(r=>{
+            if(r.date==='Mar 21'){
+                return{...r,
+                    ramadan:true,
+                    ramadanDay:30,
+                    suhoor:cfg.day30Suhoor||'5:49',
+                    iftar:cfg.day30Iftar||'7:33'
+                };
+            }
+            return r;
+        });
+    }
+    return base;
+}
+
+const ALL_DATA=buildAllData();
 const FEB_R=ALL_DATA.filter(r=>r.date.startsWith('Feb'));
 const MAR_R=ALL_DATA.filter(r=>r.date.startsWith('Mar'));
 
