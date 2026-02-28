@@ -182,6 +182,71 @@
 <!-- ══════════════════════════════════════════ -->
 <div class="tab-pane active" id="tab-extract">
 
+    <!-- RAMADAN SETTINGS CARD -->
+    <div class="card" id="ramadanSettingsCard">
+        <div class="card-hdr">
+            <div class="card-num">🌙</div>
+            <div>
+                <div class="card-title">Ramadan Duration — 29 or 30 Days?</div>
+                <div class="card-sub">Set this after moon sighting confirmation. The calendar updates instantly — no code change needed.</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <!-- Status banner -->
+            <div id="ramSettingsBanner" style="padding:12px 14px;border-radius:10px;margin-bottom:16px;font-size:.84em;font-weight:600;text-align:center;background:var(--gold-dim);border:1px solid var(--gold-border);color:var(--gold)">
+                Loading...
+            </div>
+
+            <!-- 29 / 30 toggle -->
+            <div style="display:flex;gap:10px;margin-bottom:16px;">
+                <button id="btn29" onclick="setRamadanDays(29)" style="flex:1;padding:14px;border-radius:var(--radius-sm);border:2px solid var(--glass-border);background:transparent;color:var(--text-dim);font-family:'DM Sans',sans-serif;font-size:.9em;font-weight:600;cursor:pointer;transition:all .2s">
+                    🌙 29 Days
+                </button>
+                <button id="btn30" onclick="setRamadanDays(30)" style="flex:1;padding:14px;border-radius:var(--radius-sm);border:2px solid var(--glass-border);background:transparent;color:var(--text-dim);font-family:'DM Sans',sans-serif;font-size:.9em;font-weight:600;cursor:pointer;transition:all .2s">
+                    🌙 30 Days
+                </button>
+            </div>
+
+            <!-- Day 30 fields — shown only when 30 days selected -->
+            <div id="day30Fields" style="display:none;background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius-sm);padding:14px;margin-bottom:16px;">
+                <div style="font-size:.72em;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">📅 Day 30 — Saturday Mar 21</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                    <div class="fg">
+                        <label class="flbl">Suhoor Ends (AM)</label>
+                        <input class="finput" id="day30Suhoor" placeholder="e.g. 5:49" type="text" value="5:49">
+                    </div>
+                    <div class="fg">
+                        <label class="flbl">Iftar Time (PM)</label>
+                        <input class="finput" id="day30Iftar" placeholder="e.g. 7:33" type="text" value="7:33">
+                    </div>
+                </div>
+                <div style="margin-top:10px;font-size:.7em;color:var(--text-muted);line-height:1.6;">
+                    💡 Iftar = Maghrib time for Mar 21 from FIANZ calendar. Suhoor = ~1 min later than Mar 20 (5:48 + 1).
+                </div>
+            </div>
+
+            <button class="btn btn-gold btn-full" onclick="saveRamadanConfig()" id="saveRamBtn">
+                💾 Save &amp; Apply to Live App
+            </button>
+            <div style="margin-top:10px;font-size:.7em;color:var(--text-muted);text-align:center;line-height:1.6;">
+                Settings are saved to this browser's storage and apply immediately to the app on the same device.<br>
+                For other users, paste the generated code snippet into <code>index.html</code>.
+            </div>
+
+            <!-- Code output -->
+            <div id="ramCodeWrap" style="display:none;margin-top:14px;">
+                <div class="code-bar">
+                    <div class="code-ttl" id="ramCodeTitle"></div>
+                    <button class="copy-btn" id="ramCopyBtn" onclick="copyRamCode()">📋 Copy Code</button>
+                </div>
+                <div class="code-blk" id="ramCodeBlk"></div>
+                <div class="paste-hint">
+                    In <strong>index.html</strong>, find <code>getRamadanConfig()</code> and update the <code>return{totalDays:</code> line to match. This makes it the permanent default for all users instead of relying on localStorage.
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="steps">
         <div class="step active" id="s1"><div class="snum">1</div><div class="slbl">Configure</div></div>
         <div class="step" id="s2"><div class="snum">2</div><div class="slbl">Extract</div></div>
@@ -531,6 +596,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         document.getElementById('mId').value=e.target.value.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
     });
     renderMosqueList();
+    initRamadanSettings();
 });
 
 // ══════════════════════════════════════════
@@ -764,6 +830,98 @@ function resetExtract(){
     document.getElementById('previewCard').classList.add('hidden');document.getElementById('outputCard').classList.add('hidden');
     document.getElementById('progWrap').style.display='none';document.getElementById('progLbl').style.display='none';
     clearLog();hideErr();checkExtractBtn();setStep(1);window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ══════════════════════════════════════════
+// RAMADAN SETTINGS
+// ══════════════════════════════════════════
+let selectedDays = 29;
+
+function getRamadanConfig() {
+    try {
+        const s = localStorage.getItem('ramadanConfig');
+        if (s) return JSON.parse(s);
+    } catch(e) {}
+    return { totalDays: 29, day30Suhoor: '5:49', day30Iftar: '7:33' };
+}
+
+function initRamadanSettings() {
+    const cfg = getRamadanConfig();
+    selectedDays = cfg.totalDays;
+    document.getElementById('day30Suhoor').value = cfg.day30Suhoor || '5:49';
+    document.getElementById('day30Iftar').value = cfg.day30Iftar || '7:33';
+    updateRamadanUI();
+}
+
+function setRamadanDays(n) {
+    selectedDays = n;
+    updateRamadanUI();
+}
+
+function updateRamadanUI() {
+    const is30 = selectedDays === 30;
+    const gold = 'linear-gradient(135deg,var(--gold),#8B6914)';
+
+    // Buttons
+    document.getElementById('btn29').style.background = is30 ? 'transparent' : gold;
+    document.getElementById('btn29').style.color = is30 ? 'var(--text-dim)' : '#1a1100';
+    document.getElementById('btn29').style.borderColor = is30 ? 'var(--glass-border)' : 'var(--gold)';
+    document.getElementById('btn30').style.background = is30 ? gold : 'transparent';
+    document.getElementById('btn30').style.color = is30 ? '#1a1100' : 'var(--text-dim)';
+    document.getElementById('btn30').style.borderColor = is30 ? 'var(--gold)' : 'var(--glass-border)';
+
+    // Day 30 fields
+    document.getElementById('day30Fields').style.display = is30 ? 'block' : 'none';
+
+    // Banner
+    const banner = document.getElementById('ramSettingsBanner');
+    if (is30) {
+        banner.style.background = 'linear-gradient(135deg,rgba(201,168,76,.15),rgba(201,168,76,.05))';
+        banner.style.borderColor = 'rgba(201,168,76,.4)';
+        banner.style.color = 'var(--gold-light)';
+        banner.textContent = '🌙 30-Day Ramadan — Eid ul-Fitr on Sunday 22 March 2026';
+    } else {
+        banner.style.background = 'linear-gradient(135deg,rgba(15,155,142,.1),rgba(15,155,142,.04))';
+        banner.style.borderColor = 'rgba(15,155,142,.3)';
+        banner.style.color = 'var(--teal)';
+        banner.textContent = '🌙 29-Day Ramadan — Eid ul-Fitr on Saturday 21 March 2026';
+    }
+}
+
+function saveRamadanConfig() {
+    const suhoor = document.getElementById('day30Suhoor').value.trim() || '5:49';
+    const iftar = document.getElementById('day30Iftar').value.trim() || '7:33';
+    const cfg = { totalDays: selectedDays, day30Suhoor: suhoor, day30Iftar: iftar };
+
+    // Save to localStorage (applies immediately on this device)
+    localStorage.setItem('ramadanConfig', JSON.stringify(cfg));
+
+    // Generate code snippet for permanent change in index.html
+    const code = `// In index.html — update getRamadanConfig() return value:
+return {
+    totalDays: ${selectedDays},
+    day30Suhoor: '${suhoor}',
+    day30Iftar: '${iftar}'
+};
+
+// This makes ${selectedDays === 30 ? 'Day 30 (Mar 21) appear as Ramadan' : '29-day Ramadan (Mar 21 is Eid day)'} for ALL users.`;
+
+    document.getElementById('ramCodeBlk').textContent = code;
+    document.getElementById('ramCodeTitle').textContent = selectedDays === 30
+        ? '30-Day Ramadan config — paste into index.html'
+        : '29-Day Ramadan config — paste into index.html';
+    document.getElementById('ramCodeWrap').style.display = 'block';
+
+    showToast(`✅ Saved! App now shows ${selectedDays}-day Ramadan`);
+}
+
+function copyRamCode() {
+    const code = document.getElementById('ramCodeBlk').textContent;
+    navigator.clipboard.writeText(code).then(() => {
+        const b = document.getElementById('ramCopyBtn');
+        b.textContent = '✅ Copied!';
+        setTimeout(() => b.textContent = '📋 Copy Code', 2200);
+    });
 }
 
 // ══════════════════════════════════════════
