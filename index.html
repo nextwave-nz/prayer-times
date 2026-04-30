@@ -804,6 +804,43 @@ const APR_DATA=[
 ];
 
 // ═══════════════════════════════════════
+// MAY 2026 — WMA Iqama times
+// ═══════════════════════════════════════
+const MAY_DATA=[
+ {date:"May 1",day:"Fri", fajr:"5:30",fajrIq:"5:50",shuruq:"6:59", dhuhr:"12:16",dhuhrIq:"12:50", asr:"3:10",asrIq:"4:00", magh:"5:33",maghIq:"5:40", isha:"7:01",ishaIq:"7:20", ramadan:false,suhoor:null,iftar:null},
+ {date:"May 2",day:"Sat", fajr:"5:31",fajrIq:null,shuruq:"7:00", dhuhr:"12:16",dhuhrIq:null, asr:"3:09",asrIq:null, magh:"5:31",maghIq:null, isha:"7:00",ishaIq:"7:15", ramadan:false,suhoor:null,iftar:null},
+ {date:"May 3",day:"Sun", fajr:"5:32",fajrIq:null,shuruq:"7:01", dhuhr:"12:16",dhuhrIq:null, asr:"3:08",asrIq:null, magh:"5:30",maghIq:"5:35", isha:"7:00",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 4",day:"Mon", fajr:"5:33",fajrIq:null,shuruq:"7:02", dhuhr:"12:16",dhuhrIq:null, asr:"3:07",asrIq:null, magh:"5:29",maghIq:null, isha:"6:59",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 5",day:"Tue", fajr:"5:33",fajrIq:null,shuruq:"7:03", dhuhr:"12:16",dhuhrIq:null, asr:"3:06",asrIq:null, magh:"5:28",maghIq:null, isha:"6:58",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 6",day:"Wed", fajr:"5:34",fajrIq:null,shuruq:"7:04", dhuhr:"12:16",dhuhrIq:null, asr:"3:05",asrIq:null, magh:"5:27",maghIq:null, isha:"6:57",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 7",day:"Thu", fajr:"5:35",fajrIq:"5:55",shuruq:"7:05", dhuhr:"12:16",dhuhrIq:null, asr:"3:04",asrIq:null, magh:"5:26",maghIq:null, isha:"6:56",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 8",day:"Fri", fajr:"5:36",fajrIq:null,shuruq:"7:06", dhuhr:"12:16",dhuhrIq:null, asr:"3:04",asrIq:null, magh:"5:25",maghIq:"5:30", isha:"6:55",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 9",day:"Sat", fajr:"5:36",fajrIq:null,shuruq:"7:06", dhuhr:"12:15",dhuhrIq:null, asr:"3:03",asrIq:null, magh:"5:24",maghIq:null, isha:"6:54",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 10",day:"Sun", fajr:"5:37",fajrIq:null,shuruq:"7:07", dhuhr:"12:15",dhuhrIq:null, asr:"3:02",asrIq:null, magh:"5:23",maghIq:null, isha:"6:53",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 11",day:"Mon", fajr:"5:38",fajrIq:null,shuruq:"7:08", dhuhr:"12:15",dhuhrIq:null, asr:"3:01",asrIq:null, magh:"5:22",maghIq:null, isha:"6:52",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 12",day:"Tue", fajr:"5:39",fajrIq:null,shuruq:"7:09", dhuhr:"12:15",dhuhrIq:null, asr:"3:00",asrIq:null, magh:"5:21",maghIq:null, isha:"6:52",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 13",day:"Wed", fajr:"5:39",fajrIq:null,shuruq:"7:10", dhuhr:"12:15",dhuhrIq:null, asr:"3:00",asrIq:null, magh:"5:20",maghIq:"5:25", isha:"6:51",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 14",day:"Thu", fajr:"5:40",fajrIq:"6:00",shuruq:"7:11", dhuhr:"12:15",dhuhrIq:null, asr:"2:59",asrIq:null, magh:"5:20",maghIq:null, isha:"6:50",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 15",day:"Fri", fajr:"5:41",fajrIq:null,shuruq:"7:12", dhuhr:"12:15",dhuhrIq:null, asr:"2:58",asrIq:null, magh:"5:19",maghIq:null, isha:"6:50",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 16",day:"Sat", fajr:"5:41",fajrIq:null,shuruq:"7:12", dhuhr:"12:15",dhuhrIq:null, asr:"2:58",asrIq:null, magh:"5:18",maghIq:null, isha:"6:49",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 17",day:"Sun", fajr:"5:42",fajrIq:null,shuruq:"7:13", dhuhr:"12:15",dhuhrIq:null, asr:"2:57",asrIq:null, magh:"5:17",maghIq:null, isha:"6:48",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 18",day:"Mon", fajr:"5:43",fajrIq:null,shuruq:"7:14", dhuhr:"12:15",dhuhrIq:null, asr:"2:56",asrIq:null, magh:"5:16",maghIq:null, isha:"6:47",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 19",day:"Tue", fajr:"5:44",fajrIq:null,shuruq:"7:15", dhuhr:"12:15",dhuhrIq:null, asr:"2:56",asrIq:null, magh:"5:15",maghIq:"5:20", isha:"6:46",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 20",day:"Wed", fajr:"5:44",fajrIq:null,shuruq:"7:16", dhuhr:"12:15",dhuhrIq:null, asr:"2:55",asrIq:null, magh:"5:15",maghIq:null, isha:"6:46",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 21",day:"Thu", fajr:"5:45",fajrIq:"6:05",shuruq:"7:17", dhuhr:"12:16",dhuhrIq:null, asr:"2:55",asrIq:null, magh:"5:14",maghIq:null, isha:"6:46",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 22",day:"Fri", fajr:"5:46",fajrIq:null,shuruq:"7:17", dhuhr:"12:16",dhuhrIq:null, asr:"2:54",asrIq:null, magh:"5:14",maghIq:null, isha:"6:45",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 23",day:"Sat", fajr:"5:46",fajrIq:null,shuruq:"7:18", dhuhr:"12:16",dhuhrIq:null, asr:"2:54",asrIq:null, magh:"5:13",maghIq:null, isha:"6:45",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 24",day:"Sun", fajr:"5:47",fajrIq:null,shuruq:"7:19", dhuhr:"12:16",dhuhrIq:null, asr:"2:53",asrIq:null, magh:"5:12",maghIq:null, isha:"6:44",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 25",day:"Mon", fajr:"5:47",fajrIq:null,shuruq:"7:20", dhuhr:"12:16",dhuhrIq:null, asr:"2:53",asrIq:null, magh:"5:12",maghIq:null, isha:"6:44",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 26",day:"Tue", fajr:"5:48",fajrIq:null,shuruq:"7:20", dhuhr:"12:16",dhuhrIq:null, asr:"2:52",asrIq:null, magh:"5:11",maghIq:null, isha:"6:44",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 27",day:"Wed", fajr:"5:49",fajrIq:null,shuruq:"7:21", dhuhr:"12:16",dhuhrIq:null, asr:"2:52",asrIq:null, magh:"5:11",maghIq:null, isha:"6:43",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 28",day:"Thu", fajr:"5:49",fajrIq:null,shuruq:"7:22", dhuhr:"12:16",dhuhrIq:null, asr:"2:51",asrIq:null, magh:"5:10",maghIq:"5:15", isha:"6:43",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 29",day:"Fri", fajr:"5:50",fajrIq:"6:10",shuruq:"7:23", dhuhr:"12:16",dhuhrIq:null, asr:"2:51",asrIq:null, magh:"5:10",maghIq:null, isha:"6:42",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 30",day:"Sat", fajr:"5:50",fajrIq:null,shuruq:"7:23", dhuhr:"12:16",dhuhrIq:null, asr:"2:51",asrIq:null, magh:"5:09",maghIq:null, isha:"6:42",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 31",day:"Sun", fajr:"5:51",fajrIq:null,shuruq:"7:24", dhuhr:"12:17",dhuhrIq:null, asr:"2:50",asrIq:null, magh:"5:09",maghIq:null, isha:"6:42",ishaIq:null, ramadan:false,suhoor:null,iftar:null}
+];
+
+// ═══════════════════════════════════════
 // RESOLVE CARRY-FORWARD IQAMA TIMES
 // ═══════════════════════════════════════
 function resolveIqamas(data){
@@ -832,7 +869,7 @@ function getRamadanConfig(){
 }
 
 function buildAllData(){
-    const base=resolveIqamas([...APR_DATA]);
+    const base=resolveIqamas([...APR_DATA,...MAY_DATA]);
     const cfg=getRamadanConfig();
     if(cfg.totalDays===30){
         // Patch Mar 21 to be Ramadan Day 30
