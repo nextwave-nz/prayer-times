@@ -11,14 +11,11 @@
         body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--midnight);color:var(--text);min-height:100vh;}
         body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 50% -10%,rgba(201,168,76,.06) 0%,transparent 60%);pointer-events:none;z-index:0;}
         .wrap{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:28px 18px 60px;}
-
         .hdr{text-align:center;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--glass-border);}
         .hdr-icon{font-size:2.2em;display:block;margin-bottom:6px;filter:drop-shadow(0 0 14px rgba(201,168,76,.5));}
         .hdr h1{font-family:'Amiri',serif;font-size:1.75em;color:var(--gold);margin-bottom:2px;}
         .hdr p{color:var(--text-dim);font-size:.82em;}
         .hdr-badge{display:inline-block;margin-top:7px;background:var(--gold-dim);border:1px solid var(--gold-border);color:var(--gold);font-size:.62em;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:3px 13px;border-radius:20px;}
-
-        /* ── WORKFLOW STEPS ── */
         .workflow{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px;}
         .wf-step{background:var(--navy);border:1px solid var(--glass-border);border-radius:var(--radius-sm);padding:14px 13px;text-align:center;position:relative;}
         .wf-step::after{content:'→';position:absolute;right:-14px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:1.1em;font-weight:700;}
@@ -28,7 +25,6 @@
         .wf-desc{font-size:.68em;color:var(--text-dim);line-height:1.4;}
         .wf-step.done .wf-num{background:linear-gradient(135deg,var(--teal),#0a7a70);}
         .wf-step.done .wf-title{color:var(--teal);}
-
         .card{background:var(--navy);border:1px solid var(--glass-border);border-radius:var(--radius);margin-bottom:16px;overflow:hidden;}
         .card-hdr{padding:13px 18px;border-bottom:1px solid var(--glass-border);display:flex;align-items:center;gap:10px;}
         .card-num{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#8B6914);color:#1a1100;font-weight:700;font-size:.75em;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
@@ -37,7 +33,6 @@
         .card-sub{font-size:.71em;color:var(--text-dim);margin-top:1px;}
         .card-body{padding:16px;}
         .hidden{display:none!important;}
-
         .steps-bar{display:flex;background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:18px;}
         .step-item{flex:1;padding:10px 6px;text-align:center;position:relative;}
         .step-item:not(:last-child)::after{content:'›';position:absolute;right:-5px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:1em;z-index:2;}
@@ -48,8 +43,6 @@
         .step-item.done .snum{background:var(--teal);color:white;border-color:var(--teal);}
         .slbl{font-size:.62em;color:var(--text-muted);font-weight:500;}
         .step-item.active .slbl{color:var(--gold);}.step-item.done .slbl{color:var(--teal);}
-
-        /* ── APP FILE UPLOAD ── */
         .app-upz{border:2px dashed var(--glass-border);border-radius:var(--radius-sm);padding:22px 16px;text-align:center;cursor:pointer;transition:all .22s;position:relative;margin-bottom:13px;}
         .app-upz:hover,.app-upz:focus-within{border-color:var(--gold-border);background:var(--gold-dim);}
         .app-upz.has{border-color:rgba(15,155,142,.5);background:rgba(15,155,142,.06);border-style:solid;}
@@ -59,8 +52,6 @@
         .app-upz-desc{font-size:.71em;color:var(--text-dim);}
         .app-upz-badge{display:none;margin-top:7px;background:rgba(15,155,142,.15);border:1px solid rgba(15,155,142,.3);border-radius:6px;padding:3px 12px;font-size:.68em;color:var(--teal);font-weight:500;}
         .app-upz.has .app-upz-badge{display:inline-block;}
-
-        /* ── FORM ELEMENTS ── */
         .month-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:13px;}
         .mchip{padding:6px 12px;border-radius:20px;border:1px solid var(--glass-border);background:transparent;color:var(--text-dim);font-family:'Plus Jakarta Sans',sans-serif;font-size:.74em;cursor:pointer;transition:all .18s;font-weight:500;}
         .mchip.sel{background:var(--gold-dim);border-color:var(--gold-border);color:var(--gold);}
@@ -73,8 +64,6 @@
         .finput::placeholder{color:var(--text-muted);}
         .fg{display:flex;flex-direction:column;gap:5px;margin-bottom:11px;}
         .flbl{font-size:.7em;color:var(--text-dim);font-weight:500;}
-
-        /* ── UPLOAD ZONES ── */
         .upg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:13px;}
         .upz{border:2px dashed var(--glass-border);border-radius:var(--radius-sm);padding:18px 12px;text-align:center;cursor:pointer;transition:all .22s;position:relative;}
         .upz:hover,.upz:focus-within{border-color:var(--gold-border);background:var(--gold-dim);}
@@ -85,8 +74,6 @@
         .up-desc{font-size:.68em;color:var(--text-dim);}
         .up-badge{display:none;margin-top:5px;background:rgba(15,155,142,.15);border:1px solid rgba(15,155,142,.3);border-radius:6px;padding:3px 10px;font-size:.66em;color:var(--teal);font-weight:500;}
         .upz.has .up-badge{display:inline-block;}
-
-        /* ── BUTTONS ── */
         .btn{padding:11px 20px;border:none;border-radius:var(--radius-sm);font-family:'Plus Jakarta Sans',sans-serif;font-size:.84em;font-weight:700;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px;}
         .btn-gold{background:linear-gradient(135deg,var(--gold),#8B6914);color:#1a1100;}
         .btn-gold:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(201,168,76,.3);}
@@ -97,41 +84,36 @@
         .btn-ghost:hover{border-color:var(--gold-border);color:var(--gold);}
         .btn-full{width:100%;justify-content:center;}
         .btn-sm{padding:6px 13px;font-size:.73em;}
-
-        /* ── MANUAL PANEL ── */
         .manual-step{display:flex;gap:11px;align-items:flex-start;padding:13px;background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius-sm);margin-bottom:10px;}
         .ms-num{width:23px;height:23px;min-width:23px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#8B6914);color:#1a1100;font-weight:700;font-size:.72em;display:flex;align-items:center;justify-content:center;}
         .ms-body{flex:1;}
         .ms-title{font-weight:600;font-size:.83em;margin-bottom:3px;}
         .ms-desc{font-size:.72em;color:var(--text-dim);line-height:1.5;margin-bottom:7px;}
-        .prompt-box{background:rgba(0,0,0,.4);border:1px solid var(--gold-border);border-radius:var(--radius-sm);padding:11px;font-family:'JetBrains Mono',monospace;font-size:.67em;color:var(--gold-light);line-height:1.6;max-height:150px;overflow-y:auto;white-space:pre-wrap;margin-bottom:7px;}
+        .prompt-box{background:rgba(0,0,0,.4);border:1px solid var(--gold-border);border-radius:var(--radius-sm);padding:11px;font-family:'JetBrains Mono',monospace;font-size:.67em;color:var(--gold-light);line-height:1.6;max-height:200px;overflow-y:auto;white-space:pre-wrap;margin-bottom:7px;}
         .json-paste{width:100%;background:rgba(0,0,0,.3);border:1px solid var(--glass-border);border-radius:var(--radius-sm);color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.71em;padding:11px;min-height:90px;resize:vertical;line-height:1.6;}
         .json-paste:focus{outline:none;border-color:var(--gold-border);}
         .json-paste::placeholder{color:var(--text-muted);}
-
-        /* ── PROGRESS ── */
         .prog-wrap{background:var(--glass);border-radius:4px;height:4px;margin:10px 0;overflow:hidden;display:none;}
         .prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:4px;width:0%;transition:width .4s ease;}
         .prog-lbl{font-size:.71em;color:var(--text-dim);text-align:center;display:none;margin-bottom:5px;}
         .ai-log{background:rgba(0,0,0,.3);border:1px solid var(--glass-border);border-radius:var(--radius-sm);padding:9px 12px;font-family:'JetBrains Mono',monospace;font-size:.68em;color:var(--text-dim);max-height:80px;overflow-y:auto;margin-bottom:12px;display:none;line-height:1.7;}
         .ai-log .lok{color:var(--teal);}.ai-log .lerr{color:var(--red);}.ai-log .linf{color:var(--gold);}
         .err-box{background:rgba(231,76,60,.08);border:1px solid rgba(231,76,60,.3);border-radius:var(--radius-sm);padding:9px 12px;font-size:.77em;color:#ff9999;display:none;margin-bottom:10px;}
-
-        /* ── PREVIEW TABLE ── */
         .tscroll{overflow-x:auto;border-radius:var(--radius-sm);border:1px solid var(--glass-border);}
-        table.prev{width:100%;border-collapse:collapse;font-size:.68em;min-width:640px;}
+        table.prev{width:100%;border-collapse:collapse;font-size:.68em;min-width:780px;}
         table.prev thead{background:linear-gradient(135deg,rgba(201,168,76,.15),rgba(201,168,76,.05));}
         table.prev th{padding:8px 5px;text-align:center;color:var(--gold);font-weight:600;font-size:.78em;letter-spacing:.3px;text-transform:uppercase;border-bottom:1px solid var(--glass-border);white-space:nowrap;}
         table.prev td{padding:0;text-align:center;border-bottom:1px solid rgba(255,255,255,.04);}
         table.prev td input{width:100%;background:transparent;border:none;color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:.91em;text-align:center;padding:6px 3px;min-width:46px;}
         table.prev td input:focus{background:rgba(201,168,76,.08);color:var(--gold-light);outline:none;}
         table.prev td.iq input{color:var(--gold);font-weight:600;}
+        table.prev td.jm input{color:var(--gold-light);font-weight:700;background:rgba(201,168,76,.05);}
         table.prev td.dt{padding:6px 7px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.84em;color:var(--text);font-weight:500;white-space:nowrap;}
         table.prev tr:hover td{background:rgba(255,255,255,.02);}
+        table.prev tr.fri-row td{background:rgba(201,168,76,.03);}
         .iq-legend{font-size:.65em;color:var(--text-muted);margin-bottom:7px;padding:5px 10px;background:var(--glass);border-radius:8px;border:1px solid var(--glass-border);}
         .iq-legend span{color:var(--gold);}
-
-        /* ── DOWNLOAD CARD ── */
+        .iq-legend .jm{color:var(--gold-light);font-weight:700;}
         .download-card{background:linear-gradient(135deg,rgba(15,155,142,.12),rgba(15,155,142,.04));border:1px solid rgba(15,155,142,.35);border-radius:var(--radius);padding:22px;text-align:center;}
         .dl-icon{font-size:2.8em;margin-bottom:10px;}
         .dl-title{font-size:1.05em;font-weight:700;color:var(--teal);margin-bottom:6px;}
@@ -143,17 +125,15 @@
         .dl-step-txt{font-size:.75em;color:var(--text-dim);line-height:1.5;}
         .dl-step-txt strong{color:var(--text);}
         code{background:rgba(0,0,0,.3);border:1px solid var(--glass-border);border-radius:4px;padding:1px 5px;font-family:'JetBrains Mono',monospace;font-size:.88em;color:var(--gold-light);}
-
         .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(14px);background:var(--navy2);border:1px solid var(--gold-border);color:var(--text);padding:8px 18px;border-radius:22px;font-size:.78em;font-weight:500;z-index:1000;opacity:0;transition:all .27s;white-space:nowrap;}
         .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-
-        /* ── TOGGLE ── */
         .toggle-row{display:flex;align-items:center;gap:10px;padding:10px 13px;background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius-sm);cursor:pointer;margin-bottom:13px;user-select:none;}
         .tsw{width:36px;height:20px;background:rgba(255,255,255,.1);border-radius:10px;position:relative;transition:background .2s;flex-shrink:0;}
         .tsw.on{background:linear-gradient(135deg,var(--gold),#8B6914);}
         .tkn{width:14px;height:14px;background:white;border-radius:50%;position:absolute;top:3px;left:3px;transition:left .2s;box-shadow:0 1px 4px rgba(0,0,0,.3);}
         .tsw.on .tkn{left:19px;}
-
+        .info-box{background:rgba(201,168,76,.06);border:1px solid var(--gold-border);border-radius:var(--radius-sm);padding:10px 13px;font-size:.74em;color:var(--text-dim);margin-bottom:13px;line-height:1.5;}
+        .info-box strong{color:var(--gold);}
         @media(max-width:600px){.upg{grid-template-columns:1fr;}.workflow{grid-template-columns:1fr;gap:6px;}.wf-step::after{display:none;}}
     </style>
 </head>
@@ -168,7 +148,6 @@
     <div class="hdr-badge">🔒 Everything runs locally in your browser</div>
 </div>
 
-<!-- WORKFLOW OVERVIEW -->
 <div class="workflow">
     <div class="wf-step" id="wfStep1">
         <div class="wf-num">1</div>
@@ -194,7 +173,6 @@
     <div class="step-item" id="s4"><div class="snum">4</div><div class="slbl">Download</div></div>
 </div>
 
-<!-- ── STEP 1: CONFIGURE ── -->
 <div class="card" id="configCard">
     <div class="card-hdr">
         <div class="card-num" id="cn1">1</div>
@@ -204,20 +182,17 @@
         </div>
     </div>
     <div class="card-body">
-
-        <!-- App file upload -->
         <div class="fg">
             <div class="flbl">📱 Current index.html (from GitHub) — upload once per session</div>
             <div class="app-upz" id="appZone">
                 <input type="file" id="appFile" accept=".html" onchange="handleAppFile(this)">
                 <div class="app-upz-icon">📄</div>
                 <div class="app-upz-title">Upload your current index.html</div>
-                <div class="app-upz-desc">Drag &amp; drop or tap — from your <code>Hamilton/</code> folder on GitHub</div>
+                <div class="app-upz-desc">Drag &amp; drop or tap — from your <code>prayer-times/</code> repo on GitHub</div>
                 <div class="app-upz-badge" id="appBadge">✓ index.html loaded</div>
             </div>
         </div>
 
-        <!-- Month + Year -->
         <div class="year-row">
             <span class="yr-lbl">Year:</span>
             <input type="number" class="yr-inp" id="yearInput" value="2026" min="2025" max="2030" oninput="checkReady()">
@@ -246,7 +221,13 @@
             </div>
         </div>
 
-        <!-- PDF uploads -->
+        <div class="info-box" id="jumuahInfoBox">
+            <strong>🕌 Jumu'ah times</strong> — Hamilton Jamia Mosque follows NZ daylight saving:<br>
+            • <strong>Summer</strong> (DST active): Khutbah <strong>1:40 PM</strong>, Iqama <strong>1:50 PM</strong><br>
+            • <strong>Winter</strong> (NZST): Khutbah <strong>12:40 PM</strong>, Iqama <strong>1:00 PM</strong><br>
+            DST ends 1st Sunday April · resumes last Sunday September. Set values on the Friday that transitions; other Fridays carry forward.
+        </div>
+
         <div class="upg">
             <div class="upz" id="wmaZone">
                 <input type="file" id="wmaFile" accept=".pdf,image/*" onchange="handleFile('wma',this)">
@@ -274,7 +255,6 @@
     </div>
 </div>
 
-<!-- ── MANUAL EXTRACTION PANEL ── -->
 <div class="card hidden" id="manualPanel">
     <div class="card-hdr">
         <div class="card-num">2</div>
@@ -316,17 +296,16 @@
     </div>
 </div>
 
-<!-- ── REVIEW TABLE ── -->
 <div class="card hidden" id="previewCard">
     <div class="card-hdr">
         <div class="card-num">3</div>
         <div>
             <div class="card-title">Review &amp; Edit Extracted Data</div>
-            <div class="card-sub">Click any cell to correct · Blank iqama = carry forward (intentional)</div>
+            <div class="card-sub">Click any cell to correct · Blank iqama = carry forward (intentional) · Friday rows show Jumu'ah Khutbah + Iqama</div>
         </div>
     </div>
     <div class="card-body">
-        <div class="iq-legend"><span>Gold</span> = Iqama &nbsp;|&nbsp; Blank iqama = carry forward</div>
+        <div class="iq-legend"><span>Gold</span> = Iqama &nbsp;|&nbsp; <span class="jm">Bright gold</span> = Jumu'ah (Fri) &nbsp;|&nbsp; Blank iqama = carry forward</div>
         <div class="tscroll"><table class="prev"><thead id="prevHead"></thead><tbody id="prevBody"></tbody></table></div>
         <div style="display:flex;gap:9px;margin-top:12px;flex-wrap:wrap">
             <button class="btn btn-ghost" onclick="resetAll()">↺ Start Over</button>
@@ -335,7 +314,6 @@
     </div>
 </div>
 
-<!-- ── DOWNLOAD ── -->
 <div class="card hidden" id="downloadCard">
     <div class="card-hdr">
         <div class="card-num done">✓</div>
@@ -354,7 +332,7 @@
             </button>
             <div class="dl-steps">
                 <div class="dl-step"><div class="dl-step-num">1</div><div class="dl-step-txt">Go to <strong>github.com/nextwave-nz/prayer-times</strong></div></div>
-                <div class="dl-step"><div class="dl-step-num">2</div><div class="dl-step-txt">Open the <strong>Hamilton</strong> folder → click <strong>index.html</strong></div></div>
+                <div class="dl-step"><div class="dl-step-num">2</div><div class="dl-step-txt">Click <strong>index.html</strong> in the repo root</div></div>
                 <div class="dl-step"><div class="dl-step-num">3</div><div class="dl-step-txt">Click the <strong>pencil ✏️ icon</strong> → then the <strong>three dots ···</strong> → <strong>Upload file</strong></div></div>
                 <div class="dl-step"><div class="dl-step-num">4</div><div class="dl-step-txt">Upload the downloaded file → click <strong>Commit changes</strong></div></div>
                 <div class="dl-step"><div class="dl-step-num">5</div><div class="dl-step-txt">✅ Done — the live app updates in about 30 seconds!</div></div>
@@ -431,7 +409,6 @@ function setStep(n){
         if(i<n)el.classList.add('done');
         else if(i===n)el.classList.add('active');
     }
-    // Workflow bubbles
     if(n>=2)document.getElementById('wfStep1').classList.add('done');
     if(n>=3)document.getElementById('wfStep2').classList.add('done');
     if(n>=4)document.getElementById('wfStep3').classList.add('done');
@@ -463,17 +440,23 @@ RULES:
 - WMA shows two values per prayer: adhan time and iqama (bold). Only include iqama when it explicitly appears for that day; use null when it carries forward.
 - Times format: h:mm no leading zero (e.g. "6:20" not "06:20")
 - AM: Fajr, Sunrise. PM: Dhuhr, Asr, Maghrib, Isha.
+
+JUMU'AH (Fridays only):
+- Hamilton Jamia Mosque has two Jumu'ah schedules tied to NZ daylight saving:
+  • SUMMER (DST active, before 1st Sunday April and from last Sunday September): Khutbah 1:40 PM, Iqama 1:50 PM
+  • WINTER (1st Sunday April to last Sunday September): Khutbah 12:40 PM, Iqama 1:00 PM
+- Set jummahKhutbah + jummahIqama on the FIRST Friday of the month AND on any Friday where DST transitions. Use null on other Fridays (carry-forward).
+- Non-Friday rows: jummahKhutbah and jummahIqama should always be null.
 ${state.isRamadan?'- Also extract suhoorEnds and iftar from the FIANZ calendar.':''}
 
 Return ONLY raw JSON (no markdown, no text before or after):
-{"month":"${state.month}","year":"${yr}","mosqueId":"hamilton-jamia","isRamadan":${state.isRamadan},"days":[{"date":1,"dayName":"Wed","fajrAdhan":"6:04","fajrIqama":"6:20","sunrise":"7:31","dhuhrAdhan":"1:23","dhuhrIqama":null,"asrAdhan":"4:42","asrIqama":null,"maghribAdhan":"7:15","maghribIqama":null,"ishaAdhan":"8:27","ishaIqama":null,"suhoorEnds":null,"iftar":null,"isRamadan":false,"ramadanDay":null}]}`;
+{"month":"${state.month}","year":"${yr}","mosqueId":"hamilton-jamia","isRamadan":${state.isRamadan},"days":[{"date":1,"dayName":"Wed","fajrAdhan":"6:04","fajrIqama":"6:20","sunrise":"7:31","dhuhrAdhan":"1:23","dhuhrIqama":null,"asrAdhan":"4:42","asrIqama":null,"maghribAdhan":"7:15","maghribIqama":null,"ishaAdhan":"8:27","ishaIqama":null,"jummahKhutbah":null,"jummahIqama":null,"suhoorEnds":null,"iftar":null,"isRamadan":false,"ramadanDay":null}]}`;
 }
 
 // ── START EXTRACT ────────────────────────────────────────────────────────────
 async function startExtract(){
     hideErr();
     state.year=parseInt(document.getElementById('yearInput').value);
-    // Always use manual mode (CORS blocks direct API calls from GitHub Pages)
     showManualPanel();
 }
 
@@ -486,7 +469,6 @@ function showManualPanel(){
     document.getElementById('jsonErrBox').style.display='none';
     document.getElementById('manualPanel').scrollIntoView({behavior:'smooth',block:'start'});
     setStep(2);
-    // Update workflow
     document.getElementById('wfStep1').classList.add('done');
 }
 
@@ -508,6 +490,11 @@ function parseManualJson(){
         if(si===-1||ei===-1)throw new Error('No JSON found. Copy the full response from Claude.ai.');
         const parsed=JSON.parse(jt.substring(si,ei+1));
         if(!parsed.days?.length)throw new Error('No days array found in JSON.');
+        // Ensure new Jumu'ah fields exist (backward compat with old prompts)
+        parsed.days.forEach(d=>{
+            if(typeof d.jummahKhutbah==='undefined')d.jummahKhutbah=null;
+            if(typeof d.jummahIqama==='undefined')d.jummahIqama=null;
+        });
         state.rows=parsed.days;
         errBox.style.display='none';
         document.getElementById('manualPanel').classList.add('hidden');
@@ -532,17 +519,20 @@ function buildPreview(){
         <th>Asr</th><th style="color:var(--gold)">Asr Iq.</th>
         <th>Maghrib</th><th style="color:var(--gold)">Maghr.Iq.</th>
         <th>Isha</th><th style="color:var(--gold)">Isha Iq.</th>
+        <th style="color:var(--gold-light)">🕌 Khutbah</th><th style="color:var(--gold-light)">🕌 Jum.Iq.</th>
         ${hasRam?'<th style="color:#6aacde">Suhoor</th><th style="color:#e8826a">Iftar</th>':''}
     </tr>`;
     const fields=[
         {k:'fajrAdhan',c:''},{k:'fajrIqama',c:'iq'},{k:'dhuhrAdhan',c:''},{k:'dhuhrIqama',c:'iq'},
         {k:'asrAdhan',c:''},{k:'asrIqama',c:'iq'},{k:'maghribAdhan',c:''},{k:'maghribIqama',c:'iq'},
         {k:'ishaAdhan',c:''},{k:'ishaIqama',c:'iq'},
+        {k:'jummahKhutbah',c:'jm'},{k:'jummahIqama',c:'jm'},
         ...(hasRam?[{k:'suhoorEnds',c:''},{k:'iftar',c:''}]:[])
     ];
     const tbody=document.getElementById('prevBody');tbody.innerHTML='';
     state.rows.forEach((row,i)=>{
         const tr=document.createElement('tr');
+        if(row.dayName==='Fri')tr.className='fri-row';
         let html=`<td class="dt">${row.dayName||''} ${ms} ${row.date}</td>`;
         fields.forEach(f=>{html+=`<td class="${f.c}"><input type="text" value="${row[f.k]||''}" data-r="${i}" data-f="${f.k}" oninput="updCell(this)"></td>`;});
         tr.innerHTML=html;tbody.appendChild(tr);
@@ -563,18 +553,17 @@ function buildDownload(){
         l+=` asr:${f(row.asrAdhan)},asrIq:${f(row.asrIqama)},`;
         l+=` magh:${f(row.maghribAdhan)},maghIq:${f(row.maghribIqama)},`;
         l+=` isha:${f(row.ishaAdhan)},ishaIq:${f(row.ishaIqama)},`;
+        l+=` jummahKhutbah:${f(row.jummahKhutbah)},jummahIqama:${f(row.jummahIqama)},`;
         l+=` ramadan:${row.isRamadan?'true':'false'},suhoor:${f(row.suhoorEnds)},iftar:${f(row.iftar)}},`;
         return l;
     });
     if(lines.length)lines[lines.length-1]=lines[lines.length-1].replace(/,$/,'');
 
-    const newArrayCode=`// ═══════════════════════════════════════\n// ${state.month.toUpperCase()} ${state.year} — WMA Iqama times\n// ═══════════════════════════════════════\nconst ${varName}=[\n${lines.join('\n')}\n];`;
+    const newArrayCode=`// ═══════════════════════════════════════\n// ${state.month.toUpperCase()} ${state.year} — WMA Iqama times (incl. Jumu'ah Khutbah + Iqama)\n// ═══════════════════════════════════════\nconst ${varName}=[\n${lines.join('\n')}\n];`;
 
     let updatedHtml=state.appHtml;
 
     if(updatedHtml){
-        // ── Inject into uploaded index.html ──────────────────────────────────
-        // Find the resolve comment and insert new array just before it
         const resolveMarker='// ═══════════════════════════════════════\n// RESOLVE CARRY-FORWARD IQAMA TIMES';
         const resolveIdx=updatedHtml.indexOf(resolveMarker);
 
@@ -583,15 +572,11 @@ function buildDownload(){
             return;
         }
 
-        // Insert the new data array before the resolve comment
         updatedHtml=updatedHtml.substring(0,resolveIdx)+newArrayCode+'\n\n'+updatedHtml.substring(resolveIdx);
 
-        // Update buildAllData to include new variable
-        // Find current resolveIqamas call and add new array
         const buildAllMatch=updatedHtml.match(/const base=resolveIqamas\(\[(.*?)\]\)/);
         if(buildAllMatch){
             const currentArgs=buildAllMatch[1];
-            // Add new variable if not already there
             if(!currentArgs.includes(`...${varName}`)){
                 const newArgs=currentArgs+`,...${varName}`;
                 updatedHtml=updatedHtml.replace(
@@ -604,7 +589,6 @@ function buildDownload(){
         downloadFilename='index.html';
         showToast('✅ index.html updated with '+state.month+' data!');
     } else {
-        // No index.html uploaded — just provide the code snippet
         updatedHtml='<!-- No index.html uploaded — paste this code into index.html before the RESOLVE CARRY-FORWARD comment -->\n\n'+newArrayCode;
         downloadFilename=`${ms}_DATA_${state.year}.txt`;
         showToast('ℹ️ No index.html uploaded — downloading code snippet only');
@@ -612,7 +596,6 @@ function buildDownload(){
 
     downloadBlob=new Blob([updatedHtml],{type:'text/html;charset=utf-8'});
 
-    // Show download card
     document.getElementById('previewCard').classList.add('hidden');
     document.getElementById('downloadCard').classList.remove('hidden');
     document.getElementById('dlTitle').textContent=state.appHtml
@@ -622,9 +605,8 @@ function buildDownload(){
         ?`${state.month} ${state.year} data injected · Ready to upload to GitHub`
         :`Code snippet ready — upload your index.html next time for one-click download`;
     document.getElementById('dlDesc').textContent=state.appHtml
-        ?`Your index.html has been updated with all ${state.month} prayer times. Download it and upload to GitHub — done in 30 seconds.`
-        ?`Download the code snippet and manually paste it into index.html.`:'':''
-        ;
+        ?`Your index.html has been updated with all ${state.month} prayer times (including Jumu'ah). Download it and upload to GitHub — done in 30 seconds.`
+        :`Download the code snippet and manually paste it into index.html.`;
 
     document.getElementById('downloadCard').scrollIntoView({behavior:'smooth',block:'start'});
     setStep(4);
@@ -645,13 +627,11 @@ function downloadFile(){
 // ── RESET ────────────────────────────────────────────────────────────────────
 function resetAll(){
     state.rows=[];state.wmaFile=null;state.fianzFile=null;
-    // Keep appHtml loaded — user doesn't need to re-upload it
     document.getElementById('wmaFile').value='';document.getElementById('fianzFile').value='';
     document.getElementById('wmaZone').classList.remove('has');document.getElementById('fianzZone').classList.remove('has');
     ['manualPanel','previewCard','downloadCard'].forEach(id=>document.getElementById(id).classList.add('hidden'));
     document.getElementById('progWrap').style.display='none';document.getElementById('progLbl').style.display='none';
     clearLog();hideErr();checkReady();setStep(1);
-    // Reset workflow dots
     ['wfStep1','wfStep2','wfStep3'].forEach(id=>document.getElementById(id).classList.remove('done'));
     window.scrollTo({top:0,behavior:'smooth'});
 }

@@ -255,6 +255,15 @@
             border-radius:3px 0 0 3px;
         }
         .pr-row.passed{opacity:.25}
+        .pr-row.jumuah{background:linear-gradient(145deg,rgba(201,168,76,.08),rgba(201,168,76,.02));border-color:var(--gold-border)}
+        .pr-row.jumuah.current{background:linear-gradient(145deg,rgba(201,168,76,.14),rgba(201,168,76,.04))}
+        .pr-row.jumuah .pr-name{color:var(--gold-light)}
+        .pr-row.jumuah .pr-sub{color:var(--gold)}
+        .pr-row.jumuah .pr-iqama{color:var(--gold-bright)}
+        .pr-khutbah{font-family:'JetBrains Mono',monospace;font-size:.7em;color:var(--gold);margin-top:2px;font-weight:500}
+        .nh-khutbah{font-size:.7em;color:var(--gold);font-weight:600;margin-top:4px;letter-spacing:.3px}
+        .cal-cell-extra{font-size:.6em;color:var(--gold);margin-top:1px;font-family:'JetBrains Mono',monospace}
+        .pt .khutbah-tag{display:block;font-family:'JetBrains Mono',monospace;font-size:.65em;color:var(--gold);margin-top:1px;font-weight:600}
         .pr-left{display:flex;align-items:center;gap:12px}
         .pr-icon{
             width:36px;height:36px;flex-shrink:0;
@@ -266,6 +275,21 @@
         .pr-row.current .pr-icon{background:var(--gold-dim);border-color:var(--gold-border)}
         .pr-name{font-weight:600;font-size:.9em;color:var(--text)}
         .pr-row.current .pr-name{color:var(--gold-light)}
+        /* Friday Jumu'ah pill — sits next to "Dhuhr" name */
+        .jumuah-pill{
+            display:inline-block;
+            font-size:.62em;font-weight:700;
+            background:var(--gold-dim);
+            color:var(--gold);
+            border:1px solid var(--gold-border);
+            padding:1px 7px;border-radius:10px;
+            margin-left:6px;letter-spacing:.3px;
+            vertical-align:middle;
+        }
+        .pr-row.current .jumuah-pill{
+            background:linear-gradient(135deg,var(--gold),#8b6914);
+            color:#1a0e00;border-color:transparent;
+        }
         .pr-sub{font-size:.62em;color:var(--text-3);margin-top:2px}
         .pr-right{text-align:right}
         .pr-iqama{font-family:'JetBrains Mono',monospace;font-size:1.05em;font-weight:500;color:var(--text)}
@@ -347,6 +371,8 @@
         .cal-cell{background:rgba(0,0,0,.25);border-radius:7px;padding:8px;text-align:center}
         .cal-cell-lbl{font-size:.56em;color:var(--text-3);text-transform:uppercase;letter-spacing:.4px}
         .cal-cell-val{font-family:'JetBrains Mono',monospace;font-size:.82em;color:var(--text);margin-top:2px}
+        .cal-cell.jumuah-cell{background:linear-gradient(135deg,rgba(201,168,76,.18),rgba(201,168,76,.05));border:1px solid var(--gold-border)}
+        .cal-cell.jumuah-cell .cal-cell-lbl{color:var(--gold)}
         .iftar-v{color:var(--rose)!important;font-weight:600}
         .suhoor-v{color:var(--sky)!important}
         .iqama-v{color:var(--gold)!important}
@@ -362,6 +388,21 @@
         .pt .iftar-c{color:var(--rose)!important;font-weight:600}
         .pt .suhoor-c{color:var(--sky)!important}
         .pt .iqama-c{color:var(--gold)!important;font-weight:600}
+        /* Friday Dhuhr cell — Jumu'ah indicator (subtle gold tint + small label below time) */
+        .pt .jumuah-c{
+            background:linear-gradient(135deg,rgba(201,168,76,.14),rgba(201,168,76,.04));
+            color:var(--gold-bright)!important;
+            font-weight:700;
+            position:relative;
+        }
+        .pt .jumuah-c .jumuah-tag{
+            display:block;
+            font-family:'Plus Jakarta Sans',sans-serif;
+            font-size:.62em;font-weight:600;
+            color:var(--gold);
+            letter-spacing:.5px;
+            margin-top:1px;
+        }
 
         /* ── HADITH ────────────────────────── */
         .hadith-card{background:var(--surface);border:1px solid var(--border-hi);border-radius:var(--r);padding:20px 17px;margin-bottom:10px;position:relative;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.3),inset 0 1px 0 rgba(201,168,76,.1)}
@@ -591,6 +632,7 @@
                         <div class="nh-time" id="nextIqamaTime">--:--</div>
                         <div class="nh-time-lbl">Iqama time</div>
                     </div>
+                    <div class="nh-khutbah" id="nextKhutbah" style="display:none"></div>
                 </div>
                 <div class="nh-bottom">
                     <div class="nh-cd-lbl">Iqama begins in</div>
@@ -623,7 +665,7 @@
                 <span style="font-size:1.3em">🕌</span>
                 <div>
                     <div style="font-size:.73em;color:var(--gold);font-weight:700">Jumu'ah Today</div>
-                    <div style="font-size:.78em;color:var(--text-2);margin-top:2px">Khutbah at <strong style="color:var(--text)">1:40 PM</strong></div>
+                    <div style="font-size:.78em;color:var(--text-2);margin-top:2px" id="jummahNoticeBody">Khutbah at <strong style="color:var(--text)">1:40 PM</strong></div>
                 </div>
             </div>
             <div class="sec-label">Today's Iqama Times</div>
@@ -711,7 +753,7 @@
                     <div class="info-body">
                         <p>📍 921 Heaphy Terrace, Hamilton</p>
                         <div class="info-div"></div>
-                        <p>🕌 <strong>Friday Khutbah:</strong> 1:40 PM</p>
+                        <p>🕌 <strong>Jumu'ah Today:</strong> <span id="infoJumuah">—</span></p>
                         <p>🌙 <strong>Taraweeh:</strong> After Isha nightly in Ramadan</p>
                     </div>
                 </div>
@@ -719,6 +761,8 @@
                     <div class="info-title">📌 Important Notes</div>
                     <div class="info-body">
                         <p>• All times shown are <strong>Iqama (congregation) times</strong></p>
+                        <p>• On Fridays, <strong>Dhuhr is replaced by Jumu'ah</strong> — Khutbah + Iqama times shown separately</p>
+                        <p>• Jumu'ah times change with NZ daylight saving</p>
                         <p>• Iftar/Maghrib from <strong>FIANZ Hamilton calendar</strong></p>
                         <p>• 3 minutes added to Ramadan Maghrib</p>
                         <p>• Asr based on <strong>single shadow</strong> method</p>
@@ -769,89 +813,91 @@
 // Friday Khutbah from Apr 10: 12:40 PM
 // ═══════════════════════════════════════
 const APR_DATA=[
- {date:"Apr 1", day:"Wed",fajr:"6:05",fajrIq:"6:20",shuruq:"7:32",dhuhr:"1:23",dhuhrIq:"1:50",asr:"4:41",asrIq:"5:00",magh:"7:13",maghIq:"7:20",isha:"8:40",ishaIq:"8:50",ramadan:false,suhoor:null,iftar:null},
- {date:"Apr 2", day:"Thu",fajr:"6:06",fajrIq:null,  shuruq:"7:33",dhuhr:"1:23",dhuhrIq:null,  asr:"4:40",asrIq:null,  magh:"7:12",maghIq:null,  isha:"8:39",ishaIq:null,  ramadan:false,suhoor:null,iftar:null},
- {date:"Apr 3", day:"Fri",fajr:"6:07",fajrIq:null,  shuruq:"7:34",dhuhr:"1:23",dhuhrIq:null,  asr:"4:39",asrIq:null,  magh:"7:10",maghIq:"7:15",isha:"8:37",ishaIq:null,  ramadan:false,suhoor:null,iftar:null},
- {date:"Apr 4", day:"Sat",fajr:"6:08",fajrIq:null,  shuruq:"7:35",dhuhr:"1:22",dhuhrIq:null,  asr:"4:38",asrIq:null,  magh:"7:09",maghIq:null,  isha:"8:36",ishaIq:null,  ramadan:false,suhoor:null,iftar:null},
+ {date:"Apr 1", day:"Wed",fajr:"6:05",fajrIq:"6:20",shuruq:"7:32",dhuhr:"1:23",dhuhrIq:"1:50",asr:"4:41",asrIq:"5:00",magh:"7:13",maghIq:"7:20",isha:"8:40",ishaIq:"8:50",jummahKhutbah:"1:40",jummahIqama:"1:50",ramadan:false,suhoor:null,iftar:null},
+ {date:"Apr 2", day:"Thu",fajr:"6:06",fajrIq:null,  shuruq:"7:33",dhuhr:"1:23",dhuhrIq:null,  asr:"4:40",asrIq:null,  magh:"7:12",maghIq:null,  isha:"8:39",ishaIq:null,jummahKhutbah:null,jummahIqama:null,  ramadan:false,suhoor:null,iftar:null},
+ {date:"Apr 3", day:"Fri",fajr:"6:07",fajrIq:null,  shuruq:"7:34",dhuhr:"1:23",dhuhrIq:null,  asr:"4:39",asrIq:null,  magh:"7:10",maghIq:"7:15",isha:"8:37",ishaIq:null,jummahKhutbah:null,jummahIqama:null,  ramadan:false,suhoor:null,iftar:null},
+ {date:"Apr 4", day:"Sat",fajr:"6:08",fajrIq:null,  shuruq:"7:35",dhuhr:"1:22",dhuhrIq:null,  asr:"4:38",asrIq:null,  magh:"7:09",maghIq:null,  isha:"8:36",ishaIq:null,jummahKhutbah:null,jummahIqama:null,  ramadan:false,suhoor:null,iftar:null},
  // Daylight Saving ends — all iqamas reset
- {date:"Apr 5", day:"Sun",fajr:"5:09",fajrIq:"5:30",shuruq:"6:36",dhuhr:"12:22",dhuhrIq:"12:50",asr:"3:37",asrIq:"4:00",magh:"6:07",maghIq:"6:10",isha:"7:34",ishaIq:"7:45",ramadan:false,suhoor:null,iftar:null},
- {date:"Apr 6", day:"Mon",fajr:"5:10",fajrIq:null,  shuruq:"6:37",dhuhr:"12:22",dhuhrIq:null,  asr:"3:36",asrIq:null,  magh:"6:06",maghIq:null,  isha:"7:33",ishaIq:null,  ramadan:false,suhoor:null,iftar:null},
- {date:"Apr 7", day:"Tue",fajr:"5:11",fajrIq:null,  shuruq:"6:38",dhuhr:"12:21",dhuhrIq:null,  asr:"3:34",asrIq:null,  magh:"6:04",maghIq:null,  isha:"7:31",ishaIq:null,  ramadan:false,suhoor:null,iftar:null},
- {date:"Apr 8", day:"Wed",fajr:"5:11",fajrIq:null,  shuruq:"6:39",dhuhr:"12:21",dhuhrIq:null,  asr:"3:33",asrIq:null,  magh:"6:03",maghIq:null,  isha:"7:30",ishaIq:null,  ramadan:false,suhoor:null,iftar:null},
- {date:"Apr 9", day:"Thu",fajr:"5:12",fajrIq:null,  shuruq:"6:40",dhuhr:"12:21",dhuhrIq:null,  asr:"3:32",asrIq:null,  magh:"6:02",maghIq:null,  isha:"7:29",ishaIq:null,  ramadan:false,suhoor:null,iftar:null},
+ {date:"Apr 5", day:"Sun",fajr:"5:09",fajrIq:"5:30",shuruq:"6:36",dhuhr:"12:22",dhuhrIq:"12:50",asr:"3:37",asrIq:"4:00",magh:"6:07",maghIq:"6:10",isha:"7:34",ishaIq:"7:45",jummahKhutbah:"12:40",jummahIqama:"1:00",ramadan:false,suhoor:null,iftar:null},
+ {date:"Apr 6", day:"Mon",fajr:"5:10",fajrIq:null,  shuruq:"6:37",dhuhr:"12:22",dhuhrIq:null,  asr:"3:36",asrIq:null,  magh:"6:06",maghIq:null,  isha:"7:33",ishaIq:null,jummahKhutbah:null,jummahIqama:null,  ramadan:false,suhoor:null,iftar:null},
+ {date:"Apr 7", day:"Tue",fajr:"5:11",fajrIq:null,  shuruq:"6:38",dhuhr:"12:21",dhuhrIq:null,  asr:"3:34",asrIq:null,  magh:"6:04",maghIq:null,  isha:"7:31",ishaIq:null,jummahKhutbah:null,jummahIqama:null,  ramadan:false,suhoor:null,iftar:null},
+ {date:"Apr 8", day:"Wed",fajr:"5:11",fajrIq:null,  shuruq:"6:39",dhuhr:"12:21",dhuhrIq:null,  asr:"3:33",asrIq:null,  magh:"6:03",maghIq:null,  isha:"7:30",ishaIq:null,jummahKhutbah:null,jummahIqama:null,  ramadan:false,suhoor:null,iftar:null},
+ {date:"Apr 9", day:"Thu",fajr:"5:12",fajrIq:null,  shuruq:"6:40",dhuhr:"12:21",dhuhrIq:null,  asr:"3:32",asrIq:null,  magh:"6:02",maghIq:null,  isha:"7:29",ishaIq:null,jummahKhutbah:null,jummahIqama:null,  ramadan:false,suhoor:null,iftar:null},
  // Maghrib + Isha iqamas change; Friday Khutbah now 12:40 PM
- {date:"Apr 10",day:"Fri",fajr:"5:13",fajrIq:null,  shuruq:"6:40",dhuhr:"12:21",dhuhrIq:null,  asr:"3:31",asrIq:null,  magh:"6:00",maghIq:"6:05",isha:"7:27",ishaIq:"7:40",ramadan:false,suhoor:null,iftar:null},
- {date:"Apr 11",day:"Sat",fajr:"5:14",fajrIq:null,  shuruq:"6:41",dhuhr:"12:20",dhuhrIq:null,  asr:"3:30",asrIq:null,  magh:"5:59",maghIq:null,  isha:"7:26",ishaIq:null,  ramadan:false,suhoor:null,iftar:null},
- {date:"Apr 12",day:"Sun",fajr:"5:15",fajrIq:"5:35",shuruq:"6:42",dhuhr:"12:20",dhuhrIq:null,  asr:"3:29",asrIq:null,  magh:"5:57",maghIq:null,  isha:"7:24",ishaIq:null,  ramadan:false,suhoor:null,iftar:null},
- {date:"Apr 13",day:"Mon",fajr:"5:16",fajrIq:null,  shuruq:"6:43",dhuhr:"12:20",dhuhrIq:null,  asr:"3:28",asrIq:null,  magh:"5:56",maghIq:null,  isha:"7:23",ishaIq:null,  ramadan:false,suhoor:null,iftar:null},
- {date:"Apr 14",day:"Tue",fajr:"5:17",fajrIq:null,  shuruq:"6:44",dhuhr:"12:19",dhuhrIq:null,  asr:"3:27",asrIq:null,  magh:"5:54",maghIq:"6:00",isha:"7:22",ishaIq:null,  ramadan:false,suhoor:null,iftar:null},
- {date:"Apr 15",day:"Wed",fajr:"5:17",fajrIq:null,  shuruq:"6:45",dhuhr:"12:19",dhuhrIq:null,  asr:"3:26",asrIq:null,  magh:"5:53",maghIq:null,  isha:"7:20",ishaIq:"7:30",ramadan:false,suhoor:null,iftar:null},
- {date:"Apr 16",day:"Thu",fajr:"5:18",fajrIq:null,  shuruq:"6:46",dhuhr:"12:19",dhuhrIq:null,  asr:"3:25",asrIq:null,  magh:"5:52",maghIq:null,  isha:"7:19",ishaIq:null,  ramadan:false,suhoor:null,iftar:null},
- {date:"Apr 17",day:"Fri",fajr:"5:19",fajrIq:null,  shuruq:"6:47",dhuhr:"12:19",dhuhrIq:null,  asr:"3:24",asrIq:null,  magh:"5:50",maghIq:"5:55",isha:"7:18",ishaIq:null,  ramadan:false,suhoor:null,iftar:null},
- {date:"Apr 18",day:"Sat",fajr:"5:20",fajrIq:"5:40",shuruq:"6:48",dhuhr:"12:19",dhuhrIq:null,  asr:"3:23",asrIq:null,  magh:"5:49",maghIq:null,  isha:"7:16",ishaIq:null,  ramadan:false,suhoor:null,iftar:null},
- {date:"Apr 19",day:"Sun",fajr:"5:21",fajrIq:null,  shuruq:"6:49",dhuhr:"12:18",dhuhrIq:null,  asr:"3:22",asrIq:null,  magh:"5:48",maghIq:null,  isha:"7:15",ishaIq:null,  ramadan:false,suhoor:null,iftar:null},
- {date:"Apr 20",day:"Mon",fajr:"5:22",fajrIq:null,  shuruq:"6:49",dhuhr:"12:18",dhuhrIq:null,  asr:"3:20",asrIq:null,  magh:"5:46",maghIq:null,  isha:"7:14",ishaIq:null,  ramadan:false,suhoor:null,iftar:null},
- {date:"Apr 21",day:"Tue",fajr:"5:22",fajrIq:null,  shuruq:"6:50",dhuhr:"12:18",dhuhrIq:null,  asr:"3:19",asrIq:null,  magh:"5:45",maghIq:"5:50",isha:"7:13",ishaIq:null,  ramadan:false,suhoor:null,iftar:null},
- {date:"Apr 22",day:"Wed",fajr:"5:23",fajrIq:null,  shuruq:"6:51",dhuhr:"12:18",dhuhrIq:null,  asr:"3:18",asrIq:null,  magh:"5:44",maghIq:null,  isha:"7:11",ishaIq:null,  ramadan:false,suhoor:null,iftar:null},
- {date:"Apr 23",day:"Thu",fajr:"5:24",fajrIq:null,  shuruq:"6:52",dhuhr:"12:17",dhuhrIq:null,  asr:"3:17",asrIq:null,  magh:"5:42",maghIq:null,  isha:"7:10",ishaIq:"7:20",ramadan:false,suhoor:null,iftar:null},
- {date:"Apr 24",day:"Fri",fajr:"5:25",fajrIq:"5:45",shuruq:"6:53",dhuhr:"12:17",dhuhrIq:null,  asr:"3:16",asrIq:null,  magh:"5:41",maghIq:null,  isha:"7:09",ishaIq:null,  ramadan:false,suhoor:null,iftar:null},
- {date:"Apr 25",day:"Sat",fajr:"5:26",fajrIq:null,  shuruq:"6:54",dhuhr:"12:17",dhuhrIq:null,  asr:"3:15",asrIq:null,  magh:"5:40",maghIq:"5:45",isha:"7:08",ishaIq:null,  ramadan:false,suhoor:null,iftar:null},
- {date:"Apr 26",day:"Sun",fajr:"5:26",fajrIq:null,  shuruq:"6:55",dhuhr:"12:17",dhuhrIq:null,  asr:"3:14",asrIq:null,  magh:"5:39",maghIq:null,  isha:"7:07",ishaIq:null,  ramadan:false,suhoor:null,iftar:null},
- {date:"Apr 27",day:"Mon",fajr:"5:27",fajrIq:null,  shuruq:"6:56",dhuhr:"12:17",dhuhrIq:null,  asr:"3:13",asrIq:null,  magh:"5:37",maghIq:null,  isha:"7:06",ishaIq:null,  ramadan:false,suhoor:null,iftar:null},
- {date:"Apr 28",day:"Tue",fajr:"5:28",fajrIq:null,  shuruq:"6:57",dhuhr:"12:17",dhuhrIq:null,  asr:"3:12",asrIq:null,  magh:"5:36",maghIq:null,  isha:"7:05",ishaIq:null,  ramadan:false,suhoor:null,iftar:null},
- {date:"Apr 29",day:"Wed",fajr:"5:29",fajrIq:null,  shuruq:"6:58",dhuhr:"12:16",dhuhrIq:null,  asr:"3:12",asrIq:null,  magh:"5:35",maghIq:"5:40",isha:"7:04",ishaIq:null,  ramadan:false,suhoor:null,iftar:null},
- {date:"Apr 30",day:"Thu",fajr:"5:30",fajrIq:"5:50",shuruq:"6:58",dhuhr:"12:16",dhuhrIq:null,  asr:"3:11",asrIq:null,  magh:"5:34",maghIq:null,  isha:"7:03",ishaIq:null,  ramadan:false,suhoor:null,iftar:null},
+ {date:"Apr 10",day:"Fri",fajr:"5:13",fajrIq:null,  shuruq:"6:40",dhuhr:"12:21",dhuhrIq:null,  asr:"3:31",asrIq:null,  magh:"6:00",maghIq:"6:05",isha:"7:27",ishaIq:"7:40",jummahKhutbah:null,jummahIqama:null,ramadan:false,suhoor:null,iftar:null},
+ {date:"Apr 11",day:"Sat",fajr:"5:14",fajrIq:null,  shuruq:"6:41",dhuhr:"12:20",dhuhrIq:null,  asr:"3:30",asrIq:null,  magh:"5:59",maghIq:null,  isha:"7:26",ishaIq:null,jummahKhutbah:null,jummahIqama:null,  ramadan:false,suhoor:null,iftar:null},
+ {date:"Apr 12",day:"Sun",fajr:"5:15",fajrIq:"5:35",shuruq:"6:42",dhuhr:"12:20",dhuhrIq:null,  asr:"3:29",asrIq:null,  magh:"5:57",maghIq:null,  isha:"7:24",ishaIq:null,jummahKhutbah:null,jummahIqama:null,  ramadan:false,suhoor:null,iftar:null},
+ {date:"Apr 13",day:"Mon",fajr:"5:16",fajrIq:null,  shuruq:"6:43",dhuhr:"12:20",dhuhrIq:null,  asr:"3:28",asrIq:null,  magh:"5:56",maghIq:null,  isha:"7:23",ishaIq:null,jummahKhutbah:null,jummahIqama:null,  ramadan:false,suhoor:null,iftar:null},
+ {date:"Apr 14",day:"Tue",fajr:"5:17",fajrIq:null,  shuruq:"6:44",dhuhr:"12:19",dhuhrIq:null,  asr:"3:27",asrIq:null,  magh:"5:54",maghIq:"6:00",isha:"7:22",ishaIq:null,jummahKhutbah:null,jummahIqama:null,  ramadan:false,suhoor:null,iftar:null},
+ {date:"Apr 15",day:"Wed",fajr:"5:17",fajrIq:null,  shuruq:"6:45",dhuhr:"12:19",dhuhrIq:null,  asr:"3:26",asrIq:null,  magh:"5:53",maghIq:null,  isha:"7:20",ishaIq:"7:30",jummahKhutbah:null,jummahIqama:null,ramadan:false,suhoor:null,iftar:null},
+ {date:"Apr 16",day:"Thu",fajr:"5:18",fajrIq:null,  shuruq:"6:46",dhuhr:"12:19",dhuhrIq:null,  asr:"3:25",asrIq:null,  magh:"5:52",maghIq:null,  isha:"7:19",ishaIq:null,jummahKhutbah:null,jummahIqama:null,  ramadan:false,suhoor:null,iftar:null},
+ {date:"Apr 17",day:"Fri",fajr:"5:19",fajrIq:null,  shuruq:"6:47",dhuhr:"12:19",dhuhrIq:null,  asr:"3:24",asrIq:null,  magh:"5:50",maghIq:"5:55",isha:"7:18",ishaIq:null,jummahKhutbah:null,jummahIqama:null,  ramadan:false,suhoor:null,iftar:null},
+ {date:"Apr 18",day:"Sat",fajr:"5:20",fajrIq:"5:40",shuruq:"6:48",dhuhr:"12:19",dhuhrIq:null,  asr:"3:23",asrIq:null,  magh:"5:49",maghIq:null,  isha:"7:16",ishaIq:null,jummahKhutbah:null,jummahIqama:null,  ramadan:false,suhoor:null,iftar:null},
+ {date:"Apr 19",day:"Sun",fajr:"5:21",fajrIq:null,  shuruq:"6:49",dhuhr:"12:18",dhuhrIq:null,  asr:"3:22",asrIq:null,  magh:"5:48",maghIq:null,  isha:"7:15",ishaIq:null,jummahKhutbah:null,jummahIqama:null,  ramadan:false,suhoor:null,iftar:null},
+ {date:"Apr 20",day:"Mon",fajr:"5:22",fajrIq:null,  shuruq:"6:49",dhuhr:"12:18",dhuhrIq:null,  asr:"3:20",asrIq:null,  magh:"5:46",maghIq:null,  isha:"7:14",ishaIq:null,jummahKhutbah:null,jummahIqama:null,  ramadan:false,suhoor:null,iftar:null},
+ {date:"Apr 21",day:"Tue",fajr:"5:22",fajrIq:null,  shuruq:"6:50",dhuhr:"12:18",dhuhrIq:null,  asr:"3:19",asrIq:null,  magh:"5:45",maghIq:"5:50",isha:"7:13",ishaIq:null,jummahKhutbah:null,jummahIqama:null,  ramadan:false,suhoor:null,iftar:null},
+ {date:"Apr 22",day:"Wed",fajr:"5:23",fajrIq:null,  shuruq:"6:51",dhuhr:"12:18",dhuhrIq:null,  asr:"3:18",asrIq:null,  magh:"5:44",maghIq:null,  isha:"7:11",ishaIq:null,jummahKhutbah:null,jummahIqama:null,  ramadan:false,suhoor:null,iftar:null},
+ {date:"Apr 23",day:"Thu",fajr:"5:24",fajrIq:null,  shuruq:"6:52",dhuhr:"12:17",dhuhrIq:null,  asr:"3:17",asrIq:null,  magh:"5:42",maghIq:null,  isha:"7:10",ishaIq:"7:20",jummahKhutbah:null,jummahIqama:null,ramadan:false,suhoor:null,iftar:null},
+ {date:"Apr 24",day:"Fri",fajr:"5:25",fajrIq:"5:45",shuruq:"6:53",dhuhr:"12:17",dhuhrIq:null,  asr:"3:16",asrIq:null,  magh:"5:41",maghIq:null,  isha:"7:09",ishaIq:null,jummahKhutbah:null,jummahIqama:null,  ramadan:false,suhoor:null,iftar:null},
+ {date:"Apr 25",day:"Sat",fajr:"5:26",fajrIq:null,  shuruq:"6:54",dhuhr:"12:17",dhuhrIq:null,  asr:"3:15",asrIq:null,  magh:"5:40",maghIq:"5:45",isha:"7:08",ishaIq:null,jummahKhutbah:null,jummahIqama:null,  ramadan:false,suhoor:null,iftar:null},
+ {date:"Apr 26",day:"Sun",fajr:"5:26",fajrIq:null,  shuruq:"6:55",dhuhr:"12:17",dhuhrIq:null,  asr:"3:14",asrIq:null,  magh:"5:39",maghIq:null,  isha:"7:07",ishaIq:null,jummahKhutbah:null,jummahIqama:null,  ramadan:false,suhoor:null,iftar:null},
+ {date:"Apr 27",day:"Mon",fajr:"5:27",fajrIq:null,  shuruq:"6:56",dhuhr:"12:17",dhuhrIq:null,  asr:"3:13",asrIq:null,  magh:"5:37",maghIq:null,  isha:"7:06",ishaIq:null,jummahKhutbah:null,jummahIqama:null,  ramadan:false,suhoor:null,iftar:null},
+ {date:"Apr 28",day:"Tue",fajr:"5:28",fajrIq:null,  shuruq:"6:57",dhuhr:"12:17",dhuhrIq:null,  asr:"3:12",asrIq:null,  magh:"5:36",maghIq:null,  isha:"7:05",ishaIq:null,jummahKhutbah:null,jummahIqama:null,  ramadan:false,suhoor:null,iftar:null},
+ {date:"Apr 29",day:"Wed",fajr:"5:29",fajrIq:null,  shuruq:"6:58",dhuhr:"12:16",dhuhrIq:null,  asr:"3:12",asrIq:null,  magh:"5:35",maghIq:"5:40",isha:"7:04",ishaIq:null,jummahKhutbah:null,jummahIqama:null,  ramadan:false,suhoor:null,iftar:null},
+ {date:"Apr 30",day:"Thu",fajr:"5:30",fajrIq:"5:50",shuruq:"6:58",dhuhr:"12:16",dhuhrIq:null,  asr:"3:11",asrIq:null,  magh:"5:34",maghIq:null,  isha:"7:03",ishaIq:null,jummahKhutbah:null,jummahIqama:null,  ramadan:false,suhoor:null,iftar:null},
 ];
 
 // ═══════════════════════════════════════
 // MAY 2026 — WMA Iqama times
 // ═══════════════════════════════════════
 const MAY_DATA=[
- {date:"May 1",day:"Fri", fajr:"5:30",fajrIq:"5:50",shuruq:"6:59", dhuhr:"12:16",dhuhrIq:"12:50", asr:"3:10",asrIq:"4:00", magh:"5:33",maghIq:"5:40", isha:"7:01",ishaIq:"7:20", ramadan:false,suhoor:null,iftar:null},
- {date:"May 2",day:"Sat", fajr:"5:31",fajrIq:null,shuruq:"7:00", dhuhr:"12:16",dhuhrIq:null, asr:"3:09",asrIq:null, magh:"5:31",maghIq:null, isha:"7:00",ishaIq:"7:15", ramadan:false,suhoor:null,iftar:null},
- {date:"May 3",day:"Sun", fajr:"5:32",fajrIq:null,shuruq:"7:01", dhuhr:"12:16",dhuhrIq:null, asr:"3:08",asrIq:null, magh:"5:30",maghIq:"5:35", isha:"7:00",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
- {date:"May 4",day:"Mon", fajr:"5:33",fajrIq:null,shuruq:"7:02", dhuhr:"12:16",dhuhrIq:null, asr:"3:07",asrIq:null, magh:"5:29",maghIq:null, isha:"6:59",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
- {date:"May 5",day:"Tue", fajr:"5:33",fajrIq:null,shuruq:"7:03", dhuhr:"12:16",dhuhrIq:null, asr:"3:06",asrIq:null, magh:"5:28",maghIq:null, isha:"6:58",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
- {date:"May 6",day:"Wed", fajr:"5:34",fajrIq:null,shuruq:"7:04", dhuhr:"12:16",dhuhrIq:null, asr:"3:05",asrIq:null, magh:"5:27",maghIq:null, isha:"6:57",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
- {date:"May 7",day:"Thu", fajr:"5:35",fajrIq:"5:55",shuruq:"7:05", dhuhr:"12:16",dhuhrIq:null, asr:"3:04",asrIq:null, magh:"5:26",maghIq:null, isha:"6:56",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
- {date:"May 8",day:"Fri", fajr:"5:36",fajrIq:null,shuruq:"7:06", dhuhr:"12:16",dhuhrIq:null, asr:"3:04",asrIq:null, magh:"5:25",maghIq:"5:30", isha:"6:55",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
- {date:"May 9",day:"Sat", fajr:"5:36",fajrIq:null,shuruq:"7:06", dhuhr:"12:15",dhuhrIq:null, asr:"3:03",asrIq:null, magh:"5:24",maghIq:null, isha:"6:54",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
- {date:"May 10",day:"Sun", fajr:"5:37",fajrIq:null,shuruq:"7:07", dhuhr:"12:15",dhuhrIq:null, asr:"3:02",asrIq:null, magh:"5:23",maghIq:null, isha:"6:53",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
- {date:"May 11",day:"Mon", fajr:"5:38",fajrIq:null,shuruq:"7:08", dhuhr:"12:15",dhuhrIq:null, asr:"3:01",asrIq:null, magh:"5:22",maghIq:null, isha:"6:52",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
- {date:"May 12",day:"Tue", fajr:"5:39",fajrIq:null,shuruq:"7:09", dhuhr:"12:15",dhuhrIq:null, asr:"3:00",asrIq:null, magh:"5:21",maghIq:null, isha:"6:52",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
- {date:"May 13",day:"Wed", fajr:"5:39",fajrIq:null,shuruq:"7:10", dhuhr:"12:15",dhuhrIq:null, asr:"3:00",asrIq:null, magh:"5:20",maghIq:"5:25", isha:"6:51",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
- {date:"May 14",day:"Thu", fajr:"5:40",fajrIq:"6:00",shuruq:"7:11", dhuhr:"12:15",dhuhrIq:null, asr:"2:59",asrIq:null, magh:"5:20",maghIq:null, isha:"6:50",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
- {date:"May 15",day:"Fri", fajr:"5:41",fajrIq:null,shuruq:"7:12", dhuhr:"12:15",dhuhrIq:null, asr:"2:58",asrIq:null, magh:"5:19",maghIq:null, isha:"6:50",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
- {date:"May 16",day:"Sat", fajr:"5:41",fajrIq:null,shuruq:"7:12", dhuhr:"12:15",dhuhrIq:null, asr:"2:58",asrIq:null, magh:"5:18",maghIq:null, isha:"6:49",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
- {date:"May 17",day:"Sun", fajr:"5:42",fajrIq:null,shuruq:"7:13", dhuhr:"12:15",dhuhrIq:null, asr:"2:57",asrIq:null, magh:"5:17",maghIq:null, isha:"6:48",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
- {date:"May 18",day:"Mon", fajr:"5:43",fajrIq:null,shuruq:"7:14", dhuhr:"12:15",dhuhrIq:null, asr:"2:56",asrIq:null, magh:"5:16",maghIq:null, isha:"6:47",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
- {date:"May 19",day:"Tue", fajr:"5:44",fajrIq:null,shuruq:"7:15", dhuhr:"12:15",dhuhrIq:null, asr:"2:56",asrIq:null, magh:"5:15",maghIq:"5:20", isha:"6:46",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
- {date:"May 20",day:"Wed", fajr:"5:44",fajrIq:null,shuruq:"7:16", dhuhr:"12:15",dhuhrIq:null, asr:"2:55",asrIq:null, magh:"5:15",maghIq:null, isha:"6:46",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
- {date:"May 21",day:"Thu", fajr:"5:45",fajrIq:"6:05",shuruq:"7:17", dhuhr:"12:16",dhuhrIq:null, asr:"2:55",asrIq:null, magh:"5:14",maghIq:null, isha:"6:46",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
- {date:"May 22",day:"Fri", fajr:"5:46",fajrIq:null,shuruq:"7:17", dhuhr:"12:16",dhuhrIq:null, asr:"2:54",asrIq:null, magh:"5:14",maghIq:null, isha:"6:45",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
- {date:"May 23",day:"Sat", fajr:"5:46",fajrIq:null,shuruq:"7:18", dhuhr:"12:16",dhuhrIq:null, asr:"2:54",asrIq:null, magh:"5:13",maghIq:null, isha:"6:45",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
- {date:"May 24",day:"Sun", fajr:"5:47",fajrIq:null,shuruq:"7:19", dhuhr:"12:16",dhuhrIq:null, asr:"2:53",asrIq:null, magh:"5:12",maghIq:null, isha:"6:44",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
- {date:"May 25",day:"Mon", fajr:"5:47",fajrIq:null,shuruq:"7:20", dhuhr:"12:16",dhuhrIq:null, asr:"2:53",asrIq:null, magh:"5:12",maghIq:null, isha:"6:44",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
- {date:"May 26",day:"Tue", fajr:"5:48",fajrIq:null,shuruq:"7:20", dhuhr:"12:16",dhuhrIq:null, asr:"2:52",asrIq:null, magh:"5:11",maghIq:null, isha:"6:44",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
- {date:"May 27",day:"Wed", fajr:"5:49",fajrIq:null,shuruq:"7:21", dhuhr:"12:16",dhuhrIq:null, asr:"2:52",asrIq:null, magh:"5:11",maghIq:null, isha:"6:43",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
- {date:"May 28",day:"Thu", fajr:"5:49",fajrIq:null,shuruq:"7:22", dhuhr:"12:16",dhuhrIq:null, asr:"2:51",asrIq:null, magh:"5:10",maghIq:"5:15", isha:"6:43",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
- {date:"May 29",day:"Fri", fajr:"5:50",fajrIq:"6:10",shuruq:"7:23", dhuhr:"12:16",dhuhrIq:null, asr:"2:51",asrIq:null, magh:"5:10",maghIq:null, isha:"6:42",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
- {date:"May 30",day:"Sat", fajr:"5:50",fajrIq:null,shuruq:"7:23", dhuhr:"12:16",dhuhrIq:null, asr:"2:51",asrIq:null, magh:"5:09",maghIq:null, isha:"6:42",ishaIq:null, ramadan:false,suhoor:null,iftar:null},
- {date:"May 31",day:"Sun", fajr:"5:51",fajrIq:null,shuruq:"7:24", dhuhr:"12:17",dhuhrIq:null, asr:"2:50",asrIq:null, magh:"5:09",maghIq:null, isha:"6:42",ishaIq:null, ramadan:false,suhoor:null,iftar:null}
+ {date:"May 1",day:"Fri", fajr:"5:30",fajrIq:"5:50",shuruq:"6:59", dhuhr:"12:16",dhuhrIq:"12:50", asr:"3:10",asrIq:"4:00", magh:"5:33",maghIq:"5:40", isha:"7:01",ishaIq:"7:20",jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 2",day:"Sat", fajr:"5:31",fajrIq:null,shuruq:"7:00", dhuhr:"12:16",dhuhrIq:null, asr:"3:09",asrIq:null, magh:"5:31",maghIq:null, isha:"7:00",ishaIq:"7:15",jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 3",day:"Sun", fajr:"5:32",fajrIq:null,shuruq:"7:01", dhuhr:"12:16",dhuhrIq:null, asr:"3:08",asrIq:null, magh:"5:30",maghIq:"5:35", isha:"7:00",ishaIq:null,jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 4",day:"Mon", fajr:"5:33",fajrIq:null,shuruq:"7:02", dhuhr:"12:16",dhuhrIq:null, asr:"3:07",asrIq:null, magh:"5:29",maghIq:null, isha:"6:59",ishaIq:null,jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 5",day:"Tue", fajr:"5:33",fajrIq:null,shuruq:"7:03", dhuhr:"12:16",dhuhrIq:null, asr:"3:06",asrIq:null, magh:"5:28",maghIq:null, isha:"6:58",ishaIq:null,jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 6",day:"Wed", fajr:"5:34",fajrIq:null,shuruq:"7:04", dhuhr:"12:16",dhuhrIq:null, asr:"3:05",asrIq:null, magh:"5:27",maghIq:null, isha:"6:57",ishaIq:null,jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 7",day:"Thu", fajr:"5:35",fajrIq:"5:55",shuruq:"7:05", dhuhr:"12:16",dhuhrIq:null, asr:"3:04",asrIq:null, magh:"5:26",maghIq:null, isha:"6:56",ishaIq:null,jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 8",day:"Fri", fajr:"5:36",fajrIq:null,shuruq:"7:06", dhuhr:"12:16",dhuhrIq:null, asr:"3:04",asrIq:null, magh:"5:25",maghIq:"5:30", isha:"6:55",ishaIq:null,jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 9",day:"Sat", fajr:"5:36",fajrIq:null,shuruq:"7:06", dhuhr:"12:15",dhuhrIq:null, asr:"3:03",asrIq:null, magh:"5:24",maghIq:null, isha:"6:54",ishaIq:null,jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 10",day:"Sun", fajr:"5:37",fajrIq:null,shuruq:"7:07", dhuhr:"12:15",dhuhrIq:null, asr:"3:02",asrIq:null, magh:"5:23",maghIq:null, isha:"6:53",ishaIq:null,jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 11",day:"Mon", fajr:"5:38",fajrIq:null,shuruq:"7:08", dhuhr:"12:15",dhuhrIq:null, asr:"3:01",asrIq:null, magh:"5:22",maghIq:null, isha:"6:52",ishaIq:null,jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 12",day:"Tue", fajr:"5:39",fajrIq:null,shuruq:"7:09", dhuhr:"12:15",dhuhrIq:null, asr:"3:00",asrIq:null, magh:"5:21",maghIq:null, isha:"6:52",ishaIq:null,jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 13",day:"Wed", fajr:"5:39",fajrIq:null,shuruq:"7:10", dhuhr:"12:15",dhuhrIq:null, asr:"3:00",asrIq:null, magh:"5:20",maghIq:"5:25", isha:"6:51",ishaIq:null,jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 14",day:"Thu", fajr:"5:40",fajrIq:"6:00",shuruq:"7:11", dhuhr:"12:15",dhuhrIq:null, asr:"2:59",asrIq:null, magh:"5:20",maghIq:null, isha:"6:50",ishaIq:null,jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 15",day:"Fri", fajr:"5:41",fajrIq:null,shuruq:"7:12", dhuhr:"12:15",dhuhrIq:null, asr:"2:58",asrIq:null, magh:"5:19",maghIq:null, isha:"6:50",ishaIq:null,jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 16",day:"Sat", fajr:"5:41",fajrIq:null,shuruq:"7:12", dhuhr:"12:15",dhuhrIq:null, asr:"2:58",asrIq:null, magh:"5:18",maghIq:null, isha:"6:49",ishaIq:null,jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 17",day:"Sun", fajr:"5:42",fajrIq:null,shuruq:"7:13", dhuhr:"12:15",dhuhrIq:null, asr:"2:57",asrIq:null, magh:"5:17",maghIq:null, isha:"6:48",ishaIq:null,jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 18",day:"Mon", fajr:"5:43",fajrIq:null,shuruq:"7:14", dhuhr:"12:15",dhuhrIq:null, asr:"2:56",asrIq:null, magh:"5:16",maghIq:null, isha:"6:47",ishaIq:null,jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 19",day:"Tue", fajr:"5:44",fajrIq:null,shuruq:"7:15", dhuhr:"12:15",dhuhrIq:null, asr:"2:56",asrIq:null, magh:"5:15",maghIq:"5:20", isha:"6:46",ishaIq:null,jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 20",day:"Wed", fajr:"5:44",fajrIq:null,shuruq:"7:16", dhuhr:"12:15",dhuhrIq:null, asr:"2:55",asrIq:null, magh:"5:15",maghIq:null, isha:"6:46",ishaIq:null,jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 21",day:"Thu", fajr:"5:45",fajrIq:"6:05",shuruq:"7:17", dhuhr:"12:16",dhuhrIq:null, asr:"2:55",asrIq:null, magh:"5:14",maghIq:null, isha:"6:46",ishaIq:null,jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 22",day:"Fri", fajr:"5:46",fajrIq:null,shuruq:"7:17", dhuhr:"12:16",dhuhrIq:null, asr:"2:54",asrIq:null, magh:"5:14",maghIq:null, isha:"6:45",ishaIq:null,jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 23",day:"Sat", fajr:"5:46",fajrIq:null,shuruq:"7:18", dhuhr:"12:16",dhuhrIq:null, asr:"2:54",asrIq:null, magh:"5:13",maghIq:null, isha:"6:45",ishaIq:null,jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 24",day:"Sun", fajr:"5:47",fajrIq:null,shuruq:"7:19", dhuhr:"12:16",dhuhrIq:null, asr:"2:53",asrIq:null, magh:"5:12",maghIq:null, isha:"6:44",ishaIq:null,jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 25",day:"Mon", fajr:"5:47",fajrIq:null,shuruq:"7:20", dhuhr:"12:16",dhuhrIq:null, asr:"2:53",asrIq:null, magh:"5:12",maghIq:null, isha:"6:44",ishaIq:null,jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 26",day:"Tue", fajr:"5:48",fajrIq:null,shuruq:"7:20", dhuhr:"12:16",dhuhrIq:null, asr:"2:52",asrIq:null, magh:"5:11",maghIq:null, isha:"6:44",ishaIq:null,jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 27",day:"Wed", fajr:"5:49",fajrIq:null,shuruq:"7:21", dhuhr:"12:16",dhuhrIq:null, asr:"2:52",asrIq:null, magh:"5:11",maghIq:null, isha:"6:43",ishaIq:null,jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 28",day:"Thu", fajr:"5:49",fajrIq:null,shuruq:"7:22", dhuhr:"12:16",dhuhrIq:null, asr:"2:51",asrIq:null, magh:"5:10",maghIq:"5:15", isha:"6:43",ishaIq:null,jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 29",day:"Fri", fajr:"5:50",fajrIq:"6:10",shuruq:"7:23", dhuhr:"12:16",dhuhrIq:null, asr:"2:51",asrIq:null, magh:"5:10",maghIq:null, isha:"6:42",ishaIq:null,jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 30",day:"Sat", fajr:"5:50",fajrIq:null,shuruq:"7:23", dhuhr:"12:16",dhuhrIq:null, asr:"2:51",asrIq:null, magh:"5:09",maghIq:null, isha:"6:42",ishaIq:null,jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null},
+ {date:"May 31",day:"Sun", fajr:"5:51",fajrIq:null,shuruq:"7:24", dhuhr:"12:17",dhuhrIq:null, asr:"2:50",asrIq:null, magh:"5:09",maghIq:null, isha:"6:42",ishaIq:null,jummahKhutbah:null,jummahIqama:null, ramadan:false,suhoor:null,iftar:null}
 ];
 
 // ═══════════════════════════════════════
 // RESOLVE CARRY-FORWARD IQAMA TIMES
 // ═══════════════════════════════════════
 function resolveIqamas(data){
-    let lF="5:20",lD="1:50",lA="5:40",lM="8:40",lI="10:05";
+    let lF="5:20",lD="1:50",lA="5:40",lM="8:40",lI="10:05",lJK="1:40",lJI="1:50";
     return data.map(r=>{
         if(r.fajrIq)lF=r.fajrIq;
         if(r.dhuhrIq)lD=r.dhuhrIq;
         if(r.asrIq)lA=r.asrIq;
         if(r.maghIq)lM=r.maghIq;
         if(r.ishaIq)lI=r.ishaIq;
-        return{...r,fajrIqR:lF,dhuhrIqR:lD,asrIqR:lA,maghIqR:lM,ishaIqR:lI};
+        if(r.jummahKhutbah)lJK=r.jummahKhutbah;
+        if(r.jummahIqama)lJI=r.jummahIqama;
+        return{...r,fajrIqR:lF,dhuhrIqR:lD,asrIqR:lA,maghIqR:lM,ishaIqR:lI,jummahKhutbahR:lJK,jummahIqamaR:lJI};
     });
 }
 // ═══════════════════════════════════════
@@ -895,7 +941,15 @@ function getMonthGroups(){
     const order=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     const groups={};
     ALL_DATA.forEach(r=>{const m=r.date.split(' ')[0];if(!groups[m])groups[m]=[];groups[m].push(r);});
-    return order.filter(m=>groups[m]).map(m=>({key:m.toLowerCase(),label:m,data:groups[m]}));
+    // Only include current month + future months (hide past months once new month begins)
+    const now=new Date();
+    const thisMonthIdx=now.getMonth();
+    const thisYear=now.getFullYear();
+    return order.filter(m=>groups[m]).filter(m=>{
+        const mIdx=order.indexOf(m);
+        // Data assumed to be for current year (2026 baseline). Show only months >= current month.
+        return mIdx>=thisMonthIdx||thisYear<2026;
+    }).map(m=>({key:m.toLowerCase(),label:m,data:groups[m]}));
 }
 const MONTH_GROUPS=getMonthGroups();
 
@@ -960,6 +1014,7 @@ function updateClock(){
 
 function updateHome(now){
     const rec=todayRec(),tmr=tmrRec();
+    const isFriday=rec&&rec.day==='Fri';
     const badge=document.getElementById('modeBadge');
     if(rec&&rec.ramadan){
         badge.className='mode-badge ramadan';
@@ -974,17 +1029,30 @@ function updateHome(now){
         document.getElementById('hijriDate').textContent=_hijri;
         document.getElementById('ramadanRow').style.display='none';
     }
+    // Jumu'ah notice — Fridays only, with both Khutbah + Iqama times
     const jn=document.getElementById('jummahNotice');
-    if(jn)jn.style.display=(rec&&rec.day==='Fri')?'block':'none';
+    if(jn&&isFriday&&rec){
+        jn.style.display='flex';
+        document.getElementById('jummahNoticeBody').innerHTML=`Khutbah at <strong style="color:var(--text)">${rec.jummahKhutbahR} PM</strong> · Iqama at <strong style="color:var(--text)">${rec.jummahIqamaR} PM</strong>`;
+    }else if(jn){
+        jn.style.display='none';
+    }
+    // Info tab — dynamic Jumu'ah line
+    const infoJ=document.getElementById('infoJumuah');
+    if(infoJ&&rec)infoJ.textContent=`Khutbah ${rec.jummahKhutbahR} PM · Iqama ${rec.jummahIqamaR} PM`;
     if(!rec)return;
 
+    // On Fridays: Dhuhr row is REPLACED by a dedicated Jumu'ah row (with Jumu'ah Iqama time)
     const prayers=[
         {name:'Fajr',   emoji:'🌅',iqama:rec.fajrIqR, pm:false},
-        {name:'Dhuhr',  emoji:'☀️', iqama:rec.dhuhrIqR,pm:true},
+        isFriday
+          ? {name:"Jumu'ah", emoji:'🕌', iqama:rec.jummahIqamaR, pm:true, isJumuah:true, khutbah:rec.jummahKhutbahR, trackAs:'Dhuhr'}
+          : {name:'Dhuhr',  emoji:'☀️', iqama:rec.dhuhrIqR, pm:true},
         {name:'Asr',    emoji:'🌤️', iqama:rec.asrIqR,  pm:true},
         {name:'Maghrib',emoji:'🌆',iqama:rec.maghIqR, pm:true,isIftar:rec.ramadan},
         {name:'Isha',   emoji:'🌃',iqama:rec.ishaIqR, pm:true},
     ];
+    // Find next prayer
     let nextP=null;
     for(const p of prayers){
         const t=parseTo24(p.iqama,p.pm);if(!t)continue;
@@ -996,9 +1064,18 @@ function updateHome(now){
         if(t){const pd=makeDate(t.h,t.m,1);nextP={name:'Fajr',emoji:'🌅',iqama:tmr.fajrIqR,pm:false,date:pd};}
     }
     if(nextP){
-        document.getElementById('nextName').textContent=nextP.name+(nextP.isIftar?' / Iftar':'');
+        let displayName=nextP.name;
+        if(nextP.isIftar)displayName=`${nextP.name} / Iftar`;
+        document.getElementById('nextName').textContent=displayName;
         document.getElementById('nextIqamaTime').textContent=`${nextP.iqama} ${nextP.pm?'PM':'AM'}`;
         document.getElementById('nextCountdown').textContent=fmtCd(nextP.date-now);
+        const kEl=document.getElementById('nextKhutbah');
+        if(nextP.isJumuah){
+            kEl.style.display='block';
+            kEl.innerHTML=`🕌 Khutbah at <strong style="color:var(--gold-light)">${nextP.khutbah} PM</strong>`;
+        }else{
+            kEl.style.display='none';
+        }
     }
     // Iftar countdown
     if(rec.ramadan&&rec.iftar){
@@ -1008,7 +1085,6 @@ function updateHome(now){
         const diff=iftDt-now;
         document.getElementById('iftarCountSub').textContent=diff>0?`${fmtCd(diff)} remaining`:'✅ Iftar time has passed';
     }
-    // Suhoor — always show TODAY's suhoor time only
     if(rec.ramadan&&rec.suhoor)document.getElementById('suhoorTimeDisplay').textContent=`${rec.suhoor} AM`;
 
     // Prayer list
@@ -1020,20 +1096,24 @@ function updateHome(now){
         const pd=makeDate(t.h,t.m);
         const passed=pd<=now,isCur=!passed&&!nSet;
         if(isCur)nSet=true;
-        const extra=p.isIftar?' / Iftar':'';
-        const tw=(p.name==='Isha'&&rec.ramadan)?' + Taraweeh':'';
+        let nameHtml=p.name;
+        if(p.isIftar)nameHtml+=' / Iftar';
+        if(p.name==='Isha'&&rec.ramadan)nameHtml+=' + Taraweeh';
+        const subTxt=p.isJumuah?'Friday congregation':'Congregation time';
+        const khutbahHtml=p.isJumuah?`<div class="pr-khutbah">Khutbah ${p.khutbah} PM</div>`:'';
         const row=document.createElement('div');
-        row.className=`pr-row${passed?' passed':''}${isCur?' current':''}`;
-        const isPrayed=getTodayPrayed().includes(p.name);
+        row.className=`pr-row${passed?' passed':''}${isCur?' current':''}${p.isJumuah?' jumuah':''}`;
+        const trackName=p.trackAs||p.name;
+        const isPrayed=getTodayPrayed().includes(trackName);
         if(isPrayed)row.classList.add('prayed');
-        row.innerHTML=`<div class="pr-left"><div class="pr-icon">${p.emoji}</div><div><div class="pr-name">${p.name}${extra}${tw}</div><div class="pr-sub">Congregation time</div></div></div><div class="pr-right" style="display:flex;align-items:center;gap:10px"><div style="text-align:right"><div class="pr-iqama">${p.iqama} ${p.pm?'PM':'AM'}</div>${isCur&&!isPrayed?'<div class="now-pill">NEXT ›</div>':''}</div><div class="pr-check${isPrayed?' checked':''}" onclick="togglePrayer('${p.name}',this)" title="Mark as prayed"></div></div>`;
+        row.innerHTML=`<div class="pr-left"><div class="pr-icon">${p.emoji}</div><div><div class="pr-name">${nameHtml}</div><div class="pr-sub">${subTxt}</div></div></div><div class="pr-right" style="display:flex;align-items:center;gap:10px"><div style="text-align:right"><div class="pr-iqama">${p.iqama} ${p.pm?'PM':'AM'}</div>${khutbahHtml}${isCur&&!isPrayed?'<div class="now-pill">NEXT ›</div>':''}</div><div class="pr-check${isPrayed?' checked':''}" onclick="togglePrayer('${trackName}',this)" title="Mark as prayed"></div></div>`;
         list.appendChild(row);
     }
     if(rec.ramadan&&rec.suhoor){
         const row=document.createElement('div');
         row.className='pr-row';
-        row.style.cssText='border-color:rgba(15,155,142,.3);background:linear-gradient(135deg,rgba(15,155,142,.07),rgba(255,255,255,.04))';
-        row.innerHTML=`<div class="pr-left"><div class="pr-icon">🌙</div><div><div class="pr-name" style="color:var(--emerald)">Suhoor Ends</div><div class="pr-sub">Today's last time to eat</div></div></div><div class="pr-right"><div class="pr-iqama" style="color:var(--emerald)">${rec.suhoor} AM</div></div>`;
+        row.style.cssText='border-color:rgba(106,172,222,.3);background:linear-gradient(135deg,rgba(106,172,222,.07),rgba(255,255,255,.04))';
+        row.innerHTML=`<div class="pr-left"><div class="pr-icon">🌙</div><div><div class="pr-name" style="color:var(--sky)">Suhoor Ends</div><div class="pr-sub">Today's last time to eat</div></div></div><div class="pr-right"><div class="pr-iqama" style="color:var(--sky)">${rec.suhoor} AM</div></div>`;
         list.appendChild(row);
     }
 }
@@ -1222,16 +1302,20 @@ async function scheduleNotifications() {
     notifScheduled = true;
     const rec = todayRec(); if (!rec) return;
     const now = new Date();
+    const isFriday = rec.day === 'Fri';
 
     // Get service worker registration — REQUIRED for iOS
     const swReg = await getSWRegistration();
 
+    // On Fridays, replace Dhuhr with Jumu'ah using the dedicated Jumu'ah Iqama time
     const prayers = [
-        {name:'Fajr',   iqama:rec.fajrIqR, pm:false},
-        {name:'Dhuhr',  iqama:rec.dhuhrIqR,pm:true},
-        {name:'Asr',    iqama:rec.asrIqR,  pm:true},
-        {name:'Maghrib',iqama:rec.maghIqR, pm:true},
-        {name:'Isha',   iqama:rec.ishaIqR, pm:true}
+        {name:'Fajr',                                iqama:rec.fajrIqR, pm:false},
+        isFriday
+          ? {name:"Jumu'ah",                          iqama:rec.jummahIqamaR, pm:true, khutbah:rec.jummahKhutbahR}
+          : {name:'Dhuhr',                            iqama:rec.dhuhrIqR, pm:true},
+        {name:'Asr',                                 iqama:rec.asrIqR,  pm:true},
+        {name:'Maghrib',                             iqama:rec.maghIqR, pm:true},
+        {name:'Isha',                                iqama:rec.ishaIqR, pm:true}
     ];
 
     // Build notification list for SW postMessage (iOS method)
@@ -1245,7 +1329,9 @@ async function scheduleNotifications() {
 
         if (delay > 0 && delay < 86400000) {
             const title = `🕌 ${p.name}${notifMinutesBefore > 0 ? ` in ${notifMinutesBefore} min` : ''}`;
-            const body = `Iqama at ${p.iqama} ${p.pm ? 'PM' : 'AM'} — Hamilton Jamia Mosque`;
+            const body = p.khutbah
+                ? `Iqama at ${p.iqama} PM · Khutbah at ${p.khutbah} PM — Hamilton Jamia Mosque`
+                : `Iqama at ${p.iqama} ${p.pm ? 'PM' : 'AM'} — Hamilton Jamia Mosque`;
 
             // Add to SW schedule (works on iOS)
             swNotifications.push({ title, body, tag: p.name, delayMs: delay });
@@ -1389,6 +1475,7 @@ function buildCalCards(){
     let scrollTarget=null;
     data.forEach(r=>{
         const isToday=toDate(r.date).toDateString()===nowStr;
+        const isFri=r.day==='Fri';
         const isOdd=r.ramadan&&[21,23,25,27,29].includes(r.ramadanDay);
         const isLast10=r.ramadan&&r.ramadanDay>=21;
         let badge='';
@@ -1398,12 +1485,16 @@ function buildCalCards(){
         else if(r.ramadanDay===30)badge='🎊 Last Night';
         else if(isOdd)badge='✨ Odd Night';
         else if(isLast10)badge='🌙 Last 10 Nights';
-        else if(r.day==='Fri')badge="🕌 Jumu'ah";
+        else if(isFri)badge=`🕌 Jumu'ah · Khutbah ${r.jummahKhutbahR} PM`;
         let cls='cal-card';
         if(isToday)cls+=' today-card open';
         else if(isOdd)cls+=' odd-night';
         else if(isLast10)cls+=' last-ten';
         const dayLabel=r.ramadanDay?`Ramadan Day ${r.ramadanDay}`:'';
+        // Friday Dhuhr cell — gold-tinted Jumu'ah indicator with Khutbah sub-line
+        const dhuhrCell=isFri
+            ?`<div class="cal-cell jumuah-cell"><div class="cal-cell-lbl">🕌 Jumu'ah Iqama</div><div class="cal-cell-val iqama-v">${r.jummahIqamaR} PM</div><div class="cal-cell-extra">Khutbah ${r.jummahKhutbahR} PM</div></div>`
+            :`<div class="cal-cell"><div class="cal-cell-lbl">Dhuhr Iqama</div><div class="cal-cell-val iqama-v">${r.dhuhrIqR} PM</div></div>`;
         const card=document.createElement('div');
         card.className=cls;
         card.innerHTML=`<div class="cal-hdr" onclick="this.parentElement.classList.toggle('open')">
@@ -1415,7 +1506,7 @@ function buildCalCards(){
                 ${r.suhoor?`<div class="cal-cell"><div class="cal-cell-lbl">Suhoor Ends</div><div class="cal-cell-val suhoor-v">${r.suhoor} AM</div></div>`:''}
                 <div class="cal-cell"><div class="cal-cell-lbl">Fajr Iqama</div><div class="cal-cell-val iqama-v">${r.fajrIqR} AM</div></div>
                 <div class="cal-cell"><div class="cal-cell-lbl">Shuruq</div><div class="cal-cell-val">${r.shuruq} AM</div></div>
-                <div class="cal-cell"><div class="cal-cell-lbl">Dhuhr Iqama</div><div class="cal-cell-val iqama-v">${r.dhuhrIqR} PM</div></div>
+                ${dhuhrCell}
                 <div class="cal-cell"><div class="cal-cell-lbl">Asr Iqama</div><div class="cal-cell-val iqama-v">${r.asrIqR} PM</div></div>
                 <div class="cal-cell"><div class="cal-cell-lbl">Maghrib Iqama</div><div class="cal-cell-val iqama-v">${r.maghIqR} PM</div></div>
                 ${r.iftar?`<div class="cal-cell"><div class="cal-cell-lbl">Iftar</div><div class="cal-cell-val iftar-v">${r.iftar} PM</div></div>`:''}
@@ -1433,17 +1524,22 @@ function buildCalTable(){
     const nowStr=new Date().toDateString();
     const isRam=data.some(r=>r.ramadan);
     document.getElementById('tableHead').innerHTML=isRam
-        ?`<tr><th>Day</th><th>Date</th><th>Suhoor</th><th>Fajr Iqama</th><th>Dhuhr Iqama</th><th>Asr Iqama</th><th>Iftar</th><th>Maghrib Iqama</th><th>Isha Iqama</th></tr>`
-        :`<tr><th>Date</th><th>Day</th><th>Fajr Iqama</th><th>Dhuhr Iqama</th><th>Asr Iqama</th><th>Maghrib Iqama</th><th>Isha Iqama</th></tr>`;
+        ?`<tr><th>Day</th><th>Date</th><th>Suhoor</th><th>Fajr Iqama</th><th>Dhuhr / Jumu'ah</th><th>Asr Iqama</th><th>Iftar</th><th>Maghrib Iqama</th><th>Isha Iqama</th></tr>`
+        :`<tr><th>Date</th><th>Day</th><th>Fajr Iqama</th><th>Dhuhr / Jumu'ah</th><th>Asr Iqama</th><th>Maghrib Iqama</th><th>Isha Iqama</th></tr>`;
     const tbody=document.getElementById('tableBody');tbody.innerHTML='';
     data.forEach(r=>{
         const isToday=toDate(r.date).toDateString()===nowStr;
+        const isFri=r.day==='Fri';
         const tr=document.createElement('tr');
         if(isToday)tr.className='today-row';
+        // Friday Dhuhr cell — gold-tinted Jumu'ah Iqama with Khutbah sub-line
+        const dhuhrCellHtml=isFri
+            ?`<td class="jumuah-c">${r.jummahIqamaR} PM<span class="jumuah-tag">🕌 Jumu'ah</span><span class="khutbah-tag">Khutbah ${r.jummahKhutbahR} PM</span></td>`
+            :`<td class="iqama-c">${r.dhuhrIqR} PM</td>`;
         if(isRam){
-            tr.innerHTML=`<td>${r.ramadanDay||'—'}</td><td style="font-family:'Plus Jakarta Sans',sans-serif;color:var(--text)">${r.day} ${r.date}</td><td class="suhoor-c">${r.suhoor||'—'}</td><td class="iqama-c">${r.fajrIqR} AM</td><td class="iqama-c">${r.dhuhrIqR} PM</td><td class="iqama-c">${r.asrIqR} PM</td><td class="iftar-c">${r.iftar||'—'}</td><td class="iqama-c">${r.maghIqR} PM</td><td class="iqama-c">${r.ishaIqR} PM</td>`;
+            tr.innerHTML=`<td>${r.ramadanDay||'—'}</td><td style="font-family:'Plus Jakarta Sans',sans-serif;color:var(--text)">${r.day} ${r.date}</td><td class="suhoor-c">${r.suhoor||'—'}</td><td class="iqama-c">${r.fajrIqR} AM</td>${dhuhrCellHtml}<td class="iqama-c">${r.asrIqR} PM</td><td class="iftar-c">${r.iftar||'—'}</td><td class="iqama-c">${r.maghIqR} PM</td><td class="iqama-c">${r.ishaIqR} PM</td>`;
         }else{
-            tr.innerHTML=`<td style="font-family:'Plus Jakarta Sans',sans-serif;color:var(--text)">${r.date}</td><td style="font-family:'Plus Jakarta Sans',sans-serif">${r.day}</td><td class="iqama-c">${r.fajrIqR} AM</td><td class="iqama-c">${r.dhuhrIqR} PM</td><td class="iqama-c">${r.asrIqR} PM</td><td class="iqama-c">${r.maghIqR} PM</td><td class="iqama-c">${r.ishaIqR} PM</td>`;
+            tr.innerHTML=`<td style="font-family:'Plus Jakarta Sans',sans-serif;color:var(--text)">${r.date}</td><td style="font-family:'Plus Jakarta Sans',sans-serif">${r.day}</td><td class="iqama-c">${r.fajrIqR} AM</td>${dhuhrCellHtml}<td class="iqama-c">${r.asrIqR} PM</td><td class="iqama-c">${r.maghIqR} PM</td><td class="iqama-c">${r.ishaIqR} PM</td>`;
         }
         tbody.appendChild(tr);
     });
