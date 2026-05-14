@@ -11,46 +11,28 @@
     <link rel="manifest" href="/prayer-times/manifest.json">
     <link rel="apple-touch-icon" href="/prayer-times/icon-192.png">
     <link rel="icon" type="image/png" sizes="192x192" href="/prayer-times/icon-192.png">
-    <title>Waikato Prayer Times</title>
+    <title>Hamilton Jamia · Obsidian</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root{
-            /* ── LUXURY NAVY + GOLD PALETTE ── */
-            --bg:        #080e1a;   /* deepest navy — like a clear night sky */
-            --bg2:       #0c1422;   /* slightly lifted */
-            --surface:   #101d30;   /* card background */
-            --surface2:  #162540;   /* elevated / modal surface */
-            --surface3:  #1d2f4e;   /* highest elevation */
-
-            --border:       rgba(201,168,76,0.1);
-            --border-hi:    rgba(201,168,76,0.22);
-            --border-soft:  rgba(255,255,255,0.06);
-
-            /* Gold — the hero accent */
-            --gold:         #c9a84c;
-            --gold-light:   #e8c96e;
-            --gold-bright:  #f5d97a;
-            --gold-dim:     rgba(201,168,76,0.12);
-            --gold-glow:    rgba(201,168,76,0.25);
-            --gold-border:  rgba(201,168,76,0.3);
-
-            /* Rose — iftar accent */
-            --rose:         #e8826a;
-            --rose-dim:     rgba(232,130,106,0.12);
-            --rose-border:  rgba(232,130,106,0.28);
-
-            /* Sky — suhoor accent (cool, pre-dawn) */
-            --sky:          #6aacde;
-            --sky-dim:      rgba(106,172,222,0.1);
-            --sky-border:   rgba(106,172,222,0.25);
-
-            /* Text */
-            --text:     #f0ead6;   /* warm parchment ivory */
-            --text-2:   rgba(240,234,214,0.6);
-            --text-3:   rgba(240,234,214,0.32);
-            --text-4:   rgba(240,234,214,0.16);
-
-            --r:18px; --r-sm:12px; --r-xs:8px;
+            --bg:#0a0d12;
+            --bg-mid:#12161e;
+            --surface:#181d28;
+            --surface-2:#222937;
+            --border-soft:rgba(255,255,255,.06);
+            --gold-dim:rgba(255,176,116,.10);
+            --gold-border:rgba(255,176,116,.30);
+            --gold:#ffb074;
+            --gold-light:#ffc89a;
+            --gold-bright:#ffd9b3;
+            --teal:#5eead4;
+            --sky:#7dd3fc;
+            --red:#fb7185;
+            --text:#f1f5f9;
+            --text-2:rgba(241,245,249,.72);
+            --text-3:rgba(241,245,249,.42);
+            --r-sm:12px;
+            --r-md:18px;
         }
 
         *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -162,7 +144,7 @@
 
         /* ── NEXT PRAYER HERO ──────────────── */
         /* ── REDESIGN: Compact header + integrated date ── */
-        .header-compact{padding:14px 16px 10px;background:linear-gradient(180deg,rgba(201,168,76,.04) 0%,transparent 100%)}
+        .header-compact{padding:14px 16px 10px;background:linear-gradient(180deg,rgba(94,234,212,.04) 0%,transparent 100%);border-bottom:1px solid var(--border-soft)}
         .header-compact .masjid-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
         .header-compact .masjid-name{font-family:'Amiri',serif;font-size:1.4em;color:var(--text);font-weight:600;line-height:1.15;letter-spacing:.2px}
         .header-compact .masjid-sub{font-size:.7em;color:var(--text-3);margin-top:1px;letter-spacing:.3px}
@@ -181,6 +163,8 @@
         .streak-ring-mini .rbg{fill:none;stroke:var(--border-soft);stroke-width:3}
         .streak-ring-mini .rfg{fill:none;stroke:var(--gold);stroke-width:3;stroke-linecap:round;transition:stroke-dashoffset .6s ease}
         .streak-ring-mini .rtx{transform:rotate(90deg);transform-origin:center;font-size:11px;fill:var(--gold);font-weight:700;font-family:'JetBrains Mono',monospace}
+        .streak-ring-mini{position:relative;width:44px;height:44px}
+        .streak-ring-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.7em;font-weight:700;color:var(--gold);font-family:'JetBrains Mono',monospace;pointer-events:none;letter-spacing:-.3px}
         .streak-info{flex:1}
         .streak-title{font-size:.65em;color:var(--text-3);text-transform:uppercase;letter-spacing:1px;font-weight:600}
         .streak-status{font-size:.95em;color:var(--text);font-weight:700;margin-top:1px}
@@ -188,8 +172,8 @@
         .streak-sub{font-size:.7em;color:var(--text-2);margin-top:2px}
 
         /* ── REDESIGN: Hero countdown (BIG) ── */
-        .hero-cd{margin:0 16px 14px;padding:24px 22px 26px;background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,.12) 0%,transparent 70%),linear-gradient(150deg,var(--surface),var(--bg-mid));border:1px solid var(--gold-border);border-radius:var(--r-md);position:relative;overflow:hidden}
-        .hero-cd::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+        .hero-cd{margin:0 16px 14px;padding:24px 22px 26px;background:radial-gradient(ellipse at 50% 0%,rgba(94,234,212,.10) 0%,transparent 70%),linear-gradient(150deg,var(--surface),var(--bg-mid));border:1px solid var(--gold-border);border-radius:var(--r-md);position:relative;overflow:hidden;box-shadow:0 8px 28px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,176,116,.08)}
+        .hero-cd::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--teal) 30%,var(--gold) 70%,transparent)}
         .hero-cd-label{font-size:.62em;color:var(--gold);font-weight:700;letter-spacing:2px;text-transform:uppercase;display:flex;align-items:center;gap:6px}
         .hero-cd-name{font-family:'Amiri',serif;font-size:2.6em;color:var(--text);font-weight:700;line-height:1;margin:8px 0 4px}
         .hero-cd-time{font-family:'JetBrains Mono',monospace;font-size:1.05em;color:var(--gold-light);font-weight:500;letter-spacing:.5px}
@@ -614,7 +598,28 @@
         .apt-emoji{font-size:2.8em;display:block;margin-bottom:10px}
         .apt-title{font-size:1.05em;font-weight:700;color:var(--gold-bright);margin-bottom:5px}
         .apt-sub{font-size:.78em;color:var(--text-2)}
+        .jump-today-fab{position:fixed;bottom:84px;right:18px;z-index:50;display:none;align-items:center;gap:6px;padding:10px 16px;background:linear-gradient(135deg,var(--gold),#8B6914);color:#1a1100;border:none;border-radius:24px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.78em;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(201,168,76,.4);transition:transform .2s}
+        .jump-today-fab:active{transform:scale(.95)}
+        .jump-today-fab.show{display:inline-flex}
+        .fab-icon{font-size:1em;line-height:1}
+        .fab-label{font-size:.95em}
     </style>
+<style>
+
+/* OBSIDIAN: dual-accent (teal + peach) overrides */
+.hijri-pill{background:rgba(94,234,212,.10);border-color:rgba(94,234,212,.32);color:var(--teal)}
+.streak-chip{background:linear-gradient(135deg,rgba(94,234,212,.06),rgba(255,176,116,.04))}
+.streak-ring-mini .rfg{stroke:var(--teal)}
+.streak-ring-text{color:var(--teal)}
+.streak-status .num{color:var(--teal)}
+.tl-prayer.passed .tl-dot{background:var(--teal);border-color:var(--teal)}
+.tl-prayer.passed::after{background:rgba(94,234,212,.5)}
+.tl-prayer.passed .tl-name{color:rgba(94,234,212,.7)}
+.hero-cd-label{color:var(--teal)}
+.alerts-icon{background:rgba(94,234,212,.10);border-color:rgba(94,234,212,.28)}
+.mode-pill{background:rgba(94,234,212,.10);border-color:rgba(94,234,212,.30);color:var(--teal)}
+
+</style>
 </head>
 <body>
 <div class="app">
@@ -701,14 +706,14 @@
         <div class="view active" id="homeView">
             <div class="gap"></div>
 
-            <!-- STREAK CHIP -->
+            <!-- STREAK CHIP — fixed ring -->
             <div class="streak-chip">
                 <div class="streak-ring-mini">
-                    <svg width="38" height="38" viewBox="0 0 38 38">
-                        <circle class="rbg" cx="19" cy="19" r="15"/>
-                        <circle class="rfg" id="ringFill" cx="19" cy="19" r="15" stroke-dasharray="94.25" stroke-dashoffset="94.25"/>
-                        <text class="rtx" id="ringText" x="19" y="23" text-anchor="middle">0/5</text>
+                    <svg width="44" height="44" viewBox="0 0 44 44" style="overflow:visible">
+                        <circle class="rbg" cx="22" cy="22" r="18" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="3"/>
+                        <circle class="rfg" id="ringFill" cx="22" cy="22" r="18" fill="none" stroke="var(--gold)" stroke-width="3" stroke-linecap="round" stroke-dasharray="113.1" stroke-dashoffset="113.1" transform="rotate(-90 22 22)"/>
                     </svg>
+                    <div class="streak-ring-text" id="ringText">0/5</div>
                 </div>
                 <div class="streak-info">
                     <div class="streak-title">Today's Prayers</div>
@@ -798,6 +803,10 @@
 
         <!-- CALENDAR VIEW -->
         <div class="view" id="calendarView">
+            <button class="jump-today-fab" id="jumpTodayFab" onclick="jumpToToday()" title="Jump to today">
+                <span class="fab-icon">📅</span>
+                <span class="fab-label">Today</span>
+            </button>
             <div class="gap"></div>
             <div class="month-tabs" id="monthTabsContainer"></div>
             <div class="sub-tabs">
@@ -1289,6 +1298,52 @@ function updateHome(now){
     }
 }
 
+
+
+function jumpToToday(){
+    const nowStr=new Date().toDateString();
+    // Find the month group containing today, switch to it if needed
+    const todayMonthIdx=new Date().getMonth();
+    const todayMonthKey=['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'][todayMonthIdx];
+    if(currentMonth!==todayMonthKey){
+        const grp=MONTH_GROUPS.find(g=>g.key===todayMonthKey);
+        if(grp){
+            currentMonth=todayMonthKey;
+            buildCalendar();
+            // Update active tab pill
+            document.querySelectorAll('.month-tab').forEach(t=>{
+                t.classList.toggle('active',t.dataset.month===todayMonthKey);
+            });
+        }
+    }
+    setTimeout(()=>{
+        const cards=document.querySelectorAll('#calCards .cal-card');
+        for(const c of cards){
+            const hdr=c.querySelector('.cal-day-name');
+            if(hdr && hdr.textContent.includes('Today')){
+                c.classList.add('open');
+                c.scrollIntoView({behavior:'smooth',block:'start'});
+                // Brief highlight pulse
+                c.style.transition='box-shadow .4s';
+                c.style.boxShadow='0 0 0 3px var(--gold-bright)';
+                setTimeout(()=>{c.style.boxShadow='';},1500);
+                break;
+            }
+        }
+    },200);
+}
+
+// Show FAB only when calendar view is active and user isn't already on today
+function updateJumpFab(){
+    const fab=document.getElementById('jumpTodayFab');
+    if(!fab)return;
+    const calView=document.getElementById('calendarView');
+    if(calView && calView.classList.contains('active')){
+        fab.classList.add('show');
+    }else{
+        fab.classList.remove('show');
+    }
+}
 
 // ═══════════════════════════════════════
 // PRAYER TRACKER
@@ -1838,8 +1893,7 @@ function buildCalCards(){
             <div class="cal-grid">
                 ${r.suhoor?`<div class="cal-cell"><div class="cal-cell-lbl">Suhoor Ends</div><div class="cal-cell-val suhoor-v">${r.suhoor} AM</div></div>`:''}
                 <div class="cal-cell"><div class="cal-cell-lbl">Fajr Iqama</div><div class="cal-cell-val iqama-v">${r.fajrIqR} AM</div></div>
-                <div class="cal-cell"><div class="cal-cell-lbl">Shuruq</div><div class="cal-cell-val">${r.shuruq} AM</div></div>
-                ${dhuhrCell}
+${dhuhrCell}
                 <div class="cal-cell"><div class="cal-cell-lbl">Asr Iqama</div><div class="cal-cell-val iqama-v">${r.asrIqR} PM</div></div>
                 <div class="cal-cell"><div class="cal-cell-lbl">Maghrib Iqama</div><div class="cal-cell-val iqama-v">${r.maghIqR} PM</div></div>
                 ${r.iftar?`<div class="cal-cell"><div class="cal-cell-lbl">Iftar</div><div class="cal-cell-val iftar-v">${r.iftar} PM</div></div>`:''}
@@ -1848,7 +1902,13 @@ function buildCalCards(){
         container.appendChild(card);
         if(isToday)scrollTarget=card;
     });
-    if(scrollTarget)setTimeout(()=>scrollTarget.scrollIntoView({behavior:'smooth',block:'center'}),300);
+    if(scrollTarget)setTimeout(()=>{
+        scrollTarget.scrollIntoView({behavior:'smooth',block:'start'});
+        // Pulse highlight so user clearly sees where today is
+        scrollTarget.style.transition='box-shadow .5s';
+        scrollTarget.style.boxShadow='0 0 0 3px var(--gold-bright)';
+        setTimeout(()=>{scrollTarget.style.boxShadow='';},1800);
+    },300);
 }
 
 function buildCalTable(){
@@ -1902,7 +1962,12 @@ window.switchNav=function(view,el){
     document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
     document.getElementById(view+'View').classList.add('active');
     document.getElementById('mainContent').scrollTo({top:0,behavior:'instant'});
-    if(view==='calendar'){buildMonthTabs();}
+    if(view==='calendar'){
+        buildMonthTabs();
+        // Always jump to today when calendar opens
+        setTimeout(()=>{ try{ jumpToToday(); }catch(e){console.warn(e);} },200);
+    }
+    setTimeout(updateJumpFab,50);
 };
 window.switchMonth=function(m,el){
     currentMonth=m;
