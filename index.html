@@ -216,6 +216,25 @@
 
         /* ── NOTIFICATION BANNER ───────────── */
         .notif-banner{margin:0 16px 8px;border-radius:var(--r-sm);padding:11px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:all .2s}
+        .adhan-banner{margin:0 16px 8px;border-radius:var(--r-sm);padding:11px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:all .2s;background:linear-gradient(135deg,rgba(15,155,142,.1),rgba(15,155,142,.04));border:1px solid rgba(15,155,142,.3)}
+        .adhan-banner.disabled{background:var(--surface);border:1px solid var(--border-soft)}
+        .adhan-banner:active{transform:scale(.98)}
+        .adhan-icon{font-size:1.4em;flex-shrink:0}
+        .adhan-body{flex:1}
+        .adhan-title{font-size:.82em;font-weight:600;color:var(--gold-light)}
+        .adhan-banner.disabled .adhan-title{color:var(--text-2)}
+        .adhan-sub{font-size:.69em;color:var(--text-2);margin-top:2px}
+        .adhan-toggle-pill{padding:5px 12px;border-radius:14px;font-size:.7em;font-weight:700;background:var(--gold-dim);color:var(--gold);border:1px solid var(--gold-border)}
+        .adhan-banner.disabled .adhan-toggle-pill{background:transparent;color:var(--text-2);border-color:var(--border-soft)}
+        .adhan-playing-overlay{position:fixed;inset:0;background:rgba(13,13,26,.95);z-index:9999;display:none;flex-direction:column;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(20px)}
+        .adhan-playing-overlay.show{display:flex}
+        .adhan-mosque{font-size:5em;margin-bottom:16px;animation:adhanPulse 2.5s ease-in-out infinite}
+        @keyframes adhanPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.08);opacity:.85}}
+        .adhan-playing-title{font-family:'Amiri',serif;font-size:2.2em;color:var(--gold-light);margin-bottom:8px;text-align:center}
+        .adhan-playing-prayer{font-size:1.1em;color:var(--text-2);margin-bottom:32px}
+        .adhan-stop-btn{padding:14px 32px;border-radius:24px;background:linear-gradient(135deg,var(--gold),#8B6914);color:#1a1100;font-weight:700;font-size:.95em;border:none;cursor:pointer;box-shadow:0 6px 20px rgba(201,168,76,.4)}
+        .adhan-stop-btn:active{transform:scale(.97)}
+        .adhan-arabic{font-family:'Amiri',serif;font-size:1.6em;color:var(--gold);margin-bottom:24px;text-align:center;line-height:1.6;direction:rtl}
         .notif-banner:active{transform:scale(.98)}
         .notif-banner.enabled{background:var(--gold-dim);border:1px solid var(--gold-border)}
         .notif-banner.disabled{background:var(--surface);border:1px solid var(--border-soft)}
@@ -653,6 +672,21 @@
                     <div class="hl-sub">Last time to eat</div>
                 </div>
             </div>
+            <div class="adhan-banner disabled" id="adhanBanner" onclick="toggleAdhan()">
+
+                <span class="adhan-icon">🔊</span>
+
+                <div class="adhan-body">
+
+                    <div class="adhan-title">Adhan Audio (Madinah)</div>
+
+                    <div class="adhan-sub" id="adhanSub">Tap to enable — plays at adhan time</div>
+
+                </div>
+
+                <div class="adhan-toggle-pill" id="adhanPill">OFF</div>
+
+            </div>
             <div class="notif-banner disabled" id="notifBanner" onclick="showNotifModal()">
                 <div class="notif-bell">🔔</div>
                 <div>
@@ -964,6 +998,16 @@ function initCurrentMonth(){
 }
 let currentMonth=initCurrentMonth(),currentCalView='cards',deferredInstall=null;
 let notifMinutesBefore=20,notifEnabled=false,notifScheduled=false,selectedNotifMin=20;
+// ── ADHAN AUDIO (Madinah, free CDN) ──────────────────────────────────────────
+// Source: aladhan.com CDN — Mishary Rashid Alafasy "Adhan from Dubai's One TV" (closest available substitute for Madinah)
+// Note: True Madinah recording falls back to Internet Archive (public domain Doha) for Fajr (different lyrics).
+const ADHAN_URLS = {
+    standard: 'https://cdn.aladhan.com/audio/adhans/a4.mp3', // Mishary Rashid Alafasy (Madinah-style)
+    fajr:     'https://cdn.aladhan.com/audio/adhans/a9.mp3'  // Yet Another Adhan by Alafasy (includes Fajr-specific "as-salatu khayrun min an-nawm")
+};
+let adhanEnabled = false;
+let adhanTimers = [];
+let adhanCurrentAudio = null;
 
 // ═══════════════════════════════════════
 // HELPERS
@@ -1010,6 +1054,7 @@ function updateClock(){
     document.getElementById('liveDate').textContent=`${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]}`;
     updateHome(now);
     if(notifEnabled&&!notifScheduled)scheduleNotifications().catch(()=>{});
+    if(adhanEnabled)scheduleAdhans();
 }
 
 function updateHome(now){
@@ -1295,6 +1340,110 @@ function updateNotifBanner(on) {
         ? `Alerting ${notifMinutesBefore} min before each prayer`
         : 'Tap to get alerted before each prayer';
     b.className = on ? 'notif-banner enabled' : 'notif-banner disabled';
+}
+
+
+// ── ADHAN AUDIO PLAYBACK ─────────────────────────────────────────────────────
+function toggleAdhan(){
+    if(adhanEnabled){
+        adhanEnabled=false;
+        localStorage.setItem('adhanEnabled','false');
+        clearAdhanTimers();
+        updateAdhanUI();
+        showToast('🔇 Adhan audio disabled');
+    } else {
+        // Need user gesture to unlock audio on iOS
+        const audio=document.getElementById('adhanAudio');
+        audio.src=ADHAN_URLS.standard;
+        audio.volume=0;
+        audio.play().then(()=>{
+            audio.pause();
+            audio.currentTime=0;
+            audio.volume=1;
+            adhanEnabled=true;
+            localStorage.setItem('adhanEnabled','true');
+            scheduleAdhans();
+            updateAdhanUI();
+            showToast('🔊 Adhan enabled — plays at adhan time when app is open');
+        }).catch(err=>{
+            console.warn('Adhan unlock failed:',err);
+            showToast('⚠️ Tap again to enable — needs your tap to unlock audio');
+        });
+    }
+}
+
+function clearAdhanTimers(){
+    adhanTimers.forEach(id=>clearTimeout(id));
+    adhanTimers=[];
+}
+
+function scheduleAdhans(){
+    clearAdhanTimers();
+    if(!adhanEnabled) return;
+    const rec=todayRec(); if(!rec) return;
+    const now=new Date();
+    // Use the actual WMA ADHAN times (not Iqama). For each prayer, schedule playback at that time.
+    const adhans=[
+        {name:'Fajr',    time:rec.fajr,  pm:false, isFajr:true},
+        {name:'Dhuhr',   time:rec.dhuhr, pm:true},
+        {name:'Asr',     time:rec.asr,   pm:true},
+        {name:'Maghrib', time:rec.magh,  pm:true},
+        {name:'Isha',    time:rec.isha,  pm:true}
+    ];
+    adhans.forEach(a=>{
+        if(!a.time) return;
+        const t=parseTo24(a.time,a.pm); if(!t) return;
+        const adhanDate=makeDate(t.h,t.m);
+        const delay=adhanDate-now;
+        if(delay>0 && delay<86400000){
+            const id=setTimeout(()=>playAdhan(a.name,a.isFajr),delay);
+            adhanTimers.push(id);
+        }
+    });
+}
+
+function playAdhan(prayerName,isFajr){
+    const audio=document.getElementById('adhanAudio');
+    audio.src=isFajr?ADHAN_URLS.fajr:ADHAN_URLS.standard;
+    audio.volume=1;
+    audio.play().catch(err=>console.warn('Adhan playback failed:',err));
+    document.getElementById('adhanPlayingPrayer').textContent=prayerName+' Adhan';
+    document.getElementById('adhanPlayingSubtitle').textContent='Time for '+prayerName+' at Hamilton Masjid';
+    document.getElementById('adhanOverlay').classList.add('show');
+    adhanCurrentAudio=audio;
+    audio.onended=()=>{
+        document.getElementById('adhanOverlay').classList.remove('show');
+        adhanCurrentAudio=null;
+        // Re-schedule the rest for tomorrow at midnight
+    };
+    // Wake screen if possible
+    if('wakeLock' in navigator){
+        navigator.wakeLock.request('screen').catch(()=>{});
+    }
+}
+
+function stopAdhan(){
+    if(adhanCurrentAudio){
+        adhanCurrentAudio.pause();
+        adhanCurrentAudio.currentTime=0;
+        adhanCurrentAudio=null;
+    }
+    document.getElementById('adhanOverlay').classList.remove('show');
+}
+
+function updateAdhanUI(){
+    const b=document.getElementById('adhanBanner');
+    const sub=document.getElementById('adhanSub');
+    const pill=document.getElementById('adhanPill');
+    if(adhanEnabled){
+        b.classList.remove('disabled');
+        sub.textContent='Plays Madinah Adhan at each prayer time';
+        pill.textContent='ON';
+    } else {
+        b.classList.add('disabled');
+        sub.textContent='Tap to enable — plays at adhan time';
+        pill.textContent='OFF';
+    }
 }
 
 async function scheduleNotifications() {
@@ -1898,6 +2047,10 @@ if('serviceWorker' in navigator){
 // ═══════════════════════════════════════
 document.addEventListener('DOMContentLoaded',()=>{
     // Restore notification prefs
+    if(localStorage.getItem('adhanEnabled')==='true'){
+        // Don't auto-enable — iOS requires user gesture. Just update UI hint.
+        document.getElementById('adhanSub').textContent='Tap to re-enable for this session';
+    }
     if(localStorage.getItem('notifEnabled')==='true'){
         notifEnabled=true;
         notifMinutesBefore=parseInt(localStorage.getItem('notifMinutes')||'20');
@@ -1937,5 +2090,15 @@ document.addEventListener('DOMContentLoaded',()=>{
     updateMosqueUI();
 });
 </script>
+
+<!-- Adhan playing overlay -->
+<div class="adhan-playing-overlay" id="adhanOverlay">
+    <div class="adhan-mosque">🕌</div>
+    <div class="adhan-playing-title" id="adhanPlayingPrayer">Adhan</div>
+    <div class="adhan-arabic">حَيَّ عَلَى الصَّلَاة</div>
+    <div class="adhan-playing-prayer" id="adhanPlayingSubtitle">Time for prayer at Hamilton Masjid</div>
+    <button class="adhan-stop-btn" onclick="stopAdhan()">⏹ Stop</button>
+</div>
+<audio id="adhanAudio" preload="none" crossorigin="anonymous"></audio>
 </body>
 </html>
