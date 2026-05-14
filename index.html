@@ -161,6 +161,77 @@
         .scroll-top-btn.show{opacity:1;transform:translateY(0);pointer-events:auto}
 
         /* ── NEXT PRAYER HERO ──────────────── */
+        /* ── REDESIGN: Compact header + integrated date ── */
+        .header-compact{padding:14px 16px 10px;background:linear-gradient(180deg,rgba(201,168,76,.04) 0%,transparent 100%)}
+        .header-compact .masjid-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+        .header-compact .masjid-name{font-family:'Amiri',serif;font-size:1.4em;color:var(--text);font-weight:600;line-height:1.15;letter-spacing:.2px}
+        .header-compact .masjid-sub{font-size:.7em;color:var(--text-3);margin-top:1px;letter-spacing:.3px}
+        .header-compact .hijri-pill{display:flex;align-items:center;gap:6px;padding:6px 11px;border-radius:16px;background:var(--gold-dim);border:1px solid var(--gold-border);font-size:.68em;font-weight:600;color:var(--gold-light);white-space:nowrap}
+        .header-compact .hijri-pill-icon{font-size:1.1em;line-height:1}
+        .header-compact .date-row{display:flex;align-items:baseline;gap:8px;margin-top:8px;padding-top:9px;border-top:1px solid var(--border-soft)}
+        .header-compact .date-day{font-size:.92em;color:var(--text);font-weight:600}
+        .header-compact .date-arabic{font-size:.72em;color:var(--gold-light);font-style:italic}
+        .header-compact .mode-pill{margin-left:auto;font-size:.62em;padding:3px 10px;border-radius:10px;background:rgba(15,155,142,.12);border:1px solid rgba(15,155,142,.3);color:rgba(15,180,160,.95);font-weight:600;letter-spacing:.4px;text-transform:uppercase}
+        .header-compact .mode-pill.ramadan{background:var(--gold-dim);border-color:var(--gold-border);color:var(--gold-light)}
+
+        /* ── REDESIGN: Streak chip ── */
+        .streak-chip{display:flex;align-items:center;gap:10px;margin:0 16px 14px;padding:10px 14px;background:linear-gradient(135deg,rgba(201,168,76,.06),rgba(15,155,142,.04));border:1px solid var(--border-soft);border-radius:var(--r-sm)}
+        .streak-ring-mini{width:38px;height:38px;flex-shrink:0;position:relative}
+        .streak-ring-mini svg{transform:rotate(-90deg)}
+        .streak-ring-mini .rbg{fill:none;stroke:var(--border-soft);stroke-width:3}
+        .streak-ring-mini .rfg{fill:none;stroke:var(--gold);stroke-width:3;stroke-linecap:round;transition:stroke-dashoffset .6s ease}
+        .streak-ring-mini .rtx{transform:rotate(90deg);transform-origin:center;font-size:11px;fill:var(--gold);font-weight:700;font-family:'JetBrains Mono',monospace}
+        .streak-info{flex:1}
+        .streak-title{font-size:.65em;color:var(--text-3);text-transform:uppercase;letter-spacing:1px;font-weight:600}
+        .streak-status{font-size:.95em;color:var(--text);font-weight:700;margin-top:1px}
+        .streak-status .num{color:var(--gold-bright)}
+        .streak-sub{font-size:.7em;color:var(--text-2);margin-top:2px}
+
+        /* ── REDESIGN: Hero countdown (BIG) ── */
+        .hero-cd{margin:0 16px 14px;padding:24px 22px 26px;background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,.12) 0%,transparent 70%),linear-gradient(150deg,var(--surface),var(--bg-mid));border:1px solid var(--gold-border);border-radius:var(--r-md);position:relative;overflow:hidden}
+        .hero-cd::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+        .hero-cd-label{font-size:.62em;color:var(--gold);font-weight:700;letter-spacing:2px;text-transform:uppercase;display:flex;align-items:center;gap:6px}
+        .hero-cd-name{font-family:'Amiri',serif;font-size:2.6em;color:var(--text);font-weight:700;line-height:1;margin:8px 0 4px}
+        .hero-cd-time{font-family:'JetBrains Mono',monospace;font-size:1.05em;color:var(--gold-light);font-weight:500;letter-spacing:.5px}
+        .hero-cd-time .ampm{font-size:.7em;color:var(--text-3);margin-left:4px}
+        .hero-cd-time .sep{color:var(--text-3);margin:0 6px}
+        .hero-cd-khutbah{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:4px 9px;border-radius:10px;background:var(--gold-dim);border:1px solid var(--gold-border);font-size:.7em;color:var(--gold-light);font-weight:600}
+        .hero-cd-divider{margin:18px -22px 16px;height:1px;background:linear-gradient(90deg,transparent,var(--border-soft),transparent)}
+        .hero-cd-countdown{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+        .hero-cd-cd-label{font-size:.62em;color:var(--text-3);text-transform:uppercase;letter-spacing:1.4px;font-weight:600}
+        .hero-cd-cd-time{font-family:'JetBrains Mono',monospace;font-size:2em;color:var(--gold-bright);font-weight:600;letter-spacing:1.5px;line-height:1;text-shadow:0 0 20px rgba(245,206,107,.2)}
+
+        /* ── REDESIGN: Timeline strip showing all 5 prayers ── */
+        .timeline{display:flex;gap:0;margin:0 16px 14px;padding:14px 6px;background:var(--surface);border:1px solid var(--border-soft);border-radius:var(--r-sm);position:relative;overflow:hidden}
+        .tl-prayer{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;position:relative;padding:0 2px;cursor:default}
+        .tl-prayer:not(:last-child)::after{content:'';position:absolute;right:0;top:50%;width:100%;height:2px;background:var(--border-soft);z-index:0;transform:translateY(50%)}
+        .tl-prayer.passed::after{background:rgba(15,155,142,.4)}
+        .tl-dot{width:11px;height:11px;border-radius:50%;background:var(--surface-2);border:2px solid var(--border-soft);position:relative;z-index:1;transition:all .3s}
+        .tl-prayer.passed .tl-dot{background:rgba(15,155,142,.7);border-color:rgba(15,155,142,.9)}
+        .tl-prayer.current .tl-dot{background:var(--gold);border-color:var(--gold-bright);box-shadow:0 0 14px var(--gold-bright);animation:tl-pulse 2s ease-in-out infinite}
+        @keyframes tl-pulse{0%,100%{box-shadow:0 0 14px var(--gold-bright)}50%{box-shadow:0 0 22px var(--gold-bright)}}
+        .tl-name{font-size:.62em;color:var(--text-3);font-weight:600;letter-spacing:.2px;text-transform:uppercase}
+        .tl-prayer.passed .tl-name{color:rgba(15,180,160,.7)}
+        .tl-prayer.current .tl-name{color:var(--gold-bright)}
+        .tl-time{font-family:'JetBrains Mono',monospace;font-size:.62em;color:var(--text-3);font-weight:500}
+        .tl-prayer.current .tl-time{color:var(--text);font-weight:600}
+
+        /* ── REDESIGN: Combined Alerts card ── */
+        .alerts-card{margin:0 16px 14px;background:var(--surface);border:1px solid var(--border-soft);border-radius:var(--r-sm);overflow:hidden}
+        .alerts-header{padding:11px 14px;border-bottom:1px solid var(--border-soft);display:flex;align-items:center;gap:8px}
+        .alerts-header-title{font-size:.65em;color:var(--text-3);font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+        .alerts-row{display:flex;align-items:center;gap:12px;padding:12px 14px;cursor:pointer;transition:background .2s}
+        .alerts-row:active{background:rgba(255,255,255,.02)}
+        .alerts-row:not(:last-child){border-bottom:1px solid var(--border-soft)}
+        .alerts-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.05em;flex-shrink:0;background:rgba(15,155,142,.1);border:1px solid rgba(15,155,142,.25)}
+        .alerts-row.on .alerts-icon{background:var(--gold-dim);border-color:var(--gold-border)}
+        .alerts-body{flex:1;min-width:0}
+        .alerts-title{font-size:.83em;color:var(--text);font-weight:600}
+        .alerts-row.disabled .alerts-title{color:var(--text-2)}
+        .alerts-sub{font-size:.68em;color:var(--text-3);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .alerts-toggle{flex-shrink:0;padding:5px 12px;border-radius:14px;font-size:.65em;font-weight:700;background:transparent;border:1px solid var(--border-soft);color:var(--text-3);min-width:42px;text-align:center}
+        .alerts-row.on .alerts-toggle{background:var(--gold-dim);border-color:var(--gold-border);color:var(--gold)}
+
         .next-hero{
             margin:14px 16px 8px;
             background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);
@@ -600,40 +671,26 @@
         </div>
     </div>
 
-    <!-- HEADER -->
-    <div class="header">
-        <div class="header-top">
+    <!-- COMPACT HEADER -->
+    <div class="header-compact">
+        <div class="masjid-row">
             <div>
-                <div class="masjid-name">🕌 Hamilton Jamia Mosque</div>
-                <div class="masjid-sub">921 Heaphy Terrace · Hamilton NZ</div>
+                <div class="masjid-name">Hamilton Jamia</div>
+                <div class="masjid-sub">921 Heaphy Terrace · Hamilton</div>
             </div>
-            <div class="moon-wrap">
-                <div class="moon-icon">🌙</div>
-                <div class="moon-label">1447H</div>
+            <div class="hijri-pill">
+                <span class="hijri-pill-icon">🌙</span>
+                <span id="hijriDate">1447H</span>
             </div>
         </div>
-        <div id="mosqueSelector" style="display:none;margin-bottom:10px">
+        <div class="date-row">
+            <div class="date-day" id="liveDate">Loading...</div>
+            <div class="date-arabic" id="hijriDateFull">Dhul Qaʿdah 1447H</div>
+            <div class="mode-pill" id="modeBadge">Daily Salaat</div>
+        </div>
+        <div id="mosqueSelector" style="display:none;margin-top:10px">
             <div style="font-size:.58em;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-3);font-weight:600;margin-bottom:6px">🕌 Select Mosque</div>
             <div id="mosqueSelectorBtns" style="display:flex;gap:6px;flex-wrap:wrap"></div>
-        </div>
-        <div class="header-info">
-            <div class="hi-left">
-                <div class="clock-date" id="liveDate">Loading...</div>
-                <div class="clock-hijri" id="hijriDate">Shawwal / Dhul Qaʿdah 1447H</div>
-                <div id="modeBadge" class="mode-badge normal">🕌 Daily Salaat</div>
-            </div>
-        </div>
-        <div class="tracker-ring-wrap" id="trackerRingWrap">
-            <svg class="ring-svg" width="46" height="46" viewBox="0 0 46 46">
-                <circle class="ring-bg" cx="23" cy="23" r="20"/>
-                <circle class="ring-fill" id="ringFill" cx="23" cy="23" r="20"/>
-                <text class="ring-text" id="ringText" x="23" y="23">0/5</text>
-            </svg>
-            <div class="tracker-info">
-                <div class="tracker-label">Today's Prayers</div>
-                <div class="tracker-status" id="trackerStatus"><span id="trackerPrayed">0</span> of 5 prayed</div>
-                <div class="tracker-streak" id="trackerStreak"></div>
-            </div>
         </div>
     </div>
 
@@ -643,21 +700,44 @@
         <!-- HOME VIEW -->
         <div class="view active" id="homeView">
             <div class="gap"></div>
-            <div class="next-hero">
-                <div class="nh-top">
-                    <div class="nh-label">⏰ Next Prayer</div>
-                    <div class="nh-name" id="nextName">Loading...</div>
-                    <div class="nh-time-row">
-                        <div class="nh-time" id="nextIqamaTime">--:--</div>
-                        <div class="nh-time-lbl">Iqama time</div>
-                    </div>
-                    <div class="nh-khutbah" id="nextKhutbah" style="display:none"></div>
+
+            <!-- STREAK CHIP -->
+            <div class="streak-chip">
+                <div class="streak-ring-mini">
+                    <svg width="38" height="38" viewBox="0 0 38 38">
+                        <circle class="rbg" cx="19" cy="19" r="15"/>
+                        <circle class="rfg" id="ringFill" cx="19" cy="19" r="15" stroke-dasharray="94.25" stroke-dashoffset="94.25"/>
+                        <text class="rtx" id="ringText" x="19" y="23" text-anchor="middle">0/5</text>
+                    </svg>
                 </div>
-                <div class="nh-bottom">
-                    <div class="nh-cd-lbl">Iqama begins in</div>
-                    <div class="nh-cd" id="nextCountdown">--:--:--</div>
+                <div class="streak-info">
+                    <div class="streak-title">Today's Prayers</div>
+                    <div class="streak-status"><span class="num" id="trackerPrayed">0</span> of 5 prayed</div>
+                    <div class="streak-sub" id="trackerStreak">Start your streak today</div>
                 </div>
             </div>
+
+            <!-- HERO COUNTDOWN -->
+            <div class="hero-cd">
+                <div class="hero-cd-label">⏰ Next Prayer</div>
+                <div class="hero-cd-name" id="nextName">Loading…</div>
+                <div class="hero-cd-time">
+                    <span id="nextIqamaTime">--:--</span><span class="ampm" id="nextIqamaAmpm"></span>
+                    <span class="sep">·</span>
+                    <span style="font-size:.85em;color:var(--text-3)">Iqama</span>
+                </div>
+                <div class="hero-cd-khutbah" id="nextKhutbah" style="display:none"></div>
+                <div class="hero-cd-divider"></div>
+                <div class="hero-cd-countdown">
+                    <div class="hero-cd-cd-label">Begins in</div>
+                    <div class="hero-cd-cd-time" id="nextCountdown">--:--:--</div>
+                </div>
+            </div>
+
+            <!-- TIMELINE STRIP (all 5 prayers at a glance) -->
+            <div class="timeline" id="timeline"></div>
+
+            <!-- RAMADAN BAR -->
             <div class="ramadan-row" id="ramadanRow" style="display:none">
                 <div class="hl-card iftar" id="iftarCard">
                     <span class="hl-icon">🍽️</span>
@@ -672,28 +752,28 @@
                     <div class="hl-sub">Last time to eat</div>
                 </div>
             </div>
-            <div class="adhan-banner disabled" id="adhanBanner" onclick="toggleAdhan()">
 
-                <span class="adhan-icon">🔊</span>
-
-                <div class="adhan-body">
-
-                    <div class="adhan-title">Adhan Audio (Madinah)</div>
-
-                    <div class="adhan-sub" id="adhanSub">Tap to enable — plays at adhan time</div>
-
+            <!-- COMBINED ALERTS CARD -->
+            <div class="alerts-card">
+                <div class="alerts-header">
+                    <span class="alerts-header-title">🔔 Alerts</span>
                 </div>
-
-                <div class="adhan-toggle-pill" id="adhanPill">OFF</div>
-
-            </div>
-            <div class="notif-banner disabled" id="notifBanner" onclick="showNotifModal()">
-                <div class="notif-bell">🔔</div>
-                <div>
-                    <div class="notif-title" id="notifBannerTitle">Enable Prayer Notifications</div>
-                    <div class="notif-sub" id="notifBannerSub">Tap to get alerted before each prayer</div>
+                <div class="alerts-row disabled" id="adhanBanner" onclick="toggleAdhan()">
+                    <div class="alerts-icon">🔊</div>
+                    <div class="alerts-body">
+                        <div class="alerts-title">Adhan Audio · Madinah</div>
+                        <div class="alerts-sub" id="adhanSub">Tap to enable — plays at adhan time</div>
+                    </div>
+                    <div class="alerts-toggle" id="adhanPill">OFF</div>
                 </div>
-                <div class="notif-arrow">›</div>
+                <div class="alerts-row disabled" id="notifBanner" onclick="showNotifModal()">
+                    <div class="alerts-icon">🔔</div>
+                    <div class="alerts-body">
+                        <div class="alerts-title" id="notifBannerTitle">Prayer Notifications</div>
+                        <div class="alerts-sub" id="notifBannerSub">Tap to get alerted before each prayer</div>
+                    </div>
+                    <div class="alerts-toggle" id="notifPill">OFF</div>
+                </div>
             </div>
             <div class="jummah-notice" id="jummahNotice" style="display:none">
                 <span style="font-size:1.3em">🕌</span>
@@ -998,16 +1078,30 @@ function initCurrentMonth(){
 }
 let currentMonth=initCurrentMonth(),currentCalView='cards',deferredInstall=null;
 let notifMinutesBefore=20,notifEnabled=false,notifScheduled=false,selectedNotifMin=20;
-// ── ADHAN AUDIO (Madinah, free CDN) ──────────────────────────────────────────
-// Source: aladhan.com CDN — Mishary Rashid Alafasy "Adhan from Dubai's One TV" (closest available substitute for Madinah)
-// Note: True Madinah recording falls back to Internet Archive (public domain Doha) for Fajr (different lyrics).
-const ADHAN_URLS = {
-    standard: 'https://cdn.aladhan.com/audio/adhans/a4.mp3', // Mishary Rashid Alafasy (Madinah-style)
-    fajr:     'https://cdn.aladhan.com/audio/adhans/a9.mp3'  // Yet Another Adhan by Alafasy (includes Fajr-specific "as-salatu khayrun min an-nawm")
+// ── ADHAN AUDIO (Madinah-style, with fallback chain) ─────────────────────────
+// Primary source: Internet Archive — Public Domain Mark 1.0 (hot-linkable, no CORS issues)
+// Fallback: aladhan.com CDN (Mishary Rashid Alafasy reciter)
+// Each prayer has an array of URLs; we try them in order until one works.
+// Try LOCAL files first (zero network = bulletproof + offline). User uploads MP3s to /prayer-times/adhan/ folder.
+// Falls back to Internet Archive (Public Domain Mark 1.0) and aladhan.com CDN.
+const ADHAN_FALLBACK_CHAIN = {
+    fajr: [
+        './adhan/fajr.mp3',
+        '/prayer-times/adhan/fajr.mp3',
+        'https://archive.org/download/adhan.recordings.from.doha.qatar/Adhan_Doha_Qatar_01_Fajr_Adhan.mp3',
+        'https://cdn.aladhan.com/audio/adhans/a9.mp3'
+    ],
+    standard: [
+        './adhan/standard.mp3',
+        '/prayer-times/adhan/standard.mp3',
+        'https://archive.org/download/adhan.recordings.from.doha.qatar/Adhan_Doha_Qatar_02_Dhuhr_Adhan.mp3',
+        'https://cdn.aladhan.com/audio/adhans/a4.mp3'
+    ]
 };
 let adhanEnabled = false;
 let adhanTimers = [];
 let adhanCurrentAudio = null;
+let adhanUrlIdx = 0; // Current position in fallback chain
 
 // ═══════════════════════════════════════
 // HELPERS
@@ -1057,21 +1151,51 @@ function updateClock(){
     if(adhanEnabled)scheduleAdhans();
 }
 
+function buildTimeline(rec,now){
+    const tl=document.getElementById('timeline');
+    if(!tl||!rec)return;
+    const isFriday=rec.day==='Fri';
+    const prayers=[
+        {name:'Fajr',time:rec.fajrIqR,pm:false},
+        isFriday?{name:'Jum',time:rec.jummahIqamaR,pm:true}:{name:'Dhuhr',time:rec.dhuhrIqR,pm:true},
+        {name:'Asr',time:rec.asrIqR,pm:true},
+        {name:'Magh',time:rec.maghIqR,pm:true},
+        {name:'Isha',time:rec.ishaIqR,pm:true}
+    ];
+    // Find current/next prayer index
+    let activeIdx=-1;
+    for(let i=0;i<prayers.length;i++){
+        const t=parseTo24(prayers[i].time,prayers[i].pm);
+        if(!t)continue;
+        const pd=makeDate(t.h,t.m);
+        if(pd>now){activeIdx=i;break;}
+    }
+    tl.innerHTML=prayers.map((p,i)=>{
+        let cls='tl-prayer';
+        if(activeIdx===-1||i<activeIdx)cls+=' passed';
+        if(i===activeIdx)cls+=' current';
+        return `<div class="${cls}"><div class="tl-name">${p.name}</div><div class="tl-dot"></div><div class="tl-time">${p.time}</div></div>`;
+    }).join('');
+}
+
 function updateHome(now){
     const rec=todayRec(),tmr=tmrRec();
     const isFriday=rec&&rec.day==='Fri';
+    if(rec)buildTimeline(rec,now);
     const badge=document.getElementById('modeBadge');
     if(rec&&rec.ramadan){
-        badge.className='mode-badge ramadan';
-        badge.innerHTML=`✨ Ramadan Day <span>${rec.ramadanDay}</span>`;
+        badge.className='mode-pill ramadan';
+        badge.innerHTML=`✨ Ramadan Day ${rec.ramadanDay}`;
         document.getElementById('hijriDate').textContent='Ramadan 1447H';
+        const hf=document.getElementById('hijriDateFull');if(hf)hf.textContent='Ramadan 1447H';
         document.getElementById('ramadanRow').style.display='grid';
     }else if(rec){
-        badge.className='mode-badge normal';
-        badge.textContent='🕌 Daily Salaat';
+        badge.className='mode-pill';
+        badge.textContent='Daily Salaat';
         const _mo=new Date().getMonth();
         const _hijri=_mo<=1?'Shaban 1447H':_mo<=2?'Shawwal 1447H':_mo<=3?'Shawwal / Dhul Qaʿdah 1447H':'Dhul Qaʿdah / Dhul Hijjah 1447H';
-        document.getElementById('hijriDate').textContent=_hijri;
+        document.getElementById('hijriDate').textContent='1447H';
+        const hf2=document.getElementById('hijriDateFull');if(hf2)hf2.textContent=_hijri;
         document.getElementById('ramadanRow').style.display='none';
     }
     // Jumu'ah notice — Fridays only, with both Khutbah + Iqama times
@@ -1112,7 +1236,9 @@ function updateHome(now){
         let displayName=nextP.name;
         if(nextP.isIftar)displayName=`${nextP.name} / Iftar`;
         document.getElementById('nextName').textContent=displayName;
-        document.getElementById('nextIqamaTime').textContent=`${nextP.iqama} ${nextP.pm?'PM':'AM'}`;
+        document.getElementById('nextIqamaTime').textContent=nextP.iqama;
+        const ampmEl=document.getElementById('nextIqamaAmpm');
+        if(ampmEl)ampmEl.textContent=nextP.pm?' PM':' AM';
         document.getElementById('nextCountdown').textContent=fmtCd(nextP.date-now);
         const kEl=document.getElementById('nextKhutbah');
         if(nextP.isJumuah){
@@ -1335,11 +1461,13 @@ window.enableNotifFromModal = async function() {
 
 function updateNotifBanner(on) {
     const b = document.getElementById('notifBanner');
-    document.getElementById('notifBannerTitle').textContent = on ? '🔔 Notifications Active' : 'Enable Prayer Notifications';
+    document.getElementById('notifBannerTitle').textContent = on ? 'Prayer Notifications Active' : 'Prayer Notifications';
     document.getElementById('notifBannerSub').textContent = on
         ? `Alerting ${notifMinutesBefore} min before each prayer`
         : 'Tap to get alerted before each prayer';
-    b.className = on ? 'notif-banner enabled' : 'notif-banner disabled';
+    b.className = on ? 'alerts-row on' : 'alerts-row disabled';
+    const pill = document.getElementById('notifPill');
+    if(pill) pill.textContent = on ? 'ON' : 'OFF';
 }
 
 
@@ -1351,25 +1479,73 @@ function toggleAdhan(){
         clearAdhanTimers();
         updateAdhanUI();
         showToast('🔇 Adhan audio disabled');
-    } else {
-        // Need user gesture to unlock audio on iOS
-        const audio=document.getElementById('adhanAudio');
-        audio.src=ADHAN_URLS.standard;
-        audio.volume=0;
+        return;
+    }
+    // Try the fallback chain to find a working URL
+    tryUnlockAdhan(0);
+}
+
+function tryUnlockAdhan(idx){
+    const urls=ADHAN_FALLBACK_CHAIN.standard;
+    if(idx>=urls.length){
+        showAdhanHelp();
+        return;
+    }
+    const audio=document.getElementById('adhanAudio');
+    const sub=document.getElementById('adhanSub');
+    sub.textContent=`Testing source ${idx+1}/${urls.length}…`;
+    audio.src=urls[idx];
+    audio.muted=false;
+    audio.volume=0;
+    // Step 1: Wait for canplaythrough (URL actually loaded)
+    const onLoadFail=()=>{
+        console.warn(`Adhan URL ${idx} could not load: ${urls[idx]}`);
+        audio.removeEventListener('canplaythrough',onLoadOk);
+        audio.removeEventListener('error',onLoadFail);
+        tryUnlockAdhan(idx+1);
+    };
+    const onLoadOk=()=>{
+        audio.removeEventListener('canplaythrough',onLoadOk);
+        audio.removeEventListener('error',onLoadFail);
+        // Step 2: Now try to play (will fail if no user gesture)
         audio.play().then(()=>{
             audio.pause();
             audio.currentTime=0;
             audio.volume=1;
+            adhanUrlIdx=idx;
             adhanEnabled=true;
             localStorage.setItem('adhanEnabled','true');
+            localStorage.setItem('adhanUrlIdx',String(idx));
             scheduleAdhans();
             updateAdhanUI();
-            showToast('🔊 Adhan enabled — plays at adhan time when app is open');
+            const src=idx<2?'local file':(idx<3?'Internet Archive':'aladhan.com');
+            showToast(`🔊 Adhan enabled — using ${src}`);
         }).catch(err=>{
-            console.warn('Adhan unlock failed:',err);
-            showToast('⚠️ Tap again to enable — needs your tap to unlock audio');
+            console.warn('Adhan play failed (need user gesture):',err.message);
+            sub.textContent='Tap again to enable';
         });
-    }
+    };
+    audio.addEventListener('canplaythrough',onLoadOk,{once:true});
+    audio.addEventListener('error',onLoadFail,{once:true});
+    audio.load();
+    // Safety timeout — if neither event fires in 5s, try next
+    setTimeout(()=>{
+        if(audio.readyState<3 && audio.src===urls[idx]){
+            onLoadFail();
+        }
+    },5000);
+}
+
+function showAdhanHelp(){
+    const sub=document.getElementById('adhanSub');
+    sub.textContent='No source available — see Info tab for setup';
+    showToast('⚠️ Audio sources unreachable. Tap Info → Adhan Setup');
+    setTimeout(()=>{
+        const yes=confirm('Adhan audio sources blocked.\n\nFix: upload MP3 files to your GitHub repo at /prayer-times/adhan/\n\nFiles needed:\n• adhan/standard.mp3\n• adhan/fajr.mp3\n\nDownload Public Domain files from Internet Archive?');
+        if(yes){
+            window.open('https://archive.org/details/adhan.recordings.from.doha.qatar','_blank');
+        }
+    },800);
 }
 
 function clearAdhanTimers(){
@@ -1404,19 +1580,27 @@ function scheduleAdhans(){
 
 function playAdhan(prayerName,isFajr){
     const audio=document.getElementById('adhanAudio');
-    audio.src=isFajr?ADHAN_URLS.fajr:ADHAN_URLS.standard;
+    const chain=isFajr?ADHAN_FALLBACK_CHAIN.fajr:ADHAN_FALLBACK_CHAIN.standard;
+    const url=chain[adhanUrlIdx]||chain[0];
+    audio.src=url;
     audio.volume=1;
-    audio.play().catch(err=>console.warn('Adhan playback failed:',err));
     document.getElementById('adhanPlayingPrayer').textContent=prayerName+' Adhan';
     document.getElementById('adhanPlayingSubtitle').textContent='Time for '+prayerName+' at Hamilton Masjid';
     document.getElementById('adhanOverlay').classList.add('show');
     adhanCurrentAudio=audio;
+    audio.play().catch(err=>{
+        console.warn('Adhan playback failed, trying fallback:',err);
+        // Try next URL in chain at playtime
+        const nextIdx=adhanUrlIdx+1;
+        if(nextIdx<chain.length){
+            audio.src=chain[nextIdx];
+            audio.play().catch(e2=>console.warn('All Adhan URLs failed:',e2));
+        }
+    });
     audio.onended=()=>{
         document.getElementById('adhanOverlay').classList.remove('show');
         adhanCurrentAudio=null;
-        // Re-schedule the rest for tomorrow at midnight
     };
-    // Wake screen if possible
     if('wakeLock' in navigator){
         navigator.wakeLock.request('screen').catch(()=>{});
     }
@@ -1436,11 +1620,11 @@ function updateAdhanUI(){
     const sub=document.getElementById('adhanSub');
     const pill=document.getElementById('adhanPill');
     if(adhanEnabled){
-        b.classList.remove('disabled');
-        sub.textContent='Plays Madinah Adhan at each prayer time';
+        b.className='alerts-row on';
+        sub.textContent='Plays at each prayer time';
         pill.textContent='ON';
     } else {
-        b.classList.add('disabled');
+        b.className='alerts-row disabled';
         sub.textContent='Tap to enable — plays at adhan time';
         pill.textContent='OFF';
     }
@@ -2050,6 +2234,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     if(localStorage.getItem('adhanEnabled')==='true'){
         // Don't auto-enable — iOS requires user gesture. Just update UI hint.
         document.getElementById('adhanSub').textContent='Tap to re-enable for this session';
+        adhanUrlIdx=parseInt(localStorage.getItem('adhanUrlIdx')||'0');
     }
     if(localStorage.getItem('notifEnabled')==='true'){
         notifEnabled=true;
@@ -2099,6 +2284,6 @@ document.addEventListener('DOMContentLoaded',()=>{
     <div class="adhan-playing-prayer" id="adhanPlayingSubtitle">Time for prayer at Hamilton Masjid</div>
     <button class="adhan-stop-btn" onclick="stopAdhan()">⏹ Stop</button>
 </div>
-<audio id="adhanAudio" preload="none" crossorigin="anonymous"></audio>
+<audio id="adhanAudio" preload="metadata" playsinline></audio>
 </body>
 </html>
