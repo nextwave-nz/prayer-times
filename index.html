@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#080e1a">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="theme-color" content="#0a0d14">
     <meta name="description" content="Waikato Prayer Times — Hamilton Jamia Mosque Prayer & Ramadan Timetable">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -750,8 +750,362 @@
 .jump-today-fab{background:linear-gradient(135deg,var(--gold),#b07c3e);color:#1a1100;box-shadow:0 6px 24px rgba(245,184,109,.45),0 0 0 3px rgba(245,184,109,.15)}
  
 /* Italiana font for headlines */
+ 
+ 
+/* ═══════════════════════════════════════════════════════════════════
+   ── SERAPHINE LUXURY OVERRIDE ──
+   Champagne palette • Refined typography • Fixed safe areas
+═══════════════════════════════════════════════════════════════════ */
+ 
+/* Refined palette overrides */
+:root {
+    --bg:           #0a0d14 !important;
+    --bg-mid:       #0e1219 !important;
+    --surface:      #181e2a !important;
+    --surface-2:    #1f2735 !important;
+    --surface2:     #1f2735 !important;
+    --surface3:     #2a3243 !important;
+ 
+    --gold:         #d4af6e !important;
+    --gold-light:   #e6c896 !important;
+    --gold-bright:  #f0d9b0 !important;
+    --gold-dim:     rgba(212,175,110,0.10) !important;
+    --gold-border:  rgba(212,175,110,0.35) !important;
+    --gold-glow:    rgba(212,175,110,0.20) !important;
+ 
+    --teal:         #8fa68a !important;
+    --rose:         #d68b6f !important;
+    --rose-dim:     rgba(214,139,111,0.10) !important;
+    --rose-border:  rgba(214,139,111,0.28) !important;
+    --sky:          #8fa6c2 !important;
+    --sky-dim:      rgba(143,166,194,0.08) !important;
+    --sky-border:   rgba(143,166,194,0.25) !important;
+ 
+    --text:         #f2eee4 !important;
+    --text-2:       rgba(242,238,228,0.68) !important;
+    --text-3:       rgba(242,238,228,0.42) !important;
+    --text-4:       rgba(242,238,228,0.22) !important;
+ 
+    --border-soft:  rgba(242,238,228,0.06) !important;
+    --border-hi:    rgba(242,238,228,0.10) !important;
+ 
+    --sat: env(safe-area-inset-top, 0px);
+    --sab: env(safe-area-inset-bottom, 0px);
+}
+ 
+/* ── Atmospheric background ── */
+body::before {
+    background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(212,175,110,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 100% 100%, rgba(143,166,194,0.04) 0%, transparent 60%) !important;
+}
+ 
+/* ── Refined typography on key surfaces ── */
+.masjid-name {
+    font-family: 'Fraunces', 'Times New Roman', serif !important;
+    font-weight: 500 !important;
+    font-size: 1.7em !important;
+    letter-spacing: -0.02em !important;
+}
+.hero-cd-name {
+    font-family: 'Fraunces', serif !important;
+    font-weight: 400 !important;
+    font-size: 3em !important;
+    letter-spacing: -0.025em !important;
+}
+.date-day {
+    font-family: 'Fraunces', serif !important;
+    font-style: italic !important;
+    font-weight: 400 !important;
+}
+.cal-day-name, .hadith-tag {
+    letter-spacing: 1.5px !important;
+}
+ 
+/* ── Bottom nav — safe-area fix (the main bug) ── */
+.bottom-nav {
+    padding: 12px 12px calc(14px + var(--sab)) !important;
+    background: rgba(10,13,20,0.92) !important;
+    border-top: 1px solid rgba(212,175,110,0.18) !important;
+    backdrop-filter: blur(28px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+}
+ 
+/* ── Header safe-area ── */
+.header-compact {
+    padding-top: calc(var(--sat) + 22px) !important;
+}
+ 
+/* ── Refined header gradient ── */
+.header-compact {
+    background: linear-gradient(180deg,
+        rgba(212,175,110,0.06) 0%,
+        rgba(212,175,110,0.02) 50%,
+        transparent 100%) !important;
+    border-bottom: 1px solid rgba(242,238,228,0.06) !important;
+    position: relative !important;
+}
+.header-compact::after {
+    content:'';
+    position:absolute; bottom:-1px; left:50%; transform:translateX(-50%);
+    width: 60%; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212,175,110,0.35), transparent);
+    pointer-events: none;
+}
+ 
+/* ── Hero countdown — refined depth ── */
+.hero-cd {
+    background: linear-gradient(160deg,
+        rgba(212,175,110,0.08) 0%,
+        var(--surface) 35%,
+        var(--bg-mid) 100%) !important;
+    border: 1px solid rgba(212,175,110,0.22) !important;
+    border-radius: 24px !important;
+    box-shadow: 0 12px 40px rgba(0,0,0,.45), 0 8px 32px rgba(212,175,110,.15) !important;
+    padding: 24px 22px 22px !important;
+    overflow: hidden !important;
+    position: relative !important;
+}
+.hero-cd::before {
+    content:'';
+    position:absolute;
+    top:-50px; right:-50px;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, rgba(212,175,110,0.18) 0%, transparent 60%);
+    pointer-events: none;
+}
+ 
+/* ── Streak chip — premium polish ── */
+.streak-chip {
+    background: linear-gradient(135deg, var(--bg-mid) 0%, var(--surface) 100%) !important;
+    border: 1px solid rgba(242,238,228,0.06) !important;
+    border-radius: 18px !important;
+    padding: 16px 18px !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.02) !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+.streak-chip::before {
+    content:'';
+    position:absolute; top:0; left:18px; right:18px; height:1px;
+    background: linear-gradient(90deg, transparent, rgba(212,175,110,0.18), transparent);
+}
+ 
+/* ── Streak dots — gold gradient ── */
+.sd-dot.prayed {
+    background: linear-gradient(90deg, var(--gold), var(--gold-light)) !important;
+    box-shadow: 0 0 12px rgba(212,175,110,.4) !important;
+}
+ 
+/* ── Prayer rows — refined cards ── */
+.pr-row {
+    background: linear-gradient(135deg, var(--bg-mid), var(--surface)) !important;
+    border-radius: 18px !important;
+    padding: 14px 16px !important;
+}
+.pr-row.current {
+    background: linear-gradient(135deg, rgba(212,175,110,0.12), rgba(212,175,110,0.03)) !important;
+    border-color: rgba(212,175,110,0.35) !important;
+    box-shadow: 0 6px 28px rgba(212,175,110,.15), 0 4px 16px rgba(0,0,0,.3) !important;
+}
+ 
+/* ── Timeline — refined dots ── */
+.tl-prayer.current .tl-dot {
+    box-shadow: 0 0 16px var(--gold-bright), 0 0 0 4px rgba(212,175,110,.15) !important;
+}
+ 
+/* ── Iftar/Suhoor cards — refined ── */
+.hl-card {
+    border-radius: 18px !important;
+    padding: 16px !important;
+}
+.hl-time {
+    font-family: 'Fraunces', serif !important;
+    font-size: 1.5em !important;
+    font-weight: 500 !important;
+    letter-spacing: -0.01em !important;
+}
+ 
+/* ── Alerts card ── */
+.alerts-card {
+    background: linear-gradient(180deg, var(--bg-mid), var(--surface)) !important;
+    border-radius: 18px !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,.25) !important;
+}
+.alerts-icon {
+    border-radius: 10px !important;
+    width: 36px !important;
+    height: 36px !important;
+}
+ 
+/* ── Hadith — premium card ── */
+.hadith-card {
+    background: linear-gradient(160deg, var(--bg-mid), var(--surface)) !important;
+    border: 1px solid rgba(212,175,110,0.22) !important;
+    border-radius: 24px !important;
+    box-shadow: 0 12px 40px rgba(0,0,0,.4) !important;
+}
+.hadith-english {
+    font-family: 'Fraunces', serif !important;
+    font-style: italic !important;
+    font-size: 0.95em !important;
+    line-height: 1.6 !important;
+}
+ 
+/* ── Calendar — refined ── */
+.cal-card {
+    background: linear-gradient(160deg, var(--bg-mid), var(--surface)) !important;
+    border-radius: 14px !important;
+    border: 1px solid rgba(242,238,228,0.06) !important;
+}
+.cal-card.today-card {
+    border-color: rgba(212,175,110,0.35) !important;
+    background: linear-gradient(135deg, rgba(212,175,110,0.10), var(--surface)) !important;
+    box-shadow: 0 6px 24px rgba(212,175,110,.15) !important;
+}
+.cal-day-num {
+    font-family: 'Fraunces', serif !important;
+    font-style: italic !important;
+    font-size: 1.4em !important;
+    font-weight: 500 !important;
+}
+.month-tab.active {
+    background: linear-gradient(135deg, var(--gold), #a8854f) !important;
+    color: #1a1305 !important;
+}
+ 
+/* ── Halal directory — refined hero ── */
+.halal-hero {
+    background:
+        radial-gradient(ellipse at 50% 0%, rgba(143,166,138,0.14) 0%, transparent 65%),
+        linear-gradient(160deg, var(--bg-mid), var(--surface)) !important;
+    border: 1px solid rgba(143,166,138,0.30) !important;
+    border-radius: 24px !important;
+    padding: 26px 22px !important;
+    box-shadow: 0 8px 28px rgba(0,0,0,.35) !important;
+}
+.halal-hero-title {
+    font-family: 'Fraunces', serif !important;
+    font-weight: 500 !important;
+    font-size: 1.8em !important;
+    letter-spacing: -0.02em !important;
+}
+.halal-cat-title {
+    font-family: 'Fraunces', serif !important;
+    font-weight: 500 !important;
+    font-size: 1.05em !important;
+    letter-spacing: -0.01em !important;
+}
+.halal-cat {
+    border-radius: 18px !important;
+    background: linear-gradient(160deg, var(--bg-mid), var(--surface)) !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,.25) !important;
+}
+.halal-search {
+    border-radius: 18px !important;
+    padding: 13px 16px !important;
+    background: var(--bg-mid) !important;
+}
+.halal-search:focus {
+    box-shadow: 0 0 0 3px rgba(212,175,110,.08) !important;
+}
+.hf-chip {
+    padding: 8px 16px !important;
+    border-radius: 999px !important;
+    background: var(--bg-mid) !important;
+}
+.hf-chip.active {
+    background: var(--gold-dim) !important;
+    border-color: rgba(212,175,110,0.35) !important;
+    color: var(--gold-light) !important;
+    box-shadow: 0 2px 12px rgba(212,175,110,.15) !important;
+}
+.halal-badge.halal {
+    background: rgba(143,166,138,0.14) !important;
+    color: var(--teal) !important;
+    border-color: rgba(143,166,138,0.32) !important;
+    box-shadow: 0 0 10px rgba(143,166,138,.18) !important;
+}
+.halal-badge.partial {
+    background: rgba(212,175,110,0.14) !important;
+    color: var(--gold) !important;
+}
+.halal-item-status.halal {
+    background: rgba(143,166,138,0.12) !important;
+    color: var(--teal) !important;
+}
+.halal-item-status.partial {
+    background: rgba(212,175,110,0.12) !important;
+    color: var(--gold) !important;
+}
+ 
+/* ── Info card ── */
+.info-card {
+    background: linear-gradient(160deg, var(--bg-mid), var(--surface)) !important;
+    border-radius: 18px !important;
+    border: 1px solid rgba(242,238,228,0.06) !important;
+}
+.info-title {
+    font-family: 'Fraunces', serif !important;
+    font-weight: 500 !important;
+    color: var(--gold-light) !important;
+    font-size: 1.3em !important;
+    letter-spacing: -0.02em !important;
+    text-transform: none !important;
+}
+ 
+/* ── Hijri pill ── */
+.hijri-pill {
+    background: linear-gradient(135deg, var(--gold-dim), transparent) !important;
+    border: 1px solid rgba(212,175,110,0.18) !important;
+    border-radius: 999px !important;
+    padding: 6px 12px !important;
+    box-shadow: inset 0 1px 0 rgba(212,175,110,.08) !important;
+}
+ 
+/* ── Buttons - refined ── */
+.notif-enable-btn, .adhan-stop-btn {
+    background: linear-gradient(135deg, var(--gold), #a8854f) !important;
+    color: #1a1305 !important;
+    border-radius: 18px !important;
+}
+ 
+/* ── Modal — refined ── */
+.notif-modal {
+    background: linear-gradient(160deg, var(--surface-2), var(--surface)) !important;
+    border: 1px solid rgba(212,175,110,0.18) !important;
+    border-radius: 24px !important;
+}
+.notif-modal h2 {
+    font-family: 'Fraunces', serif !important;
+    font-weight: 500 !important;
+    font-size: 1.4em !important;
+    letter-spacing: -0.02em !important;
+}
+ 
+/* ── Selection ── */
+::selection {
+    background: var(--gold-dim);
+    color: var(--gold-bright);
+}
+ 
+/* ── Jump today FAB — bottom safe area ── */
+.jump-today-fab {
+    bottom: calc(96px + var(--sab)) !important;
+}
+ 
+/* ── Scroll-top button — bottom safe area ── */
+.scroll-top-btn {
+    bottom: calc(96px + var(--sab)) !important;
+}
+ 
+/* ── HIDE the install-to-homescreen bar entirely ── */
+.hs-bottom-bar {
+    display: none !important;
+}
+ 
 </style>
-<link href="https://fonts.googleapis.com/css2?family=Italiana&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="app">
@@ -921,14 +1275,6 @@
             <div class="sec-label">Today's Iqama Times</div>
             <div class="prayers-list" id="prayerList"></div>
             <div class="gap"></div>
-            <div class="hs-bottom-bar" id="hsBottomBar" onclick="showHSModal()">
-                <div class="hs-bar-icon">📲</div>
-                <div>
-                    <div class="hs-bar-title">Add to Home Screen</div>
-                    <div class="hs-bar-sub">Install as an app — quick access, works offline</div>
-                </div>
-                <div class="hs-bar-arrow">›</div>
-            </div>
             <div class="gap"></div>
         </div>
  
@@ -2686,7 +3032,7 @@ window.addEventListener('beforeinstallprompt',e=>{
     // Show native button in modal
     document.getElementById('hsNativeBtn').style.display='block';
     // Show bottom bar
-    document.getElementById('hsBottomBar').style.display='flex';
+    /* hs bar removed */ if(document.getElementById('hsBottomBar')) document.getElementById('hsBottomBar').style.display='none';
 });
  
 const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream;
