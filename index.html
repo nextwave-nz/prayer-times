@@ -15,22 +15,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root{
-            --bg:#0a0d12;
-            --bg-mid:#12161e;
-            --surface:#181d28;
-            --surface-2:#222937;
+            /* Obsidian Pro — Deep Indigo / Mint / Amber */
+            --bg:#0b0d17;
+            --bg-mid:#13162a;
+            --surface:#1a1d35;
+            --surface-2:#252849;
             --border-soft:rgba(255,255,255,.06);
-            --gold-dim:rgba(255,176,116,.10);
-            --gold-border:rgba(255,176,116,.30);
-            --gold:#ffb074;
-            --gold-light:#ffc89a;
-            --gold-bright:#ffd9b3;
-            --teal:#5eead4;
-            --sky:#7dd3fc;
-            --red:#fb7185;
-            --text:#f1f5f9;
-            --text-2:rgba(241,245,249,.72);
-            --text-3:rgba(241,245,249,.42);
+            --gold-dim:rgba(245,184,109,.10);
+            --gold-border:rgba(245,184,109,.30);
+            --gold:#f5b86d;              /* warm amber for next-up / focus */
+            --gold-light:#f7c485;
+            --gold-bright:#ffd49a;
+            --teal:#7be0c2;              /* mint for "done" / passed states */
+            --sky:#a5b4fc;               /* soft indigo for accents */
+            --red:#f87171;
+            --text:#eef0fa;
+            --text-2:rgba(238,240,250,.72);
+            --text-3:rgba(238,240,250,.42);
             --r-sm:12px;
             --r-md:18px;
         }
@@ -144,7 +145,7 @@
 
         /* ── NEXT PRAYER HERO ──────────────── */
         /* ── REDESIGN: Compact header + integrated date ── */
-        .header-compact{padding:14px 16px 10px;background:linear-gradient(180deg,rgba(94,234,212,.04) 0%,transparent 100%);border-bottom:1px solid var(--border-soft)}
+        .header-compact{padding:16px 16px 12px;background:linear-gradient(180deg,rgba(165,180,252,.06) 0%,transparent 70%),url("data:image/svg+xml;utf8,%3Csvg xmlns='http%3A//www.w3.org/2000/svg' viewBox='0 0 80 80' width='80' height='80'%3E%3Cpath fill='none' stroke='%23a5b4fc' stroke-width='.6' stroke-opacity='.13' d='M40 5l8 14h16l-8 14 8 14H48l-8 14-8-14H16l8-14-8-14h16z M20 40l8 14h16l-8 14H20l8-14-8-14z'/%3E%3C/svg%3E");background-size:auto,80px 80px;background-repeat:no-repeat,repeat;background-position:top,center;border-bottom:1px solid var(--border-soft);position:relative}
         .header-compact .masjid-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
         .header-compact .masjid-name{font-family:'Amiri',serif;font-size:1.4em;color:var(--text);font-weight:600;line-height:1.15;letter-spacing:.2px}
         .header-compact .masjid-sub{font-size:.7em;color:var(--text-3);margin-top:1px;letter-spacing:.3px}
@@ -172,8 +173,8 @@
         .streak-sub{font-size:.7em;color:var(--text-2);margin-top:2px}
 
         /* ── REDESIGN: Hero countdown (BIG) ── */
-        .hero-cd{margin:0 16px 14px;padding:24px 22px 26px;background:radial-gradient(ellipse at 50% 0%,rgba(94,234,212,.10) 0%,transparent 70%),linear-gradient(150deg,var(--surface),var(--bg-mid));border:1px solid var(--gold-border);border-radius:var(--r-md);position:relative;overflow:hidden;box-shadow:0 8px 28px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,176,116,.08)}
-        .hero-cd::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--teal) 30%,var(--gold) 70%,transparent)}
+        .hero-cd{margin:0 16px 14px;padding:24px 22px 26px 30px;background:radial-gradient(ellipse at 30% 0%,rgba(245,184,109,.10) 0%,transparent 65%),radial-gradient(ellipse at 80% 100%,rgba(165,180,252,.08) 0%,transparent 60%),linear-gradient(150deg,var(--surface),var(--bg-mid));border:1px solid var(--gold-border);border-radius:var(--r-md);position:relative;overflow:hidden;box-shadow:0 12px 32px rgba(0,0,0,.45),inset 0 1px 0 rgba(245,184,109,.10)}
+        .hero-cd::before{content:'';position:absolute;top:14px;bottom:14px;left:0;width:3px;background:linear-gradient(180deg,transparent,var(--gold) 50%,transparent);border-radius:0 2px 2px 0;box-shadow:0 0 12px rgba(245,184,109,.4)}
         .hero-cd-label{font-size:.62em;color:var(--gold);font-weight:700;letter-spacing:2px;text-transform:uppercase;display:flex;align-items:center;gap:6px}
         .hero-cd-name{font-family:'Amiri',serif;font-size:2.6em;color:var(--text);font-weight:700;line-height:1;margin:8px 0 4px}
         .hero-cd-time{font-family:'JetBrains Mono',monospace;font-size:1.05em;color:var(--gold-light);font-weight:500;letter-spacing:.5px}
@@ -603,23 +604,131 @@
         .jump-today-fab.show{display:inline-flex}
         .fab-icon{font-size:1em;line-height:1}
         .fab-label{font-size:.95em}
+
+        /* ── HALAL DIRECTORY ── */
+        .halal-hero{margin:0 16px 14px;padding:22px 18px;background:radial-gradient(ellipse at 50% 0%,rgba(123,224,194,.12) 0%,transparent 70%),linear-gradient(150deg,var(--surface),var(--bg-mid));border:1px solid rgba(123,224,194,.28);border-radius:var(--r-md);text-align:center;position:relative;overflow:hidden}
+        .halal-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--teal),transparent)}
+        .halal-hero-icon{font-size:2.2em;margin-bottom:6px;filter:drop-shadow(0 0 12px rgba(123,224,194,.5))}
+        .halal-hero-title{font-family:'Italiana',serif;font-size:1.9em;color:var(--text);font-weight:400;letter-spacing:.5px;margin-bottom:4px}
+        .halal-hero-sub{font-size:.78em;color:var(--text-2)}
+
+        .halal-search-wrap{margin:0 16px 12px}
+        .halal-search{width:100%;background:var(--surface);border:1px solid var(--border-soft);border-radius:var(--r-sm);padding:11px 14px;color:var(--text);font-family:inherit;font-size:.85em;transition:border-color .2s}
+        .halal-search:focus{outline:none;border-color:var(--gold-border)}
+        .halal-search::placeholder{color:var(--text-3)}
+
+        .halal-filters{display:flex;gap:6px;padding:0 16px 14px;overflow-x:auto;scrollbar-width:none}
+        .halal-filters::-webkit-scrollbar{display:none}
+        .hf-chip{flex-shrink:0;padding:6px 13px;border-radius:14px;border:1px solid var(--border-soft);background:transparent;color:var(--text-2);font-family:inherit;font-size:.72em;font-weight:600;cursor:pointer;transition:all .18s;white-space:nowrap}
+        .hf-chip.active{background:var(--gold-dim);border-color:var(--gold-border);color:var(--gold)}
+
+        .halal-cat{margin:0 16px 14px;background:var(--surface);border:1px solid var(--border-soft);border-radius:var(--r-sm);overflow:hidden}
+        .halal-cat-header{padding:13px 16px;display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,rgba(245,184,109,.05),transparent);border-bottom:1px solid var(--border-soft);cursor:pointer;user-select:none}
+        .halal-cat-icon{font-size:1.4em;line-height:1}
+        .halal-cat-title{flex:1;font-size:.92em;font-weight:600;color:var(--text)}
+        .halal-cat-count{font-size:.65em;color:var(--text-3);background:var(--surface-2);padding:3px 9px;border-radius:10px;font-weight:600}
+        .halal-cat-toggle{font-size:1.1em;color:var(--text-3);transition:transform .25s}
+        .halal-cat.collapsed .halal-cat-toggle{transform:rotate(-90deg)}
+        .halal-cat.collapsed .halal-items{display:none}
+
+        .halal-item{padding:13px 16px;border-bottom:1px solid var(--border-soft);display:flex;gap:12px;align-items:flex-start}
+        .halal-item:last-child{border-bottom:none}
+        .halal-badge{flex-shrink:0;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9em;font-weight:700}
+        .halal-badge.halal{background:rgba(123,224,194,.14);color:var(--teal);border:1px solid rgba(123,224,194,.32);box-shadow:0 0 10px rgba(123,224,194,.18)}
+        .halal-badge.partial{background:rgba(245,184,109,.14);color:var(--gold);border:1px solid var(--gold-border)}
+        .halal-badge.not-halal{background:rgba(248,113,113,.14);color:var(--red);border:1px solid rgba(248,113,113,.32)}
+        .halal-badge.check{background:rgba(165,180,252,.14);color:var(--sky);border:1px solid rgba(165,180,252,.32)}
+        .halal-item-body{flex:1;min-width:0}
+        .halal-item-brand{font-size:.92em;font-weight:700;color:var(--text);margin-bottom:3px}
+        .halal-item-status{display:inline-block;font-size:.62em;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:2px 8px;border-radius:8px;margin-bottom:5px}
+        .halal-item-status.halal{background:rgba(123,224,194,.10);color:var(--teal)}
+        .halal-item-status.partial{background:rgba(245,184,109,.10);color:var(--gold)}
+        .halal-item-status.not-halal{background:rgba(248,113,113,.10);color:var(--red)}
+        .halal-item-status.check{background:rgba(165,180,252,.10);color:var(--sky)}
+        .halal-item-details{font-size:.74em;color:var(--text-2);line-height:1.55;margin-bottom:6px}
+        .halal-item-extra{font-size:.7em;color:var(--text-3);line-height:1.5;margin-top:6px;padding:7px 10px;background:rgba(255,255,255,.02);border-radius:6px;border-left:2px solid var(--gold-border)}
+        .halal-item-meta{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:6px;font-size:.65em;color:var(--text-3)}
+        .halal-item-source{font-style:italic}
+        .halal-item-link{color:var(--gold);text-decoration:none;font-weight:600}
+        .halal-item-link:hover{text-decoration:underline}
+
+        .halal-empty{margin:20px 16px;padding:30px 20px;text-align:center;background:var(--surface);border:1px dashed var(--border-soft);border-radius:var(--r-sm);color:var(--text-3);font-size:.85em}
+
+        .halal-footer{margin:18px 16px;padding:14px 16px;background:rgba(245,184,109,.05);border:1px solid var(--gold-border);border-radius:var(--r-sm);font-size:.74em}
+        .halal-footer-title{color:var(--gold);font-weight:700;margin-bottom:8px;font-size:.95em}
+        .halal-footer-list{margin:0;padding-left:18px;color:var(--text-2);line-height:1.7}
+        .halal-footer-list li{margin-bottom:4px}
+        .halal-last-updated{margin-top:10px;padding-top:10px;border-top:1px solid var(--border-soft);font-size:.85em;color:var(--text-3);text-align:center}
+
     </style>
 <style>
+/* ─── OBSIDIAN PRO refinements ─── */
 
-/* OBSIDIAN: dual-accent (teal + peach) overrides */
-.hijri-pill{background:rgba(94,234,212,.10);border-color:rgba(94,234,212,.32);color:var(--teal)}
-.streak-chip{background:linear-gradient(135deg,rgba(94,234,212,.06),rgba(255,176,116,.04))}
-.streak-ring-mini .rfg{stroke:var(--teal)}
-.streak-ring-text{color:var(--teal)}
-.streak-status .num{color:var(--teal)}
-.tl-prayer.passed .tl-dot{background:var(--teal);border-color:var(--teal)}
-.tl-prayer.passed::after{background:rgba(94,234,212,.5)}
-.tl-prayer.passed .tl-name{color:rgba(94,234,212,.7)}
-.hero-cd-label{color:var(--teal)}
-.alerts-icon{background:rgba(94,234,212,.10);border-color:rgba(94,234,212,.28)}
-.mode-pill{background:rgba(94,234,212,.10);border-color:rgba(94,234,212,.30);color:var(--teal)}
+/* Hijri pill — indigo accent */
+.hijri-pill{background:rgba(165,180,252,.10);border-color:rgba(165,180,252,.30);color:var(--sky)}
+.hijri-pill-icon{filter:drop-shadow(0 0 4px rgba(245,184,109,.4))}
 
+/* Mode pill (Daily Salaat / Ramadan) — mint for daily, amber for ramadan */
+.mode-pill{background:rgba(123,224,194,.10);border-color:rgba(123,224,194,.30);color:var(--teal)}
+.mode-pill.ramadan{background:rgba(245,184,109,.12);border-color:var(--gold-border);color:var(--gold-light)}
+
+/* Streak chip — horizontal dot strip layout */
+.streak-chip{position:relative;background:linear-gradient(135deg,rgba(165,180,252,.06),rgba(245,184,109,.04));padding:13px 16px;border-color:var(--border-soft)}
+.streak-info-col{flex:1;display:flex;flex-direction:column;gap:8px}
+.streak-title{font-size:.65em;color:var(--text-3);text-transform:uppercase;letter-spacing:1.3px;font-weight:700}
+.streak-title #ringText{color:var(--gold);font-family:'JetBrains Mono',monospace;letter-spacing:0}
+.streak-dots{display:flex;gap:8px;align-items:center}
+.sd-dot{flex:1;height:6px;border-radius:3px;background:var(--surface-2);transition:all .3s}
+.sd-dot.prayed{background:linear-gradient(90deg,var(--teal),var(--gold));box-shadow:0 0 8px rgba(123,224,194,.3)}
+.sd-dot.current{background:var(--gold);box-shadow:0 0 10px rgba(245,184,109,.5);animation:sdPulse 2s ease-in-out infinite}
+@keyframes sdPulse{0%,100%{opacity:1}50%{opacity:.65}}
+.streak-sub{font-size:.68em;color:var(--text-2)}
+.streak-sub .num{color:var(--gold);font-weight:700}
+
+/* Hero card — tri-color label/name/time hierarchy */
+.hero-cd-label{color:var(--gold);letter-spacing:2.5px;font-weight:700}
+.hero-cd-name{font-family:'Italiana',serif;font-size:3em;font-weight:400;letter-spacing:.5px;background:linear-gradient(180deg,var(--text) 0%,var(--gold-light) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-cd-time{color:var(--text-2);font-family:'JetBrains Mono',monospace}
+.hero-cd-cd-time{color:var(--gold-bright);text-shadow:0 0 24px rgba(245,184,109,.35)}
+.hero-cd-cd-label{color:var(--text-3);letter-spacing:1.6px}
+.hero-cd-divider{background:linear-gradient(90deg,transparent,rgba(245,184,109,.25),transparent)}
+
+/* Khutbah badge under hero */
+.hero-cd-khutbah{background:rgba(165,180,252,.10);border-color:rgba(165,180,252,.30);color:var(--sky)}
+
+/* Timeline — tri-state colors */
+.timeline{background:linear-gradient(135deg,var(--surface),var(--bg-mid));border-color:var(--border-soft);padding:16px 8px;border-radius:var(--r-sm)}
+.tl-dot{transition:all .3s}
+.tl-prayer.passed .tl-dot{background:var(--teal);border-color:var(--teal);box-shadow:0 0 6px rgba(123,224,194,.4)}
+.tl-prayer.passed::after{background:linear-gradient(90deg,var(--teal),rgba(123,224,194,.3))}
+.tl-prayer.passed .tl-name{color:rgba(123,224,194,.85)}
+.tl-prayer.passed .tl-time{color:rgba(123,224,194,.6)}
+.tl-prayer.current .tl-dot{background:var(--gold);border-color:var(--gold-bright);box-shadow:0 0 14px var(--gold-bright)}
+.tl-prayer.current .tl-name{color:var(--gold-bright);font-weight:700}
+.tl-prayer.current .tl-time{color:var(--text)}
+
+/* Alerts — cleaner section dividers */
+.alerts-card{background:linear-gradient(150deg,var(--surface),var(--bg-mid));border-color:var(--border-soft);box-shadow:0 4px 16px rgba(0,0,0,.2)}
+.alerts-header{padding:13px 16px 9px;border-bottom:none;color:var(--text-3)}
+.alerts-row{padding:14px 16px}
+.alerts-row:not(:last-child){border-bottom:1px solid var(--border-soft)}
+.alerts-icon{background:rgba(165,180,252,.10);border-color:rgba(165,180,252,.28)}
+.alerts-row.on .alerts-icon{background:var(--gold-dim);border-color:var(--gold-border);box-shadow:0 0 12px rgba(245,184,109,.2)}
+.alerts-row.on .alerts-toggle{background:var(--gold-dim);border-color:var(--gold-border);color:var(--gold);box-shadow:inset 0 0 8px rgba(245,184,109,.15)}
+
+/* Bottom nav active state */
+.nav-item.active{background:var(--gold-dim);box-shadow:inset 0 0 0 1px var(--gold-border)}
+.nav-item.active .nav-label{color:var(--gold)}
+
+/* Header masjid name */
+.header-compact .masjid-name{background:linear-gradient(180deg,var(--text) 0%,var(--text-2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* Today FAB — amber with soft glow */
+.jump-today-fab{background:linear-gradient(135deg,var(--gold),#b07c3e);color:#1a1100;box-shadow:0 6px 24px rgba(245,184,109,.45),0 0 0 3px rgba(245,184,109,.15)}
+
+/* Italiana font for headlines */
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Italiana&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="app">
@@ -706,19 +815,18 @@
         <div class="view active" id="homeView">
             <div class="gap"></div>
 
-            <!-- STREAK CHIP — fixed ring -->
+            <!-- STREAK CHIP — dot strip layout -->
             <div class="streak-chip">
-                <div class="streak-ring-mini">
-                    <svg width="44" height="44" viewBox="0 0 44 44" style="overflow:visible">
-                        <circle class="rbg" cx="22" cy="22" r="18" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="3"/>
-                        <circle class="rfg" id="ringFill" cx="22" cy="22" r="18" fill="none" stroke="var(--gold)" stroke-width="3" stroke-linecap="round" stroke-dasharray="113.1" stroke-dashoffset="113.1" transform="rotate(-90 22 22)"/>
-                    </svg>
-                    <div class="streak-ring-text" id="ringText">0/5</div>
-                </div>
-                <div class="streak-info">
-                    <div class="streak-title">Today's Prayers</div>
-                    <div class="streak-status"><span class="num" id="trackerPrayed">0</span> of 5 prayed</div>
-                    <div class="streak-sub" id="trackerStreak">Start your streak today</div>
+                <div class="streak-info-col">
+                    <div class="streak-title">Today's Prayers · <span id="ringText">0/5</span></div>
+                    <svg style="position:absolute;width:0;height:0" aria-hidden="true"><circle id="ringFill" stroke-dasharray="113.1" stroke-dashoffset="113.1"/></svg><div class="streak-dots" id="streakDots">
+                        <div class="sd-dot" data-prayer="Fajr"></div>
+                        <div class="sd-dot" data-prayer="Dhuhr"></div>
+                        <div class="sd-dot" data-prayer="Asr"></div>
+                        <div class="sd-dot" data-prayer="Maghrib"></div>
+                        <div class="sd-dot" data-prayer="Isha"></div>
+                    </div>
+                    <div class="streak-sub"><span class="num" id="trackerPrayed">0</span> prayed · <span id="trackerStreak">Start your streak today</span></div>
                 </div>
             </div>
 
@@ -868,6 +976,43 @@
         </div>
 
         <!-- INFO VIEW -->
+
+        <!-- HALAL DIRECTORY VIEW -->
+        <div class="view" id="halalView">
+            <div class="gap"></div>
+            <div class="halal-hero">
+                <div class="halal-hero-icon">✅</div>
+                <div class="halal-hero-title">Halal Directory</div>
+                <div class="halal-hero-sub">Verified halal status of NZ brands &amp; restaurants</div>
+            </div>
+
+            <div class="halal-search-wrap">
+                <input type="text" id="halalSearch" class="halal-search" placeholder="🔍 Search brand, restaurant, product…" oninput="filterHalal()">
+            </div>
+
+            <div class="halal-filters" id="halalFilters">
+                <button class="hf-chip active" data-status="all" onclick="setHalalFilter('all',this)">All</button>
+                <button class="hf-chip" data-status="halal" onclick="setHalalFilter('halal',this)">✓ Halal</button>
+                <button class="hf-chip" data-status="partial" onclick="setHalalFilter('partial',this)">⚠ Partial</button>
+                <button class="hf-chip" data-status="not-halal" onclick="setHalalFilter('not-halal',this)">✗ Not Halal</button>
+                <button class="hf-chip" data-status="check" onclick="setHalalFilter('check',this)">? Verify</button>
+            </div>
+
+            <div id="halalContent"></div>
+
+            <div class="halal-footer">
+                <div class="halal-footer-title">📌 Important Disclaimers</div>
+                <ul class="halal-footer-list">
+                    <li>Status verified from official sources (FIANZ, brand websites) at the date shown</li>
+                    <li>Brands may change suppliers or certification — always check product packaging for halal logo</li>
+                    <li>For sausages and specialty items, check production dates &amp; batch codes</li>
+                    <li>"Partial" means some products halal, others not — verify each item separately</li>
+                    <li>If unsure, contact the brand or FIANZ directly: <strong>halal@fianz.com</strong></li>
+                </ul>
+                <div class="halal-last-updated" id="halalLastUpdated"></div>
+            </div>
+        </div>
+
         <div class="view" id="infoView">
             <div class="gap"></div>
             <div class="pad">
@@ -912,6 +1057,7 @@
         <button class="nav-item active" onclick="switchNav('home',this)"><div class="nav-icon">🏠</div><div class="nav-label">Home</div></button>
         <button class="nav-item" onclick="switchNav('calendar',this)"><div class="nav-icon">📅</div><div class="nav-label">Calendar</div></button>
         <button class="nav-item" onclick="switchNav('hadith',this)"><div class="nav-icon">📖</div><div class="nav-label">Hadith</div></button>
+        <button class="nav-item" onclick="switchNav('halal',this)"><div class="nav-icon">✅</div><div class="nav-label">Halal</div></button>
         <button class="nav-item" onclick="switchNav('info',this)"><div class="nav-icon">ℹ️</div><div class="nav-label">Info</div></button>
     </div>
 </div>
@@ -1334,6 +1480,276 @@ function jumpToToday(){
 }
 
 // Show FAB only when calendar view is active and user isn't already on today
+
+// ═══════════════════════════════════════
+// HALAL DIRECTORY
+// Default data; can be updated via admin or by uploading a halal-data.json
+// ═══════════════════════════════════════
+const DEFAULT_HALAL_DATA = {
+  "_meta": {
+    "version": 1,
+    "lastUpdated": "2026-05-15",
+    "source": "FIANZ memos, official brand websites"
+  },
+  "categories": [
+    {
+      "id": "poultry",
+      "name": "Poultry & Chicken",
+      "icon": "🐔",
+      "items": [
+        {
+          "brand": "Tegel",
+          "status": "halal",
+          "details": "All Tegel products are halal. Audited and approved by Halal Conformity Services Limited (HCS).",
+          "source": "tegel.co.nz/faqs",
+          "url": "https://www.tegel.co.nz/faqs/"
+        },
+        {
+          "brand": "Ingham's",
+          "status": "halal",
+          "details": "FIANZ Approved HALAL — fresh/chilled whole chickens, portions, marinated chickens. Frozen: only 'Ingham's Always Good' packaging. Includes Waitoa brand (Free Range and Carbon Zero).",
+          "source": "FIANZ Memo, 7 April 2025",
+          "url": ""
+        },
+        {
+          "brand": "Waitoa",
+          "status": "halal",
+          "details": "FIANZ Approved HALAL. Free Range and Carbon Zero options. Produced by Ingham's.",
+          "source": "FIANZ Memo, 7 April 2025",
+          "url": ""
+        },
+        {
+          "brand": "Turks Poultry (Foxton)",
+          "status": "halal",
+          "details": "Halal-certified chicken production resumed 5 August 2025. Look for batch codes after 5 August 2025. Includes fresh/frozen whole, half, portions, diced, minced, MDM.",
+          "source": "FIANZ Memo, 27 August 2025",
+          "url": ""
+        },
+        {
+          "brand": "Pams Whole Chicken",
+          "status": "check",
+          "details": "Sold at Pak'nSave/New World. Product of New Zealand — verify with store as no clear halal certification stated on packaging.",
+          "source": "paknsave.co.nz",
+          "url": ""
+        },
+        {
+          "brand": "Pams Finest Whole Duck",
+          "status": "check",
+          "details": "Product of New Zealand. No halal certification stated. Verify with retailer.",
+          "source": "paknsave.co.nz",
+          "url": ""
+        }
+      ]
+    },
+    {
+      "id": "meat",
+      "name": "Beef, Lamb & Red Meat",
+      "icon": "🥩",
+      "items": [
+        {
+          "brand": "Silver Fern Farms",
+          "status": "halal",
+          "details": "All beef and lamb products are halal certified. Venison is NOT halal certified.",
+          "source": "silverfernfarms.com/nz",
+          "url": "https://silverfernfarms.com/nz/en/what-were-made-of"
+        },
+        {
+          "brand": "Angel Bay (by ANZCO)",
+          "status": "halal",
+          "details": "Halal certified by NZ Islamic Development Trust (NZIDT) — an MPI-Approved Halal Organisation.",
+          "source": "angelbay.com",
+          "url": "https://angelbay.com/about-us/accreditations"
+        }
+      ]
+    },
+    {
+      "id": "sausages",
+      "name": "Sausages",
+      "icon": "🌭",
+      "items": [
+        {
+          "brand": "Harmony Brand (by Ikana NZ)",
+          "status": "halal",
+          "details": "FIANZ certified halal sausages. Launched 17 February 2026 in BLACK & PURPLE packaging. 4 varieties: Traditional Beef, Curry Beef, Lamb Shawarma, Moroccan Lamb. Look for FIANZ Halal Logo on front of packaging.",
+          "source": "FIANZ Memo, 20 February 2026",
+          "url": "",
+          "extra": "Stores: New World (New Lynn, Mt Roskill, Wellington City, Thorndon), Pak'nSave (Highland Park, Ormiston, Papakura, Albany, Silverdale, Mt Albert, Royal Oak, Mill Street)"
+        }
+      ]
+    },
+    {
+      "id": "pies",
+      "name": "Pies & Pastries",
+      "icon": "🥧",
+      "items": [
+        {
+          "brand": "Mrs Mac's Famous Beef Pie",
+          "status": "halal",
+          "details": "Halal Certified by Perth Mosque Inc.",
+          "source": "mrsmacs.co.nz",
+          "url": "https://mrsmacs.co.nz/our-products/single-serve-pies/famous-beef-pie/"
+        },
+        {
+          "brand": "Mrs Mac's Beef & Cheese Pie",
+          "status": "halal",
+          "details": "Halal Certified by Perth Mosque Inc.",
+          "source": "mrsmacs.co.nz",
+          "url": "https://mrsmacs.co.nz/our-products/single-serve-pies/beef-cheese/"
+        }
+      ]
+    },
+    {
+      "id": "restaurants",
+      "name": "Restaurants & Takeaways",
+      "icon": "🍔",
+      "items": [
+        {
+          "brand": "KFC New Zealand",
+          "status": "not-halal",
+          "details": "KFC chicken in New Zealand is NOT halal certified. Refer to KFC NZ help center for any updates.",
+          "source": "help.kfc.co.nz",
+          "url": "https://help.kfc.co.nz/hc/en-us/articles/360028631692-Is-KFC-chicken-Halal"
+        },
+        {
+          "brand": "Nando's New Zealand",
+          "status": "partial",
+          "details": "Nando's NZ is NOT a halal brand and does not pay for certification. HOWEVER, all chickens are sourced from Tegel, which IS halal certified. Restaurant kitchen is not halal-certified premises.",
+          "source": "help.nandos.com.au",
+          "url": "https://help.nandos.com.au/hc/en-au/articles/4402031212185-Does-Nando-s-serve-Halal-chicken-in-NZ-"
+        },
+        {
+          "brand": "Popeyes Louisiana Chicken NZ",
+          "status": "not-halal",
+          "details": "Popeyes products are NOT halal because cooked in Beef Tallow.",
+          "source": "popeyesnz.zendesk.com",
+          "url": "https://popeyesnz.zendesk.com/hc/en-us/articles/8572730745871-Is-your-chicken-Halal"
+        },
+        {
+          "brand": "BurgerFuel",
+          "status": "partial",
+          "details": "Stores and food NOT halal in the strictest sense. Some menu products are not halal certified and cross-contamination cannot be guaranteed. BurgerFuel WILL cook your burger separately using fresh, clean utensils if you let crew know you are halal.",
+          "source": "burgerfuel.com/nz",
+          "url": "https://www.burgerfuel.com/nz/dietary-requirements"
+        }
+      ]
+    }
+  ]
+};
+
+let HALAL_DATA = (function(){
+    try {
+        const stored = localStorage.getItem('halalData');
+        if(stored){
+            const parsed = JSON.parse(stored);
+            if(parsed && parsed.categories) return parsed;
+        }
+    } catch(e){}
+    return DEFAULT_HALAL_DATA;
+})();
+
+// Try to fetch updated halal-data.json from the repo (cache-busted)
+// Falls back silently to localStorage / defaults if not found.
+(function refreshHalalFromRepo(){
+    const url = './halal-data.json?v=' + Date.now();
+    fetch(url, {cache: 'no-store'})
+        .then(r => r.ok ? r.json() : null)
+        .then(json => {
+            if(json && json.categories && Array.isArray(json.categories)){
+                HALAL_DATA = json;
+                try { localStorage.setItem('halalData', JSON.stringify(json)); } catch(e){}
+                // If halal view currently visible, re-render
+                const halalView = document.getElementById('halalView');
+                if(halalView && halalView.classList.contains('active')){
+                    try{ renderHalal(); } catch(e){}
+                }
+            }
+        })
+        .catch(() => {/* silent — file may not exist yet */});
+})();
+
+let halalFilter = 'all';
+let halalSearchTerm = '';
+
+function setHalalFilter(status, btn){
+    halalFilter = status;
+    document.querySelectorAll('.hf-chip').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    renderHalal();
+}
+
+function filterHalal(){
+    const input = document.getElementById('halalSearch');
+    halalSearchTerm = (input ? input.value : '').toLowerCase().trim();
+    renderHalal();
+}
+
+function renderHalal(){
+    const container = document.getElementById('halalContent');
+    if(!container) return;
+    container.innerHTML = '';
+
+    const meta = HALAL_DATA._meta || {};
+    const lastEl = document.getElementById('halalLastUpdated');
+    if(lastEl) lastEl.textContent = `Last updated: ${meta.lastUpdated || '—'}`;
+
+    let totalShown = 0;
+    HALAL_DATA.categories.forEach(cat => {
+        const items = cat.items.filter(item => {
+            if(halalFilter !== 'all' && item.status !== halalFilter) return false;
+            if(halalSearchTerm){
+                const hay = (item.brand + ' ' + item.details + ' ' + (item.extra||'') + ' ' + cat.name).toLowerCase();
+                if(!hay.includes(halalSearchTerm)) return false;
+            }
+            return true;
+        });
+        if(items.length === 0) return;
+        totalShown += items.length;
+
+        const catDiv = document.createElement('div');
+        catDiv.className = 'halal-cat';
+        catDiv.innerHTML = `
+            <div class="halal-cat-header" onclick="this.parentElement.classList.toggle('collapsed')">
+                <div class="halal-cat-icon">${cat.icon}</div>
+                <div class="halal-cat-title">${cat.name}</div>
+                <div class="halal-cat-count">${items.length}</div>
+                <div class="halal-cat-toggle">▾</div>
+            </div>
+            <div class="halal-items">
+                ${items.map(item => renderHalalItem(item)).join('')}
+            </div>
+        `;
+        container.appendChild(catDiv);
+    });
+
+    if(totalShown === 0){
+        container.innerHTML = '<div class="halal-empty">No matches found. Try a different search or filter.</div>';
+    }
+}
+
+function renderHalalItem(item){
+    const statusIcons = {halal: '✓', partial: '⚠', 'not-halal': '✗', check: '?'};
+    const statusLabels = {halal: 'Halal Certified', partial: 'Partially Halal', 'not-halal': 'Not Halal', check: 'Verify'};
+    const icon = statusIcons[item.status] || '?';
+    const label = statusLabels[item.status] || item.status;
+    const sourceHtml = item.source ? `<span class="halal-item-source">Source: ${item.source}</span>` : '';
+    const linkHtml = item.url ? `<a href="${item.url}" target="_blank" rel="noopener" class="halal-item-link">View →</a>` : '';
+    const extraHtml = item.extra ? `<div class="halal-item-extra">📍 ${item.extra}</div>` : '';
+    return `
+        <div class="halal-item">
+            <div class="halal-badge ${item.status}">${icon}</div>
+            <div class="halal-item-body">
+                <div class="halal-item-brand">${item.brand}</div>
+                <div class="halal-item-status ${item.status}">${label}</div>
+                <div class="halal-item-details">${item.details}</div>
+                ${extraHtml}
+                <div class="halal-item-meta">${sourceHtml}${linkHtml}</div>
+            </div>
+        </div>
+    `;
+}
+
+// Render on first calendar/halal view open
+
 function updateJumpFab(){
     const fab=document.getElementById('jumpTodayFab');
     if(!fab)return;
@@ -1421,6 +1837,14 @@ function updateTrackerUI(){
     const prayedSpan=document.getElementById('trackerPrayed');
     if(status&&prayedSpan){
         prayedSpan.textContent=count;
+        // Update streak dots based on which prayers prayed
+        try{
+            const order=['Fajr','Dhuhr','Asr','Maghrib','Isha'];
+            document.querySelectorAll('.sd-dot').forEach((dot,i)=>{
+                const p=order[i];
+                dot.classList.toggle('prayed',prayed.includes(p));
+            });
+        }catch(e){}
         if(count===total){
             status.className='tracker-status all-done';
             status.innerHTML='<span>All 5 prayed</span> today 🌟';
@@ -1966,6 +2390,9 @@ window.switchNav=function(view,el){
         buildMonthTabs();
         // Always jump to today when calendar opens
         setTimeout(()=>{ try{ jumpToToday(); }catch(e){console.warn(e);} },200);
+    }
+    if(view==='halal'){
+        try{ renderHalal(); }catch(e){console.warn(e);}
     }
     setTimeout(updateJumpFab,50);
 };

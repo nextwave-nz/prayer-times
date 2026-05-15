@@ -342,6 +342,77 @@
     </div>
 </div>
 
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- HALAL DIRECTORY MANAGEMENT                                       -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="card" id="halalCard">
+    <div class="card-hdr">
+        <div class="card-num" style="background:linear-gradient(135deg,#7be0c2,#0f9b8e);color:#03261f">✓</div>
+        <div>
+            <div class="card-title">Halal Directory Management</div>
+            <div class="card-sub">Add / edit / remove brands & restaurants — exports a JSON file to upload</div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="info-box" style="margin-bottom:12px">
+            <strong>How it works:</strong> The app stores the halal directory in <code>halal-data.json</code> in the repo (or loads defaults if missing). Edit below, click "Download halal-data.json", then upload to <code>github.com/nextwave-nz/prayer-times/halal-data.json</code>.
+        </div>
+
+        <!-- Category selector + add new -->
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap">
+            <select id="halalCatSel" class="finput" style="flex:1;min-width:160px" onchange="renderHalalAdmin()"></select>
+            <button class="btn btn-ghost btn-sm" onclick="addHalalCategory()">+ Category</button>
+            <button class="btn btn-gold btn-sm" onclick="addHalalItem()">+ Brand</button>
+        </div>
+
+        <!-- Items list -->
+        <div id="halalAdminList" style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px"></div>
+
+        <!-- Item editor modal-ish -->
+        <div id="halalEditor" class="hidden" style="border:1px solid var(--gold-border);border-radius:var(--radius-sm);padding:14px;background:rgba(201,168,76,.04);margin-bottom:14px">
+            <div style="font-weight:700;color:var(--gold);margin-bottom:10px;font-size:.92em">📝 Edit Brand Entry</div>
+            <div class="fg"><div class="flbl">Brand / Restaurant name</div><input type="text" class="finput" id="heBrand"></div>
+            <div class="fg"><div class="flbl">Status</div>
+                <select class="finput" id="heStatus">
+                    <option value="halal">✓ Halal Certified</option>
+                    <option value="partial">⚠ Partially Halal</option>
+                    <option value="not-halal">✗ Not Halal</option>
+                    <option value="check">? Verify with retailer</option>
+                </select>
+            </div>
+            <div class="fg"><div class="flbl">Details / certification info</div><textarea class="finput" id="heDetails" rows="3"></textarea></div>
+            <div class="fg"><div class="flbl">Extra notes (stores, batch codes) — optional</div><textarea class="finput" id="heExtra" rows="2"></textarea></div>
+            <div class="fg"><div class="flbl">Source label (e.g. "FIANZ Memo, 27 Aug 2025")</div><input type="text" class="finput" id="heSource"></div>
+            <div class="fg"><div class="flbl">URL (optional)</div><input type="text" class="finput" id="heUrl" placeholder="https://…"></div>
+            <div style="display:flex;gap:8px;margin-top:6px">
+                <button class="btn btn-gold btn-sm" onclick="saveHalalItem()">💾 Save</button>
+                <button class="btn btn-ghost btn-sm" onclick="cancelHalalEdit()">Cancel</button>
+            </div>
+        </div>
+
+        <!-- Action buttons -->
+        <div style="display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--glass-border);padding-top:14px">
+            <button class="btn btn-teal" onclick="downloadHalalJson()">⬇️ Download halal-data.json</button>
+            <button class="btn btn-ghost btn-sm" onclick="importHalalJson()">📤 Import from JSON file</button>
+            <input type="file" id="halalImport" accept=".json" style="display:none" onchange="handleHalalImport(this)">
+            <button class="btn btn-ghost btn-sm" onclick="resetHalalDefaults()" style="margin-left:auto">↺ Reset to defaults</button>
+        </div>
+
+        <div class="info-box" style="margin-top:14px;background:rgba(15,155,142,.06);border-color:rgba(15,155,142,.32)">
+            <strong style="color:var(--teal)">📦 Upload to GitHub:</strong>
+            <ol style="margin:8px 0 0 18px;padding:0;font-size:.85em;line-height:1.7;color:var(--text-dim)">
+                <li>Click "Download halal-data.json" above</li>
+                <li>Go to <strong>github.com/nextwave-nz/prayer-times</strong></li>
+                <li>If <code>halal-data.json</code> exists: click it → pencil icon → upload new version</li>
+                <li>If not: click "Add file" → "Upload files" → drag in halal-data.json → commit</li>
+                <li>Bump <code>sw.js</code> cache version so users get the new data</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
 </div><!-- .wrap -->
 
 <script>
@@ -640,6 +711,214 @@ function showToast(msg,dur=3000){
     const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
     setTimeout(()=>t.classList.remove('show'),dur);
 }
+
+
+// ═══════════════════════════════════════════════════════════════════════
+// HALAL DIRECTORY MANAGEMENT
+// ═══════════════════════════════════════════════════════════════════════
+const DEFAULT_HALAL = {"_meta": {"version": 1, "lastUpdated": "2026-05-15", "source": "FIANZ memos, official brand websites"}, "categories": [{"id": "poultry", "name": "Poultry & Chicken", "icon": "🐔", "items": [{"brand": "Tegel", "status": "halal", "details": "All Tegel products are halal. Audited and approved by Halal Conformity Services Limited (HCS).", "source": "tegel.co.nz/faqs", "url": "https://www.tegel.co.nz/faqs/"}, {"brand": "Ingham's", "status": "halal", "details": "FIANZ Approved HALAL — fresh/chilled whole chickens, portions, marinated chickens. Frozen: only 'Ingham's Always Good' packaging. Includes Waitoa brand.", "source": "FIANZ Memo, 7 April 2025", "url": ""}, {"brand": "Waitoa", "status": "halal", "details": "FIANZ Approved HALAL. Free Range and Carbon Zero options. Produced by Ingham's.", "source": "FIANZ Memo, 7 April 2025", "url": ""}, {"brand": "Turks Poultry (Foxton)", "status": "halal", "details": "Halal-certified chicken production resumed 5 August 2025. Look for batch codes after 5 August 2025.", "source": "FIANZ Memo, 27 August 2025", "url": ""}, {"brand": "Pams Whole Chicken", "status": "check", "details": "Sold at Pak'nSave/New World. No clear halal certification on packaging — verify with store.", "source": "paknsave.co.nz", "url": ""}, {"brand": "Pams Finest Whole Duck", "status": "check", "details": "Product of New Zealand. No halal certification stated. Verify with retailer.", "source": "paknsave.co.nz", "url": ""}]}, {"id": "meat", "name": "Beef, Lamb & Red Meat", "icon": "🥩", "items": [{"brand": "Silver Fern Farms", "status": "halal", "details": "All beef and lamb products are halal certified. Venison is NOT halal certified.", "source": "silverfernfarms.com/nz", "url": "https://silverfernfarms.com/nz/en/what-were-made-of"}, {"brand": "Angel Bay (by ANZCO)", "status": "halal", "details": "Halal certified by NZ Islamic Development Trust (NZIDT) — MPI-Approved Halal Organisation.", "source": "angelbay.com", "url": "https://angelbay.com/about-us/accreditations"}]}, {"id": "sausages", "name": "Sausages", "icon": "🌭", "items": [{"brand": "Harmony Brand (by Ikana NZ)", "status": "halal", "details": "FIANZ certified halal sausages. Launched 17 February 2026 in BLACK & PURPLE packaging. 4 varieties: Traditional Beef, Curry Beef, Lamb Shawarma, Moroccan Lamb.", "source": "FIANZ Memo, 20 February 2026", "url": "", "extra": "Stores: New World (New Lynn, Mt Roskill, Wellington City, Thorndon), Pak'nSave (Highland Park, Ormiston, Papakura, Albany, Silverdale, Mt Albert, Royal Oak, Mill Street)"}]}, {"id": "pies", "name": "Pies & Pastries", "icon": "🥧", "items": [{"brand": "Mrs Mac's Famous Beef Pie", "status": "halal", "details": "Halal Certified by Perth Mosque Inc.", "source": "mrsmacs.co.nz", "url": "https://mrsmacs.co.nz/our-products/single-serve-pies/famous-beef-pie/"}, {"brand": "Mrs Mac's Beef & Cheese Pie", "status": "halal", "details": "Halal Certified by Perth Mosque Inc.", "source": "mrsmacs.co.nz", "url": "https://mrsmacs.co.nz/our-products/single-serve-pies/beef-cheese/"}]}, {"id": "restaurants", "name": "Restaurants & Takeaways", "icon": "🍔", "items": [{"brand": "KFC New Zealand", "status": "not-halal", "details": "KFC chicken in New Zealand is NOT halal certified.", "source": "help.kfc.co.nz", "url": "https://help.kfc.co.nz/hc/en-us/articles/360028631692-Is-KFC-chicken-Halal"}, {"brand": "Nando's New Zealand", "status": "partial", "details": "Nando's NZ is NOT a halal brand. HOWEVER, all chickens are sourced from Tegel (halal certified). Kitchen is not halal-certified premises.", "source": "help.nandos.com.au", "url": "https://help.nandos.com.au/hc/en-au/articles/4402031212185-Does-Nando-s-serve-Halal-chicken-in-NZ-"}, {"brand": "Popeyes Louisiana Chicken NZ", "status": "not-halal", "details": "Popeyes products are NOT halal because cooked in Beef Tallow.", "source": "popeyesnz.zendesk.com", "url": "https://popeyesnz.zendesk.com/hc/en-us/articles/8572730745871-Is-your-chicken-Halal"}, {"brand": "BurgerFuel", "status": "partial", "details": "Stores and food NOT halal in strictest sense. Some products not halal certified, cross-contamination not guaranteed. WILL cook separately using fresh utensils if you let crew know.", "source": "burgerfuel.com/nz", "url": "https://www.burgerfuel.com/nz/dietary-requirements"}]}]};
+let halalDataState = JSON.parse(JSON.stringify(DEFAULT_HALAL));
+let halalEditingIdx = -1;
+let halalEditingCat = '';
+
+// Load from localStorage if present (so edits persist across page reload)
+try {
+    const saved = localStorage.getItem('halalAdminData');
+    if(saved){
+        const parsed = JSON.parse(saved);
+        if(parsed && parsed.categories) halalDataState = parsed;
+    }
+} catch(e){}
+
+function persistHalal(){
+    try { localStorage.setItem('halalAdminData', JSON.stringify(halalDataState)); } catch(e){}
+}
+
+function renderHalalCatSelect(){
+    const sel = document.getElementById('halalCatSel');
+    if(!sel) return;
+    const current = sel.value;
+    sel.innerHTML = halalDataState.categories.map(c =>
+        `<option value="${c.id}">${c.icon} ${c.name} (${c.items.length})</option>`
+    ).join('');
+    if(current && halalDataState.categories.find(c => c.id === current)){
+        sel.value = current;
+    }
+}
+
+function renderHalalAdmin(){
+    renderHalalCatSelect();
+    const sel = document.getElementById('halalCatSel');
+    const list = document.getElementById('halalAdminList');
+    if(!sel || !list) return;
+    const cat = halalDataState.categories.find(c => c.id === sel.value);
+    if(!cat){ list.innerHTML = '<div style="padding:14px;text-align:center;color:var(--text-muted);font-size:.85em">No category selected</div>'; return; }
+
+    if(cat.items.length === 0){
+        list.innerHTML = '<div style="padding:14px;text-align:center;color:var(--text-muted);font-size:.85em">No brands in this category. Click "+ Brand" to add one.</div>';
+        return;
+    }
+
+    const statusBadges = {halal:'✓ Halal',partial:'⚠ Partial','not-halal':'✗ Not Halal',check:'? Verify'};
+    const statusColors = {halal:'var(--teal)',partial:'var(--gold)','not-halal':'#f87171',check:'#a5b4fc'};
+
+    list.innerHTML = cat.items.map((item, idx) => `
+        <div style="padding:11px 13px;background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius-sm);display:flex;gap:10px;align-items:center">
+            <div style="flex:1;min-width:0">
+                <div style="font-weight:600;font-size:.86em;color:var(--text)">${item.brand}</div>
+                <div style="font-size:.7em;color:${statusColors[item.status]||'var(--text-dim)'};font-weight:600;margin-top:2px">${statusBadges[item.status]||item.status}</div>
+                <div style="font-size:.7em;color:var(--text-dim);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${item.details.substring(0,80)}${item.details.length>80?'…':''}</div>
+            </div>
+            <button class="btn btn-ghost btn-sm" onclick="editHalalItem('${cat.id}',${idx})" title="Edit">✏️</button>
+            <button class="btn btn-ghost btn-sm" onclick="deleteHalalItem('${cat.id}',${idx})" title="Delete" style="color:#f87171">🗑</button>
+        </div>
+    `).join('');
+}
+
+function addHalalCategory(){
+    const name = prompt('Category name (e.g. "Frozen Meals"):');
+    if(!name || !name.trim()) return;
+    const icon = prompt('Emoji icon (e.g. 🍱):') || '📦';
+    const id = name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+    if(halalDataState.categories.find(c => c.id === id)){ showToast('⚠️ Category already exists'); return; }
+    halalDataState.categories.push({id, name: name.trim(), icon, items:[]});
+    persistHalal();
+    document.getElementById('halalCatSel').value = id;
+    renderHalalAdmin();
+    showToast('✅ Category added: '+name);
+}
+
+function addHalalItem(){
+    const sel = document.getElementById('halalCatSel');
+    if(!sel.value){ showToast('⚠️ Select a category first'); return; }
+    halalEditingCat = sel.value;
+    halalEditingIdx = -1; // new
+    document.getElementById('heBrand').value = '';
+    document.getElementById('heStatus').value = 'halal';
+    document.getElementById('heDetails').value = '';
+    document.getElementById('heExtra').value = '';
+    document.getElementById('heSource').value = '';
+    document.getElementById('heUrl').value = '';
+    document.getElementById('halalEditor').classList.remove('hidden');
+    document.getElementById('halalEditor').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function editHalalItem(catId, idx){
+    const cat = halalDataState.categories.find(c => c.id === catId);
+    if(!cat) return;
+    const item = cat.items[idx];
+    if(!item) return;
+    halalEditingCat = catId;
+    halalEditingIdx = idx;
+    document.getElementById('heBrand').value = item.brand || '';
+    document.getElementById('heStatus').value = item.status || 'halal';
+    document.getElementById('heDetails').value = item.details || '';
+    document.getElementById('heExtra').value = item.extra || '';
+    document.getElementById('heSource').value = item.source || '';
+    document.getElementById('heUrl').value = item.url || '';
+    document.getElementById('halalEditor').classList.remove('hidden');
+    document.getElementById('halalEditor').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function saveHalalItem(){
+    const cat = halalDataState.categories.find(c => c.id === halalEditingCat);
+    if(!cat){ showToast('⚠️ Category gone — refresh'); return; }
+    const brand = document.getElementById('heBrand').value.trim();
+    if(!brand){ showToast('⚠️ Brand name required'); return; }
+    const newItem = {
+        brand,
+        status: document.getElementById('heStatus').value,
+        details: document.getElementById('heDetails').value.trim(),
+        source: document.getElementById('heSource').value.trim(),
+        url: document.getElementById('heUrl').value.trim()
+    };
+    const extra = document.getElementById('heExtra').value.trim();
+    if(extra) newItem.extra = extra;
+    if(halalEditingIdx === -1){
+        cat.items.push(newItem);
+    } else {
+        cat.items[halalEditingIdx] = newItem;
+    }
+    halalDataState._meta = halalDataState._meta || {};
+    halalDataState._meta.lastUpdated = new Date().toISOString().split('T')[0];
+    persistHalal();
+    renderHalalAdmin();
+    cancelHalalEdit();
+    showToast(halalEditingIdx === -1 ? '✅ Added: '+brand : '✅ Updated: '+brand);
+}
+
+function cancelHalalEdit(){
+    document.getElementById('halalEditor').classList.add('hidden');
+    halalEditingIdx = -1;
+    halalEditingCat = '';
+}
+
+function deleteHalalItem(catId, idx){
+    const cat = halalDataState.categories.find(c => c.id === catId);
+    if(!cat || !cat.items[idx]) return;
+    if(!confirm(`Delete "${cat.items[idx].brand}"?`)) return;
+    cat.items.splice(idx, 1);
+    halalDataState._meta = halalDataState._meta || {};
+    halalDataState._meta.lastUpdated = new Date().toISOString().split('T')[0];
+    persistHalal();
+    renderHalalAdmin();
+    showToast('🗑 Deleted');
+}
+
+function downloadHalalJson(){
+    const json = JSON.stringify(halalDataState, null, 2);
+    const blob = new Blob([json], {type: 'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'halal-data.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast('✅ Downloaded halal-data.json — upload to GitHub repo');
+}
+
+function importHalalJson(){
+    document.getElementById('halalImport').click();
+}
+
+function handleHalalImport(input){
+    const f = input.files[0];
+    if(!f) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+        try {
+            const parsed = JSON.parse(e.target.result);
+            if(!parsed.categories || !Array.isArray(parsed.categories)){
+                showToast('⚠️ Invalid JSON — missing "categories" array');
+                return;
+            }
+            halalDataState = parsed;
+            persistHalal();
+            renderHalalAdmin();
+            showToast('✅ Imported '+parsed.categories.length+' categories');
+        } catch(err){
+            showToast('⚠️ Invalid JSON: '+err.message);
+        }
+    };
+    reader.readAsText(f);
+    input.value = '';
+}
+
+function resetHalalDefaults(){
+    if(!confirm('Reset halal directory to defaults? Your changes will be lost.')) return;
+    halalDataState = JSON.parse(JSON.stringify(DEFAULT_HALAL));
+    persistHalal();
+    renderHalalAdmin();
+    showToast('↺ Reset to defaults');
+}
+
+// Initial render on page load
+window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(renderHalalAdmin, 100);
+});
+
 </script>
 </body>
 </html>
