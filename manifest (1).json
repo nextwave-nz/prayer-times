@@ -1,0 +1,87 @@
+{
+  "name": "Waikato Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer times & Ramadan calendar \u2014 Hamilton Jamia Mosque, Waikato NZ",
+  "id": "/prayer-times/",
+  "start_url": "/prayer-times/?source=pwa",
+  "scope": "/prayer-times/",
+  "display": "standalone",
+  "background_color": "#0a0d14",
+  "theme_color": "#0a0d14",
+  "orientation": "portrait",
+  "categories": [
+    "lifestyle",
+    "religion"
+  ],
+  "lang": "en-NZ",
+  "icons": [
+    {
+      "src": "/prayer-times/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/prayer-times/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Prayer Times",
+      "short_name": "Prayers",
+      "description": "View today's prayer times",
+      "url": "/prayer-times/?source=shortcut",
+      "icons": [
+        {
+          "src": "/prayer-times/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Halal Directory",
+      "short_name": "Halal",
+      "description": "Browse halal brands & restaurants",
+      "url": "/prayer-times/?tab=halal&source=shortcut",
+      "icons": [
+        {
+          "src": "/prayer-times/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/prayer-times/screenshots/screenshot-home.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Home \u2014 Live prayer countdown"
+    },
+    {
+      "src": "/prayer-times/screenshots/screenshot-calendar.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Calendar \u2014 Monthly prayer view"
+    },
+    {
+      "src": "/prayer-times/screenshots/screenshot-halal.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Halal Directory \u2014 Brands & restaurants"
+    },
+    {
+      "src": "/prayer-times/screenshots/screenshot-hadith.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Hadith \u2014 Daily wisdom"
+    }
+  ]
+}
