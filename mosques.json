@@ -1,0 +1,17 @@
+{
+  "mosques": [
+    {
+      "id": "hamilton-jamia",
+      "name": "Hamilton Jamia Mosque",
+      "shortName": "Hamilton Jamia",
+      "address": "921 Heaphy Terrace, Hamilton",
+      "phone": "07 855 0567",
+      "email": "wma@xtra.co.nz",
+      "jummahKhutbah": "1:40 PM",
+      "jummahIqama": "1:50 PM",
+      "lat": -37.7833,
+      "lng": 175.2833,
+      "bank": "BNZ 02-0320-0143860-00"
+    }
+  ]
+}

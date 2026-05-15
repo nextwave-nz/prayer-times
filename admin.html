@@ -179,6 +179,110 @@
     <div class="step-item" id="s4"><div class="snum">4</div><div class="slbl">Download</div></div>
 </div>
 
+<!-- ════════ MOSQUE MANAGER ════════ -->
+<div class="card" id="mosqueCard" style="margin-bottom: 16px;">
+    <div class="card-hdr">
+        <div class="card-num" style="background: linear-gradient(135deg, var(--gold), #8B6914); color: #1a1100;">🕌</div>
+        <div style="flex:1">
+            <div class="card-title">Mosque Manager</div>
+            <div class="card-sub">Add or edit mosques shown in the app</div>
+        </div>
+        <button class="btn btn-sec" onclick="toggleMosqueManager()" id="mqToggleBtn" style="padding:6px 14px;font-size:.82em">▼ Show</button>
+    </div>
+    <div class="card-body" id="mosqueManagerBody" style="display:none">
+        <div style="background:var(--navy);border:1px solid var(--glass-border);border-radius:var(--radius-sm);padding:14px;margin-bottom:14px">
+            <div style="font-size:.78em;color:var(--text-dim);line-height:1.5">
+                <strong style="color:var(--gold-light)">How it works:</strong> Add new mosques here. The app loads <code>mosques.json</code> from GitHub. When more than 1 mosque exists, users will see a dropdown to switch between them. Each mosque has its own prayer times — just upload separate prayer data JSON files named <code>2026-05-{mosque-id}.json</code>.
+            </div>
+        </div>
+
+        <!-- Existing mosques list -->
+        <div style="margin-bottom: 18px">
+            <div class="flbl" style="margin-bottom: 10px;">📍 Current Mosques</div>
+            <div id="mosqueList"></div>
+        </div>
+
+        <!-- Add new mosque form -->
+        <div style="background:var(--navy);border:1px solid var(--glass-border);border-radius:var(--radius-sm);padding:18px">
+            <div style="font-family:'Fraunces',serif;font-size:1.1em;color:var(--gold-light);margin-bottom:14px">➕ Add New Mosque</div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+                <div>
+                    <div class="flbl">Mosque ID (URL-safe)</div>
+                    <input type="text" id="mqId" class="yr-inp" placeholder="e.g. auckland-jamia" style="width:100%;text-transform:lowercase">
+                    <div style="font-size:.7em;color:var(--text-dim);margin-top:4px">Lowercase, hyphens only. Used in filenames.</div>
+                </div>
+                <div>
+                    <div class="flbl">Short Name</div>
+                    <input type="text" id="mqShortName" class="yr-inp" placeholder="e.g. Auckland Jamia" style="width:100%">
+                </div>
+            </div>
+
+            <div style="margin-bottom:12px">
+                <div class="flbl">Full Name</div>
+                <input type="text" id="mqName" class="yr-inp" placeholder="e.g. Auckland Jamia Mosque" style="width:100%">
+            </div>
+
+            <div style="margin-bottom:12px">
+                <div class="flbl">Address</div>
+                <input type="text" id="mqAddress" class="yr-inp" placeholder="e.g. 17 Vermont Street, Ponsonby, Auckland" style="width:100%">
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px">
+                <div>
+                    <div class="flbl">Phone</div>
+                    <input type="text" id="mqPhone" class="yr-inp" placeholder="09 123 4567" style="width:100%">
+                </div>
+                <div>
+                    <div class="flbl">Email</div>
+                    <input type="email" id="mqEmail" class="yr-inp" placeholder="info@mosque.nz" style="width:100%">
+                </div>
+                <div>
+                    <div class="flbl">Friday Khutbah</div>
+                    <input type="text" id="mqJummahKhutbah" class="yr-inp" placeholder="1:40 PM" style="width:100%">
+                </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px">
+                <div>
+                    <div class="flbl">Friday Iqama</div>
+                    <input type="text" id="mqJummahIqama" class="yr-inp" placeholder="1:50 PM" style="width:100%">
+                </div>
+                <div>
+                    <div class="flbl">Latitude (optional)</div>
+                    <input type="text" id="mqLat" class="yr-inp" placeholder="-37.7833" style="width:100%">
+                </div>
+                <div>
+                    <div class="flbl">Longitude (optional)</div>
+                    <input type="text" id="mqLng" class="yr-inp" placeholder="175.2833" style="width:100%">
+                </div>
+            </div>
+
+            <div style="margin-bottom:14px">
+                <div class="flbl">Bank Account (optional, for donations)</div>
+                <input type="text" id="mqBank" class="yr-inp" placeholder="BNZ 02-0320-0143860-00" style="width:100%">
+            </div>
+
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+                <button class="btn btn-pri" onclick="addMosque()" style="flex:1;min-width:160px">➕ Add Mosque</button>
+                <button class="btn btn-sec" onclick="clearMosqueForm()" style="min-width:120px">Clear Form</button>
+            </div>
+        </div>
+
+        <!-- Download section -->
+        <div style="margin-top:20px;background:linear-gradient(135deg,rgba(212,175,110,.08),transparent);border:1px solid var(--gold-border);border-radius:var(--radius-sm);padding:16px">
+            <div style="font-family:'Fraunces',serif;font-size:1.05em;color:var(--gold-light);margin-bottom:8px">📥 Save Mosques to GitHub</div>
+            <div style="font-size:.78em;color:var(--text-dim);line-height:1.5;margin-bottom:12px">
+                Download <code>mosques.json</code> and upload to <code>github.com/nextwave-nz/prayer-times/mosques.json</code>. The app will load this file automatically.
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+                <button class="btn btn-pri" onclick="downloadMosquesJson()" style="flex:1;min-width:200px">⬇️ Download mosques.json</button>
+                <button class="btn btn-sec" onclick="copyMosquesJson()" style="min-width:140px">📋 Copy JSON</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="card" id="configCard">
     <div class="card-hdr">
         <div class="card-num" id="cn1">1</div>
@@ -434,6 +538,218 @@
 </div><!-- .wrap -->
 
 <script>
+
+// ═══════════════════════════════════════════════════════════════════
+// MOSQUE MANAGER
+// ═══════════════════════════════════════════════════════════════════
+const DEFAULT_MOSQUE_ENTRY = {
+    id: 'hamilton-jamia',
+    name: 'Hamilton Jamia Mosque',
+    shortName: 'Hamilton Jamia',
+    address: '921 Heaphy Terrace, Hamilton',
+    phone: '07 855 0567',
+    email: 'wma@xtra.co.nz',
+    jummahKhutbah: '1:40 PM',
+    jummahIqama: '1:50 PM',
+    lat: -37.7833,
+    lng: 175.2833,
+    bank: 'BNZ 02-0320-0143860-00'
+};
+
+function getStoredMosques() {
+    try {
+        const stored = localStorage.getItem('admin_mosques');
+        if (stored) return JSON.parse(stored);
+    } catch(e) {}
+    return [DEFAULT_MOSQUE_ENTRY];
+}
+
+function saveMosquesLocal(mosques) {
+    try { localStorage.setItem('admin_mosques', JSON.stringify(mosques)); } catch(e) {}
+}
+
+function toggleMosqueManager() {
+    const body = document.getElementById('mosqueManagerBody');
+    const btn = document.getElementById('mqToggleBtn');
+    if (body.style.display === 'none') {
+        body.style.display = 'block';
+        btn.textContent = '▲ Hide';
+        renderMosqueList();
+    } else {
+        body.style.display = 'none';
+        btn.textContent = '▼ Show';
+    }
+}
+
+function renderMosqueList() {
+    const mosques = getStoredMosques();
+    const list = document.getElementById('mosqueList');
+
+    if (mosques.length === 0) {
+        list.innerHTML = '<div style="padding:14px;text-align:center;color:var(--text-dim);font-style:italic">No mosques yet — add one below</div>';
+        return;
+    }
+
+    list.innerHTML = mosques.map((m, i) => `
+        <div style="background:var(--navy2);border:1px solid var(--glass-border);border-radius:10px;padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:12px">
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#8B6914);display:flex;align-items:center;justify-content:center;color:#1a1100;font-weight:700;flex-shrink:0">🕌</div>
+            <div style="flex:1;min-width:0">
+                <div style="font-weight:600;color:var(--text);font-size:.95em">${escapeHtml(m.name)}</div>
+                <div style="font-size:.78em;color:var(--text-dim);margin-top:2px">${escapeHtml(m.address || '')}</div>
+                <div style="font-size:.7em;color:var(--gold);margin-top:3px;font-family:'JetBrains Mono',monospace">${escapeHtml(m.id)}</div>
+            </div>
+            <button onclick="editMosque(${i})" style="background:transparent;border:1px solid var(--gold-border);color:var(--gold);padding:6px 12px;border-radius:10px;font-size:.75em;font-weight:600;cursor:pointer;font-family:inherit">Edit</button>
+            ${mosques.length > 1 ? `<button onclick="deleteMosque(${i})" style="background:transparent;border:1px solid rgba(214,139,111,.4);color:#d68b6f;padding:6px 12px;border-radius:10px;font-size:.75em;font-weight:600;cursor:pointer;font-family:inherit">Delete</button>` : ''}
+        </div>
+    `).join('');
+}
+
+function escapeHtml(s) {
+    if (!s) return '';
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+}
+
+let editingIdx = -1;
+
+function editMosque(idx) {
+    const mosques = getStoredMosques();
+    const m = mosques[idx];
+    if (!m) return;
+
+    document.getElementById('mqId').value = m.id || '';
+    document.getElementById('mqShortName').value = m.shortName || '';
+    document.getElementById('mqName').value = m.name || '';
+    document.getElementById('mqAddress').value = m.address || '';
+    document.getElementById('mqPhone').value = m.phone || '';
+    document.getElementById('mqEmail').value = m.email || '';
+    document.getElementById('mqJummahKhutbah').value = m.jummahKhutbah || '';
+    document.getElementById('mqJummahIqama').value = m.jummahIqama || '';
+    document.getElementById('mqLat').value = m.lat || '';
+    document.getElementById('mqLng').value = m.lng || '';
+    document.getElementById('mqBank').value = m.bank || '';
+
+    editingIdx = idx;
+
+    // Update button text
+    const btn = document.querySelector('button[onclick="addMosque()"]');
+    if (btn) btn.textContent = '💾 Save Changes';
+
+    // Scroll to form
+    document.getElementById('mqId').scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function clearMosqueForm() {
+    ['mqId','mqShortName','mqName','mqAddress','mqPhone','mqEmail','mqJummahKhutbah','mqJummahIqama','mqLat','mqLng','mqBank'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+    });
+    editingIdx = -1;
+    const btn = document.querySelector('button[onclick="addMosque()"]');
+    if (btn) btn.textContent = '➕ Add Mosque';
+}
+
+function addMosque() {
+    const id = document.getElementById('mqId').value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '-');
+    const name = document.getElementById('mqName').value.trim();
+    const shortName = document.getElementById('mqShortName').value.trim();
+    const address = document.getElementById('mqAddress').value.trim();
+
+    if (!id || !name || !address) {
+        toast('Please fill in ID, Name, and Address (required)', 'error');
+        return;
+    }
+
+    const newMosque = {
+        id,
+        name,
+        shortName: shortName || name,
+        address,
+        phone: document.getElementById('mqPhone').value.trim(),
+        email: document.getElementById('mqEmail').value.trim(),
+        jummahKhutbah: document.getElementById('mqJummahKhutbah').value.trim() || '1:40 PM',
+        jummahIqama: document.getElementById('mqJummahIqama').value.trim() || '1:50 PM',
+        lat: parseFloat(document.getElementById('mqLat').value) || null,
+        lng: parseFloat(document.getElementById('mqLng').value) || null,
+        bank: document.getElementById('mqBank').value.trim()
+    };
+
+    const mosques = getStoredMosques();
+
+    if (editingIdx >= 0 && editingIdx < mosques.length) {
+        // Update existing
+        mosques[editingIdx] = newMosque;
+        toast(`Updated ${name}`, 'success');
+    } else {
+        // Check duplicate ID
+        if (mosques.some(m => m.id === id)) {
+            toast(`A mosque with ID "${id}" already exists. Use Edit to modify it.`, 'error');
+            return;
+        }
+        mosques.push(newMosque);
+        toast(`Added ${name}`, 'success');
+    }
+
+    saveMosquesLocal(mosques);
+    clearMosqueForm();
+    renderMosqueList();
+}
+
+function deleteMosque(idx) {
+    const mosques = getStoredMosques();
+    if (mosques.length <= 1) {
+        toast('Cannot delete the last mosque', 'error');
+        return;
+    }
+    if (!confirm(`Delete "${mosques[idx].name}"? This cannot be undone.`)) return;
+    mosques.splice(idx, 1);
+    saveMosquesLocal(mosques);
+    renderMosqueList();
+    toast('Mosque deleted', 'success');
+}
+
+function buildMosquesJson() {
+    return JSON.stringify({ mosques: getStoredMosques() }, null, 2);
+}
+
+function downloadMosquesJson() {
+    const json = buildMosquesJson();
+    const blob = new Blob([json], {type: 'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'mosques.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    toast('mosques.json downloaded — upload to GitHub repo root', 'success');
+}
+
+function copyMosquesJson() {
+    const json = buildMosquesJson();
+    navigator.clipboard.writeText(json).then(() => {
+        toast('JSON copied to clipboard', 'success');
+    }).catch(() => {
+        toast('Copy failed — use download instead', 'error');
+    });
+}
+
+// Helper toast — works with existing or fallback
+if (typeof toast === 'undefined') {
+    window.toast = function(msg, type) {
+        const t = document.getElementById('toast');
+        if (t) {
+            t.textContent = msg;
+            t.style.display = 'block';
+            t.style.background = type === 'error' ? 'rgba(214,139,111,.95)' : 'rgba(143,166,138,.95)';
+            setTimeout(() => t.style.display = 'none', 3000);
+        } else {
+            alert(msg);
+        }
+    };
+}
+
+
 // ── STATE ────────────────────────────────────────────────────────────────────
 const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
 const MSHORT=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
