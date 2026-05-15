@@ -652,6 +652,29 @@
         .halal-item-link{color:var(--gold);text-decoration:none;font-weight:600}
         .halal-item-link:hover{text-decoration:underline}
 
+
+        /* ── Halal: brand selector ── */
+        .halal-brand-row{padding:0 16px 10px}
+        .halal-brand-sel{width:100%;background:var(--surface);border:1px solid var(--border-soft);border-radius:var(--r-sm);padding:10px 14px;color:var(--text);font-family:inherit;font-size:.84em;cursor:pointer}
+        .halal-brand-sel:focus{outline:none;border-color:var(--gold-border)}
+
+        /* ── Halal: products & stores expand sections ── */
+        .halal-item-scope{font-size:.72em;color:var(--text-2);margin-bottom:8px;padding:6px 10px;background:rgba(123,224,194,.06);border-left:2px solid var(--teal);border-radius:4px}
+        .halal-item-scope strong{color:var(--teal)}
+        .halal-expand{margin-top:8px;border:1px solid var(--border-soft);border-radius:8px;overflow:hidden;background:rgba(255,255,255,.02)}
+        .halal-expand-header{padding:9px 12px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-size:.74em;font-weight:600;color:var(--gold);user-select:none}
+        .halal-expand-header:hover{background:rgba(245,184,109,.05)}
+        .halal-expand-toggle{transition:transform .25s;color:var(--text-3)}
+        .halal-expand.expanded .halal-expand-toggle{transform:rotate(180deg);color:var(--gold)}
+        .halal-expand-body{display:none;padding:4px 0;border-top:1px solid var(--border-soft)}
+        .halal-expand.expanded .halal-expand-body{display:block}
+        .hp-row{padding:8px 12px;font-size:.72em;color:var(--text);border-bottom:1px solid rgba(255,255,255,.03);display:flex;flex-direction:column;gap:2px}
+        .hp-row:last-child{border-bottom:none}
+        .hp-name{font-weight:500;line-height:1.4}
+        .hp-barcode{font-family:'JetBrains Mono',monospace;font-size:.85em;color:var(--text-3);letter-spacing:.5px}
+        .hp-note{font-size:.85em;color:var(--text-2);font-style:italic}
+        .hs-row{padding:8px 12px;font-size:.74em;color:var(--text-2);border-bottom:1px solid rgba(255,255,255,.03)}
+        .hs-row:last-child{border-bottom:none}
         .halal-empty{margin:20px 16px;padding:30px 20px;text-align:center;background:var(--surface);border:1px dashed var(--border-soft);border-radius:var(--r-sm);color:var(--text-3);font-size:.85em}
 
         .halal-footer{margin:18px 16px;padding:14px 16px;background:rgba(245,184,109,.05);border:1px solid var(--gold-border);border-radius:var(--r-sm);font-size:.74em}
@@ -990,8 +1013,13 @@
                 <input type="text" id="halalSearch" class="halal-search" placeholder="🔍 Search brand, restaurant, product…" oninput="filterHalal()">
             </div>
 
+            <div class="halal-brand-row">
+                <select id="halalBrandSel" class="halal-brand-sel" onchange="setHalalBrand(this.value)">
+                    <option value="">🔽 All Brands</option>
+                </select>
+            </div>
             <div class="halal-filters" id="halalFilters">
-                <button class="hf-chip active" data-status="all" onclick="setHalalFilter('all',this)">All</button>
+                <button class="hf-chip active" data-status="all" onclick="setHalalFilter('all',this)">All Status</button>
                 <button class="hf-chip" data-status="halal" onclick="setHalalFilter('halal',this)">✓ Halal</button>
                 <button class="hf-chip" data-status="partial" onclick="setHalalFilter('partial',this)">⚠ Partial</button>
                 <button class="hf-chip" data-status="not-halal" onclick="setHalalFilter('not-halal',this)">✗ Not Halal</button>
@@ -1487,9 +1515,9 @@ function jumpToToday(){
 // ═══════════════════════════════════════
 const DEFAULT_HALAL_DATA = {
   "_meta": {
-    "version": 1,
+    "version": 2,
     "lastUpdated": "2026-05-15",
-    "source": "FIANZ memos, official brand websites"
+    "source": "FIANZ memos, official brand websites verified May 2026"
   },
   "categories": [
     {
@@ -1500,35 +1528,344 @@ const DEFAULT_HALAL_DATA = {
         {
           "brand": "Tegel",
           "status": "halal",
-          "details": "All Tegel products are halal. Audited and approved by Halal Conformity Services Limited (HCS).",
+          "details": "All Tegel products are halal. Audited and approved by Halal Conformity Services Limited (HCS) and listed under the MPI Halal Notice.",
           "source": "tegel.co.nz/faqs",
-          "url": "https://www.tegel.co.nz/faqs/"
+          "url": "https://www.tegel.co.nz/faqs/",
+          "scope": "All Tegel-branded fresh/frozen/marinated chicken products"
         },
         {
           "brand": "Ingham's",
           "status": "halal",
-          "details": "FIANZ Approved HALAL — fresh/chilled whole chickens, portions, marinated chickens. Frozen: only 'Ingham's Always Good' packaging. Includes Waitoa brand (Free Range and Carbon Zero).",
+          "details": "FIANZ Approved HALAL — all primary products. For frozen whole chickens, only buy 'Ingham's Always Good' packaging. Plant-based 'Let's Eat' range also certified.",
           "source": "FIANZ Memo, 7 April 2025",
-          "url": ""
+          "url": "",
+          "products": [
+            {
+              "name": "Whole Fresh/Chilled Chicken",
+              "code": "",
+              "barcode": ""
+            },
+            {
+              "name": "Whole Fresh/Chilled Chicken Portions",
+              "code": "",
+              "barcode": ""
+            },
+            {
+              "name": "Marinated Whole Fresh/Chilled Chickens & Portions",
+              "code": "",
+              "barcode": ""
+            },
+            {
+              "name": "Whole Frozen Chickens (Ingham's Always Good packaging only)",
+              "code": "",
+              "barcode": ""
+            },
+            {
+              "name": "Inghams Dino Nuggets 900g (NEW)",
+              "code": "4660900",
+              "barcode": "9414757466094"
+            },
+            {
+              "name": "Inghams Buttermilk Burgers 600g (NEW)",
+              "code": "2027000",
+              "barcode": "9414757202708"
+            },
+            {
+              "name": "Inghams Buttermilk Tenders 500g (NEW)",
+              "code": "2018100",
+              "barcode": "9414757201817"
+            },
+            {
+              "name": "Inghams Hot & Spicy Buttermilk Burgers 600g (NEW)",
+              "code": "4501100",
+              "barcode": "9414757450116"
+            },
+            {
+              "name": "Inghams Hot & Spicy Buttermilk Tenders 500g (NEW)",
+              "code": "2021100",
+              "barcode": "9414757202111"
+            },
+            {
+              "name": "Inghams Cajun Windings 1kg",
+              "code": "2025500",
+              "barcode": "9414757202555"
+            },
+            {
+              "name": "Inghams Chicken Tempura Battered Nuggets 1kg",
+              "code": "2081200",
+              "barcode": "9414757470404"
+            },
+            {
+              "name": "Inghams Chicken Chipees 1kg",
+              "code": "2062600",
+              "barcode": "9414757206263"
+            },
+            {
+              "name": "Inghams Chicken Tenders 400g",
+              "code": "2088900",
+              "barcode": "9414757430903"
+            },
+            {
+              "name": "Inghams Garlic Butter Kyiv 350g",
+              "code": "2088700",
+              "barcode": "9414757430804"
+            },
+            {
+              "name": "Inghams Gluten-Free Chicken Nuggets 700g",
+              "code": "2021900",
+              "barcode": "9414757202197"
+            },
+            {
+              "name": "Inghams Premium Chicken Schnitzel 1kg",
+              "code": "2084200",
+              "barcode": "8414757208427"
+            },
+            {
+              "name": "Inghams Premium Chicken Tenders 1kg",
+              "code": "2084600",
+              "barcode": "9414757208465"
+            },
+            {
+              "name": "Inghams Spicy Chicken Nibbles 1kg",
+              "code": "2084000",
+              "barcode": "9414757208403"
+            },
+            {
+              "name": "Let's Eat Plant-based Burgers 400g",
+              "code": "4500400",
+              "barcode": "9414757450048"
+            },
+            {
+              "name": "Let's Eat Plant-based Nuggets 400g",
+              "code": "4500300",
+              "barcode": "9414757450031"
+            },
+            {
+              "name": "Let's Eat Plant-based Southern Style Bites 400g",
+              "code": "4500800",
+              "barcode": "9414757450086"
+            },
+            {
+              "name": "Let's Eat Plant-based Tenders 400g",
+              "code": "4500200",
+              "barcode": "9414757450024"
+            }
+          ],
+          "extra": "⚠️ For regular speciality products (items 10-30 in the FIANZ list), ensure 'Use by Date' is 1 February 2026 or beyond. Avoid buying from non-Halal certified premises due to cross-contamination risk."
         },
         {
           "brand": "Waitoa",
           "status": "halal",
-          "details": "FIANZ Approved HALAL. Free Range and Carbon Zero options. Produced by Ingham's.",
+          "details": "FIANZ Approved HALAL. Free Range and Carbon Zero options included. Produced by Ingham's.",
           "source": "FIANZ Memo, 7 April 2025",
-          "url": ""
+          "url": "",
+          "products": [
+            {
+              "name": "Waitoa Whole Fresh/Chilled",
+              "code": "",
+              "barcode": ""
+            },
+            {
+              "name": "Waitoa Whole Fresh/Chilled Chicken Portions",
+              "code": "",
+              "barcode": ""
+            },
+            {
+              "name": "Waitoa Marinated Whole Fresh/Chilled Chickens & Portions",
+              "code": "",
+              "barcode": ""
+            },
+            {
+              "name": "Waitoa Whole Frozen Chickens",
+              "code": "",
+              "barcode": ""
+            },
+            {
+              "name": "Waitoa Garlic Butter Kyiv 300g",
+              "code": "2015800",
+              "barcode": "9414757201589"
+            },
+            {
+              "name": "Waitoa Gluten-Free Burger 400g",
+              "code": "2024600",
+              "barcode": "9414757202463"
+            },
+            {
+              "name": "Waitoa Gluten-Free Karaage 380g",
+              "code": "2027800",
+              "barcode": "9414757202784"
+            },
+            {
+              "name": "Waitoa Gluten-Free Nuggets 450g",
+              "code": "2078500",
+              "barcode": "9414757207857"
+            },
+            {
+              "name": "Waitoa Gluten-Free Tenders 350g",
+              "code": "2019300",
+              "barcode": "9414757201930"
+            },
+            {
+              "name": "Waitoa Lite & Crispy Bites 380g",
+              "code": "2028600",
+              "barcode": "9414757202869"
+            },
+            {
+              "name": "Waitoa Spinach & Cheese Kyiv 300g",
+              "code": "2028000",
+              "barcode": "9414757202807"
+            },
+            {
+              "name": "Waitoa Tenders 350g",
+              "code": "2013600",
+              "barcode": "9414757202367"
+            }
+          ]
         },
         {
           "brand": "Turks Poultry (Foxton)",
           "status": "halal",
-          "details": "Halal-certified chicken production resumed 5 August 2025. Look for batch codes after 5 August 2025. Includes fresh/frozen whole, half, portions, diced, minced, MDM.",
+          "details": "Halal-certified chicken production resumed 5 August 2025 under Semi-Mechanical Halal Slaughter process. Look for batch codes after 5 August 2025 (e.g. batch 250811 = 11 August 2025).",
           "source": "FIANZ Memo, 27 August 2025",
-          "url": ""
+          "url": "",
+          "products": [
+            {
+              "name": "Chicken Breast Fillet Free Range 450g x 12 Top Seal",
+              "code": "",
+              "barcode": "9414855301105"
+            },
+            {
+              "name": "Chicken Breast Fillet Free Range 450g x 12 HK",
+              "code": "",
+              "barcode": "9414855309514"
+            },
+            {
+              "name": "Chicken Breast Fillet Free Range Diced 12kg",
+              "code": "",
+              "barcode": "9414855305158"
+            },
+            {
+              "name": "Chicken Breast Fillet Free Range Graded 12kg",
+              "code": "",
+              "barcode": "9414855310046"
+            },
+            {
+              "name": "Chicken Breast Mince Free Range 12KG",
+              "code": "",
+              "barcode": "9414855304106"
+            },
+            {
+              "name": "Chicken Breast Fillet Free Range 400grm Top Seal Pams",
+              "code": "",
+              "barcode": "9415077160556"
+            },
+            {
+              "name": "Chicken Backs 12kg",
+              "code": "",
+              "barcode": "9414855304519"
+            },
+            {
+              "name": "Chicken Drumsticks Free Range 12kg Farro",
+              "code": "",
+              "barcode": "9414855307602"
+            },
+            {
+              "name": "Chicken Drumsticks Free Range 10 x 1kg",
+              "code": "",
+              "barcode": "9414855300429"
+            },
+            {
+              "name": "Chicken Drumsticks Free Range 400grm Top Seal Pams",
+              "code": "",
+              "barcode": "9415077160563"
+            },
+            {
+              "name": "Chicken Feet Fresh Free Range Bulk Bin",
+              "code": "",
+              "barcode": "9414855307039"
+            },
+            {
+              "name": "Chicken Necks Free Range Frozen 12KG",
+              "code": "",
+              "barcode": "9414855305233"
+            },
+            {
+              "name": "Chicken Frames Free Range 12kg",
+              "code": "",
+              "barcode": "9414855301723"
+            },
+            {
+              "name": "Chicken Thigh Fillet Free Range 12kg",
+              "code": "",
+              "barcode": "9414855301761"
+            },
+            {
+              "name": "Chicken Thigh Fillet Free Range 450g x 12 Top Seal",
+              "code": "",
+              "barcode": "9414855301136"
+            },
+            {
+              "name": "Chicken Thigh Fillet Free Range 400grm Top Seal Pams",
+              "code": "",
+              "barcode": "9415077160570"
+            },
+            {
+              "name": "Chicken Tenderloin Free Range 450g Top Seal",
+              "code": "",
+              "barcode": "9414855304502"
+            },
+            {
+              "name": "Chicken Tenderloin Free Range 450grm Top Seal Pams",
+              "code": "",
+              "barcode": "9415077160587"
+            },
+            {
+              "name": "Chicken Nibbles Free Range 12kg",
+              "code": "",
+              "barcode": "9414855301815"
+            },
+            {
+              "name": "Chicken Nibbles Free Range 10 x 1kg",
+              "code": "",
+              "barcode": "9414855300436"
+            },
+            {
+              "name": "Chicken Wings Free Range 12KG",
+              "code": "",
+              "barcode": "9414855303956"
+            },
+            {
+              "name": "Chicken Wings Free Range 1kg Farro",
+              "code": "",
+              "barcode": "9414855307282"
+            },
+            {
+              "name": "Chicken Whole Leg Free Range 10kg",
+              "code": "",
+              "barcode": "9414855302461"
+            },
+            {
+              "name": "Chicken MDM Free Range 12KG",
+              "code": "",
+              "barcode": "9414855304885"
+            },
+            {
+              "name": "Chicken Skin 5KG",
+              "code": "",
+              "barcode": "9414855305790"
+            },
+            {
+              "name": "Chicken Cocktails Frozen 12 KG",
+              "code": "",
+              "barcode": "9414855304588"
+            }
+          ],
+          "extra": "Full FIANZ Halal Certified product list has 161 SKUs. Above is a representative sample. Look for batch codes ≥ 5 Aug 2025."
         },
         {
           "brand": "Pams Whole Chicken",
           "status": "check",
-          "details": "Sold at Pak'nSave/New World. Product of New Zealand — verify with store as no clear halal certification stated on packaging.",
+          "details": "Sold at Pak'nSave/New World. Product of New Zealand. No clear halal certification stated on packaging — verify with retailer.",
           "source": "paknsave.co.nz",
           "url": ""
         },
@@ -1548,17 +1885,32 @@ const DEFAULT_HALAL_DATA = {
       "items": [
         {
           "brand": "Silver Fern Farms",
-          "status": "halal",
+          "status": "partial",
           "details": "All beef and lamb products are halal certified. Venison is NOT halal certified.",
           "source": "silverfernfarms.com/nz",
-          "url": "https://silverfernfarms.com/nz/en/what-were-made-of"
+          "url": "https://silverfernfarms.com/nz/en/what-were-made-of",
+          "products": [
+            {
+              "name": "All beef products",
+              "note": "✓ Halal certified"
+            },
+            {
+              "name": "All lamb products",
+              "note": "✓ Halal certified"
+            },
+            {
+              "name": "All venison products",
+              "note": "✗ NOT halal certified"
+            }
+          ]
         },
         {
           "brand": "Angel Bay (by ANZCO)",
           "status": "halal",
-          "details": "Halal certified by NZ Islamic Development Trust (NZIDT) — an MPI-Approved Halal Organisation.",
+          "details": "Halal certified by NZ Islamic Development Trust (NZIDT) — an MPI-Approved Halal Organisation (AHO).",
           "source": "angelbay.com",
-          "url": "https://angelbay.com/about-us/accreditations"
+          "url": "https://angelbay.com/about-us/accreditations",
+          "scope": "All Angel Bay branded products"
         }
       ]
     },
@@ -1570,10 +1922,37 @@ const DEFAULT_HALAL_DATA = {
         {
           "brand": "Harmony Brand (by Ikana NZ)",
           "status": "halal",
-          "details": "FIANZ certified halal sausages. Launched 17 February 2026 in BLACK & PURPLE packaging. 4 varieties: Traditional Beef, Curry Beef, Lamb Shawarma, Moroccan Lamb. Look for FIANZ Halal Logo on front of packaging.",
+          "details": "FIANZ certified halal sausages. Launched 17 February 2026 in distinctive BLACK & PURPLE packaging. Look for FIANZ Halal Logo on front.",
           "source": "FIANZ Memo, 20 February 2026",
           "url": "",
-          "extra": "Stores: New World (New Lynn, Mt Roskill, Wellington City, Thorndon), Pak'nSave (Highland Park, Ormiston, Papakura, Albany, Silverdale, Mt Albert, Royal Oak, Mill Street)"
+          "products": [
+            {
+              "name": "Traditional Beef Sausages"
+            },
+            {
+              "name": "Curry Beef Sausages"
+            },
+            {
+              "name": "Lamb Shawarma Sausages"
+            },
+            {
+              "name": "Moroccan Lamb Sausages"
+            }
+          ],
+          "stores": [
+            "New World New Lynn",
+            "New World Mt Roskill",
+            "New World Wellington City",
+            "New World Thorndon",
+            "Pak N Save Highland Park",
+            "Pak N Save Ormiston",
+            "Pak N Save Papakura",
+            "Pak N Save Albany",
+            "Pak N Save Silverdale",
+            "Pak N Save Mt Albert",
+            "Pak N Save Royal Oak",
+            "Pak N Save Mill Street"
+          ]
         }
       ]
     },
@@ -1583,18 +1962,25 @@ const DEFAULT_HALAL_DATA = {
       "icon": "🥧",
       "items": [
         {
-          "brand": "Mrs Mac's Famous Beef Pie",
+          "brand": "Mrs Mac's",
           "status": "halal",
           "details": "Halal Certified by Perth Mosque Inc.",
           "source": "mrsmacs.co.nz",
-          "url": "https://mrsmacs.co.nz/our-products/single-serve-pies/famous-beef-pie/"
-        },
-        {
-          "brand": "Mrs Mac's Beef & Cheese Pie",
-          "status": "halal",
-          "details": "Halal Certified by Perth Mosque Inc.",
-          "source": "mrsmacs.co.nz",
-          "url": "https://mrsmacs.co.nz/our-products/single-serve-pies/beef-cheese/"
+          "url": "https://mrsmacs.co.nz/our-products/",
+          "products": [
+            {
+              "name": "Famous Beef Pie 200g"
+            },
+            {
+              "name": "Beef & Cheese Pie 175g"
+            },
+            {
+              "name": "Mega Angus Steak Pie"
+            },
+            {
+              "name": "Single Serve Pies range"
+            }
+          ]
         }
       ]
     },
@@ -1605,29 +1991,46 @@ const DEFAULT_HALAL_DATA = {
       "items": [
         {
           "brand": "KFC New Zealand",
-          "status": "not-halal",
-          "details": "KFC chicken in New Zealand is NOT halal certified. Refer to KFC NZ help center for any updates.",
-          "source": "help.kfc.co.nz",
-          "url": "https://help.kfc.co.nz/hc/en-us/articles/360028631692-Is-KFC-chicken-Halal"
+          "status": "partial",
+          "details": "14 KFC stores serve halal-certified chicken from Tegel (HCS-approved) and Ingham's (FIANZ-approved). These stores do NOT serve pork bacon — chicken rashers used instead. Other KFC stores are NOT halal.",
+          "source": "help.kfc.co.nz · Updated 30 Aug 2024",
+          "url": "https://help.kfc.co.nz/hc/en-us/articles/360028631692-Is-KFC-chicken-Halal",
+          "stores": [
+            "Avondale, Auckland",
+            "Lynfield, Auckland",
+            "Sylvia Park, Auckland",
+            "Auckland International Airport Terminal (no rashers or bacon)",
+            "Massey Road, Māngere, Auckland",
+            "Ōtāhuhu, Auckland",
+            "Cavendish Drive, Manukau, Auckland",
+            "Takanini, Auckland",
+            "Karaka, Auckland",
+            "Rototuna, Waikato",
+            "Princess Street, Palmerston North",
+            "Wainuiomata, Wellington",
+            "Kent Terrace, Wellington",
+            "Riccarton Road, Christchurch"
+          ],
+          "extra": "⚠️ Use 'KFC Pick Up' via the app to select a halal store. Delivery orders via UberEats/DoorDash/DeliverEasy cannot guarantee fulfilment from a halal store."
         },
         {
           "brand": "Nando's New Zealand",
           "status": "partial",
-          "details": "Nando's NZ is NOT a halal brand and does not pay for certification. HOWEVER, all chickens are sourced from Tegel, which IS halal certified. Restaurant kitchen is not halal-certified premises.",
+          "details": "Nando's NZ is NOT a halal-certified brand and doesn't pay for certification. HOWEVER, all chickens are sourced from Tegel (which IS halal certified). Restaurant kitchens themselves are not halal-certified premises (cross-contamination risk).",
           "source": "help.nandos.com.au",
           "url": "https://help.nandos.com.au/hc/en-au/articles/4402031212185-Does-Nando-s-serve-Halal-chicken-in-NZ-"
         },
         {
           "brand": "Popeyes Louisiana Chicken NZ",
           "status": "not-halal",
-          "details": "Popeyes products are NOT halal because cooked in Beef Tallow.",
+          "details": "Popeyes products are NOT halal — cooked in Beef Tallow.",
           "source": "popeyesnz.zendesk.com",
           "url": "https://popeyesnz.zendesk.com/hc/en-us/articles/8572730745871-Is-your-chicken-Halal"
         },
         {
           "brand": "BurgerFuel",
           "status": "partial",
-          "details": "Stores and food NOT halal in the strictest sense. Some menu products are not halal certified and cross-contamination cannot be guaranteed. BurgerFuel WILL cook your burger separately using fresh, clean utensils if you let crew know you are halal.",
+          "details": "Stores and food NOT halal in the strictest sense. Some products are not halal certified and cross-contamination cannot be guaranteed. BurgerFuel WILL cook your burger separately using fresh, clean utensils if you let crew know you're halal.",
           "source": "burgerfuel.com/nz",
           "url": "https://www.burgerfuel.com/nz/dietary-requirements"
         }
@@ -1669,12 +2072,29 @@ let HALAL_DATA = (function(){
 
 let halalFilter = 'all';
 let halalSearchTerm = '';
+let halalBrandFilter = '';
 
 function setHalalFilter(status, btn){
     halalFilter = status;
     document.querySelectorAll('.hf-chip').forEach(c => c.classList.remove('active'));
     btn.classList.add('active');
     renderHalal();
+}
+
+function setHalalBrand(brand){
+    halalBrandFilter = brand;
+    renderHalal();
+}
+
+function populateHalalBrands(){
+    const sel = document.getElementById('halalBrandSel');
+    if(!sel) return;
+    const all = new Set();
+    HALAL_DATA.categories.forEach(c => c.items.forEach(i => all.add(i.brand)));
+    const sorted = [...all].sort();
+    const current = sel.value;
+    sel.innerHTML = '<option value="">\u{1f53d} All Brands</option>' + sorted.map(b => `<option value="${b}">${b}</option>`).join('');
+    if(current && sorted.includes(current)) sel.value = current;
 }
 
 function filterHalal(){
@@ -1684,6 +2104,7 @@ function filterHalal(){
 }
 
 function renderHalal(){
+    populateHalalBrands();
     const container = document.getElementById('halalContent');
     if(!container) return;
     container.innerHTML = '';
@@ -1696,8 +2117,11 @@ function renderHalal(){
     HALAL_DATA.categories.forEach(cat => {
         const items = cat.items.filter(item => {
             if(halalFilter !== 'all' && item.status !== halalFilter) return false;
+            if(halalBrandFilter && item.brand !== halalBrandFilter) return false;
             if(halalSearchTerm){
-                const hay = (item.brand + ' ' + item.details + ' ' + (item.extra||'') + ' ' + cat.name).toLowerCase();
+                const productHay = (item.products||[]).map(p => p.name + ' ' + (p.barcode||'')).join(' ');
+                const storeHay = (item.stores||[]).join(' ');
+                const hay = (item.brand + ' ' + item.details + ' ' + (item.extra||'') + ' ' + cat.name + ' ' + productHay + ' ' + storeHay).toLowerCase();
                 if(!hay.includes(halalSearchTerm)) return false;
             }
             return true;
@@ -1715,7 +2139,7 @@ function renderHalal(){
                 <div class="halal-cat-toggle">▾</div>
             </div>
             <div class="halal-items">
-                ${items.map(item => renderHalalItem(item)).join('')}
+                ${items.map((item, idx) => renderHalalItem(item, cat.id + '-' + idx)).join('')}
             </div>
         `;
         container.appendChild(catDiv);
@@ -1726,14 +2150,50 @@ function renderHalal(){
     }
 }
 
-function renderHalalItem(item){
-    const statusIcons = {halal: '✓', partial: '⚠', 'not-halal': '✗', check: '?'};
+function renderHalalItem(item, itemKey){
+    const statusIcons = {halal: '\u2713', partial: '\u26a0', 'not-halal': '\u2717', check: '?'};
     const statusLabels = {halal: 'Halal Certified', partial: 'Partially Halal', 'not-halal': 'Not Halal', check: 'Verify'};
     const icon = statusIcons[item.status] || '?';
     const label = statusLabels[item.status] || item.status;
     const sourceHtml = item.source ? `<span class="halal-item-source">Source: ${item.source}</span>` : '';
-    const linkHtml = item.url ? `<a href="${item.url}" target="_blank" rel="noopener" class="halal-item-link">View →</a>` : '';
-    const extraHtml = item.extra ? `<div class="halal-item-extra">📍 ${item.extra}</div>` : '';
+    const linkHtml = item.url ? `<a href="${item.url}" target="_blank" rel="noopener" class="halal-item-link">View source \u2192</a>` : '';
+    const extraHtml = item.extra ? `<div class="halal-item-extra">${item.extra}</div>` : '';
+    const scopeHtml = item.scope ? `<div class="halal-item-scope"><strong>Scope:</strong> ${item.scope}</div>` : '';
+
+    // Products list
+    let productsHtml = '';
+    if(item.products && item.products.length){
+        const rows = item.products.map(p => {
+            const barcode = p.barcode ? `<div class="hp-barcode">${p.barcode}</div>` : '';
+            const note = p.note ? `<div class="hp-note">${p.note}</div>` : '';
+            return `<div class="hp-row"><div class="hp-name">${p.name}</div>${barcode}${note}</div>`;
+        }).join('');
+        productsHtml = `
+            <div class="halal-expand" id="prods-${itemKey}">
+                <div class="halal-expand-header" onclick="toggleHalalSection('prods-${itemKey}')">
+                    <span>\ud83d\udce6 Products (${item.products.length})</span>
+                    <span class="halal-expand-toggle">\u25be</span>
+                </div>
+                <div class="halal-expand-body">${rows}</div>
+            </div>
+        `;
+    }
+
+    // Stores list
+    let storesHtml = '';
+    if(item.stores && item.stores.length){
+        const rows = item.stores.map(s => `<div class="hs-row">\ud83d\udccd ${s}</div>`).join('');
+        storesHtml = `
+            <div class="halal-expand" id="stores-${itemKey}">
+                <div class="halal-expand-header" onclick="toggleHalalSection('stores-${itemKey}')">
+                    <span>\ud83c\udfea Halal Locations (${item.stores.length})</span>
+                    <span class="halal-expand-toggle">\u25be</span>
+                </div>
+                <div class="halal-expand-body">${rows}</div>
+            </div>
+        `;
+    }
+
     return `
         <div class="halal-item">
             <div class="halal-badge ${item.status}">${icon}</div>
@@ -1741,11 +2201,19 @@ function renderHalalItem(item){
                 <div class="halal-item-brand">${item.brand}</div>
                 <div class="halal-item-status ${item.status}">${label}</div>
                 <div class="halal-item-details">${item.details}</div>
+                ${scopeHtml}
+                ${productsHtml}
+                ${storesHtml}
                 ${extraHtml}
                 <div class="halal-item-meta">${sourceHtml}${linkHtml}</div>
             </div>
         </div>
     `;
+}
+
+function toggleHalalSection(id){
+    const el = document.getElementById(id);
+    if(el) el.classList.toggle('expanded');
 }
 
 // Render on first calendar/halal view open
