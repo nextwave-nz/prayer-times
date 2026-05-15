@@ -1447,6 +1447,206 @@ body.halal-view .scan-fab { display: flex; }
     color: var(--text);
 }
 
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   ── RESPONSIVE + iOS ZOOM FIX (CRITICAL) ──
+   1. All inputs/textareas/selects must be 16px+ to prevent iOS auto-zoom
+   2. Horizontal-scroll containers must not overflow viewport
+   3. Type scales down on small screens
+   4. Touch targets minimum 44px
+═══════════════════════════════════════════════════════════════════ */
+
+/* iOS Safari auto-zooms ANY input where computed font-size < 16px.
+   Override this universally for all input types. */
+input, textarea, select, button {
+    font-size: 16px !important;
+}
+
+/* Specific overrides for our custom inputs to look proportional */
+.halal-search,
+.halal-brand-sel {
+    font-size: 16px !important;
+    padding: 13px 16px !important;
+    -webkit-text-size-adjust: 100% !important;
+    text-size-adjust: 100% !important;
+}
+
+/* Prevent ALL horizontal overflow */
+html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+    -webkit-text-size-adjust: 100% !important;
+    text-size-adjust: 100% !important;
+}
+
+.app, .content {
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+}
+
+/* Horizontal-scroll category pills — proper scrolling, no overflow */
+.halal-filters {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    scroll-snap-type: x proximity;
+    padding: 0 16px 14px !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
+}
+.halal-filters::-webkit-scrollbar { display: none !important; }
+.halal-filters .hf-chip {
+    scroll-snap-align: start;
+    font-size: 14px !important;
+    padding: 9px 14px !important;
+    min-height: 38px;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* All buttons — minimum touch target */
+.nav-item {
+    min-height: 44px !important;
+    min-width: 44px !important;
+}
+
+/* Hero responsive type — scale down on narrow screens */
+@media (max-width: 380px) {
+    .masjid-name { font-size: 1.45em !important; }
+    .hero-cd-v2 .hero-cd-name { font-size: 2.6em !important; }
+    .hero-cd-v2 .hero-cd-cd-time { font-size: 2.4em !important; }
+    .halal-hero-title { font-size: 1.5em !important; }
+    .pad { padding: 0 14px !important; }
+    .header-compact { padding-left: 16px !important; padding-right: 16px !important; }
+    .pr-row, .streak-chip, .alerts-card, .hero-cd, .timeline,
+    .halal-hero, .halal-cat, .halal-search-wrap, .halal-brand-row,
+    .info-card, .hadith-card, .ramadan-row, .jummah-notice,
+    .notif-banner, .adhan-banner {
+        margin-left: 16px !important;
+        margin-right: 16px !important;
+    }
+}
+@media (max-width: 340px) {
+    .masjid-name { font-size: 1.25em !important; }
+    .hero-cd-v2 .hero-cd-name { font-size: 2.2em !important; }
+    .hero-cd-v2 .hero-cd-cd-time { font-size: 2em !important; }
+    .pr-row, .streak-chip, .alerts-card, .hero-cd, .timeline,
+    .halal-hero, .halal-cat, .halal-search-wrap, .halal-brand-row,
+    .info-card, .hadith-card, .ramadan-row, .jummah-notice,
+    .notif-banner, .adhan-banner {
+        margin-left: 12px !important;
+        margin-right: 12px !important;
+    }
+    .pad { padding: 0 12px !important; }
+    .nav-label { font-size: 0.5em !important; }
+    .nav-icon { font-size: 1.1em !important; }
+}
+
+/* Date row — wrap on small screens */
+.date-row {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+}
+.date-row > * {
+    flex-shrink: 0;
+    min-width: 0;
+}
+
+/* Hijri pill — never get cut off */
+.hijri-pill {
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+}
+
+/* Mode pill (DAILY SALAAT) — must stay on screen */
+.mode-pill {
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+}
+
+/* Top section row containing masjid name + hijri pill */
+.masjid-row {
+    flex-wrap: nowrap !important;
+    gap: 12px !important;
+    align-items: flex-start !important;
+}
+.masjid-row > div:first-child {
+    flex: 1;
+    min-width: 0;
+}
+.masjid-name {
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    hyphens: auto;
+}
+
+/* Halal hero — no overflow */
+.halal-hero {
+    overflow: hidden !important;
+}
+.halal-hero-title {
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+}
+
+/* Disable user zoom on inputs specifically (won't auto-zoom),
+   but allow pinch-zoom on rest of page */
+input, textarea {
+    -webkit-user-select: text;
+    user-select: text;
+    touch-action: manipulation;
+}
+
+/* iOS specific: prevent input zoom by ensuring 16px minimum */
+@supports (-webkit-touch-callout: none) {
+    input, textarea, select {
+        font-size: 16px !important;
+    }
+}
+
+/* Bottom nav — always fully visible regardless of safe area */
+.bottom-nav {
+    flex-shrink: 0 !important;
+    min-height: 64px;
+}
+
+/* Tablet / large phone */
+@media (min-width: 600px) {
+    .app {
+        max-width: 480px !important;
+        margin: 0 auto !important;
+    }
+}
+
+/* Make halal items text wrap properly */
+.halal-item-name {
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+}
+
+/* Prevent text from being too small to read */
+.halal-details, .halal-source, .halal-extra {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+}
+.halal-item-name {
+    font-size: 15px !important;
+}
+.halal-cat-title {
+    font-size: 1em !important;
+}
+
+/* SVG icons in halal — sized properly */
+.halal-item-icon {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    flex-shrink: 0 !important;
+}
+
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
 </head>
