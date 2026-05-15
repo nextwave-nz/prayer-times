@@ -1702,11 +1702,24 @@ body.halal-view .scan-fab { display: flex; }
                 <input type="text" id="halalSearch" class="halal-search" placeholder="🔍 Search brand, restaurant, product…" oninput="filterHalal()">
             </div>
 
+            <!-- Category quick-filter -->
+            <div class="halal-filters" id="halalCatFilters">
+                <button class="hf-chip active" data-cat="all" onclick="setHalalCatFilter('all',this)">🔍 All Categories</button>
+                <button class="hf-chip" data-cat="poultry" onclick="setHalalCatFilter('poultry',this)">🐔 Poultry</button>
+                <button class="hf-chip" data-cat="meat" onclick="setHalalCatFilter('meat',this)">🥩 Meat</button>
+                <button class="hf-chip" data-cat="sausages" onclick="setHalalCatFilter('sausages',this)">🌭 Sausages</button>
+                <button class="hf-chip" data-cat="pies" onclick="setHalalCatFilter('pies',this)">🥧 Pies</button>
+                <button class="hf-chip" data-cat="restaurants" onclick="setHalalCatFilter('restaurants',this)">🍔 Chains</button>
+                <button class="hf-chip" data-cat="hamilton-restaurants" onclick="setHalalCatFilter('hamilton-restaurants',this)">🍽️ Hamilton Eats</button>
+            </div>
+
             <div class="halal-brand-row">
                 <select id="halalBrandSel" class="halal-brand-sel" onchange="setHalalBrand(this.value)">
                     <option value="">🔽 All Brands</option>
                 </select>
             </div>
+
+            <!-- Status filter -->
             <div class="halal-filters" id="halalFilters">
                 <button class="hf-chip active" data-status="all" onclick="setHalalFilter('all',this)">All Status</button>
                 <button class="hf-chip" data-status="halal" onclick="setHalalFilter('halal',this)">✓ Halal</button>
@@ -1733,48 +1746,92 @@ body.halal-view .scan-fab { display: flex; }
         <div class="view" id="infoView">
             <div class="gap"></div>
             <div class="pad">
+
+                <!-- Mosque Card -->
                 <div class="info-card">
                     <div class="info-title">🕌 Hamilton Jamia Mosque</div>
                     <div class="info-body">
-                        <p>📍 921 Heaphy Terrace, Hamilton</p>
-                        <div class="info-div"></div>
-                        <p>🕌 <strong>Jumu'ah Today:</strong> <span id="infoJumuah">—</span></p>
-                        <p>🌙 <strong>Taraweeh:</strong> After Isha nightly in Ramadan</p>
+                        <p><strong>📍 Address:</strong><br>921 Heaphy Terrace, Hamilton 3214</p>
+                        <p><strong>📞 Phone:</strong> <a href="tel:0788550567" style="color:var(--gold-light);text-decoration:none">07 855 0567</a></p>
+                        <p><strong>📧 Email:</strong> <a href="mailto:wma@xtra.co.nz" style="color:var(--gold-light);text-decoration:none">wma@xtra.co.nz</a></p>
+                        <p><strong>🕐 Friday Khutbah:</strong> 1:40 PM (Iqama 1:50 PM)</p>
+                        <div style="margin-top:14px">
+                            <a href="https://www.google.com/maps/search/?api=1&query=921+Heaphy+Terrace+Hamilton" target="_blank" rel="noopener" style="display:inline-block;padding:10px 18px;background:linear-gradient(135deg,var(--gold),#a8854f);color:#1a1305;text-decoration:none;border-radius:14px;font-size:.85em;font-weight:700;box-shadow:0 4px 16px rgba(212,175,110,.4)">📍 Open in Maps</a>
+                        </div>
                     </div>
                 </div>
+
+                <!-- About the App -->
                 <div class="info-card">
-                    <div class="info-title">📌 Important Notes</div>
+                    <div class="info-title">📱 About This App</div>
                     <div class="info-body">
-                        <p>• All times shown are <strong>Iqama (congregation) times</strong></p>
-                        <p>• On Fridays, <strong>Dhuhr is replaced by Jumu'ah</strong> — Khutbah + Iqama times shown separately</p>
-                        <p>• Jumu'ah times change with NZ daylight saving</p>
-                        <p>• Iftar/Maghrib from <strong>FIANZ Hamilton calendar</strong></p>
-                        <p>• 3 minutes added to Ramadan Maghrib</p>
-                        <p>• Asr based on <strong>single shadow</strong> method</p>
-                        <p>• Islamic dates subject to <strong>moon sighting</strong></p>
-                        <p>• Iqama times carry forward until next change</p>
-                        <p>• 5 min gap between Suhoor end and Fajr</p>
+                        <p>Waikato Prayer Times is the official prayer companion for Hamilton Jamia Mosque and the Waikato Muslim community in New Zealand.</p>
+                        <p><strong>Features:</strong></p>
+                        <p>• Live prayer countdown<br>• Ramadan calendar (Suhoor & Iftar)<br>• Prayer tracker & streak<br>• Daily Hadith<br>• Halal directory with barcode scanner<br>• Adhan audio alerts<br>• Works offline</p>
                     </div>
                 </div>
+
+                <!-- Donations -->
                 <div class="info-card">
-                    <div class="info-title">📱 Data Sources</div>
+                    <div class="info-title">🤲 Support the Mosque</div>
                     <div class="info-body">
-                        <p><strong>FIANZ</strong> — Suhoor &amp; Iftar times</p>
-                        <p><strong>Waikato Muslim Association</strong> — Iqama times</p>
+                        <p>Waikato Muslim Association welcomes donations to support mosque operations and community programs.</p>
+                        <p><strong>Bank Account:</strong><br><span style="font-family:'JetBrains Mono',monospace;color:var(--gold-light);font-size:1.05em">BNZ 02-0320-0143860-00</span></p>
+                        <p style="font-size:.85em;color:var(--text-3)">May Allah reward your generosity</p>
                     </div>
                 </div>
+
+                <!-- FIANZ -->
+                <div class="info-card">
+                    <div class="info-title">🇳🇿 FIANZ Resources</div>
+                    <div class="info-body">
+                        <p><strong>Federation of Islamic Associations of New Zealand</strong></p>
+                        <p>For halal certification, Islamic dates, and community resources:</p>
+                        <p><strong>Email:</strong> <a href="mailto:halal@fianz.com" style="color:var(--gold-light);text-decoration:none">halal@fianz.com</a></p>
+                        <p><strong>Website:</strong> <a href="https://fianz.com" target="_blank" rel="noopener" style="color:var(--gold-light);text-decoration:none">fianz.com</a></p>
+                    </div>
+                </div>
+
+                <!-- Prayer Etiquette -->
+                <div class="info-card">
+                    <div class="info-title">📖 Prayer Etiquette</div>
+                    <div class="info-body">
+                        <p><strong>Before Prayer:</strong><br>Perform wudu (ablution), face Qibla, wear clean modest clothing.</p>
+                        <p><strong>At the Mosque:</strong><br>Remove shoes before entering prayer hall, maintain quiet, avoid walking in front of those praying.</p>
+                        <p><strong>Friday Jumu'ah:</strong><br>Arrive 10-15 mins before Khutbah (1:40 PM). Listen attentively without speaking.</p>
+                    </div>
+                </div>
+
+                <!-- Times Source -->
+                <div class="info-card">
+                    <div class="info-title">📊 Data Sources</div>
+                    <div class="info-body">
+                        <p><strong>Iqama Times:</strong> Waikato Muslim Association (WMA) monthly timetables</p>
+                        <p><strong>Suhoor & Iftar:</strong> FIANZ Hamilton Ramadan Calendar</p>
+                        <p><strong>Hadith:</strong> Verified sources — Bukhari, Muslim, Abu Dawud, Tirmidhi, Ibn Majah</p>
+                        <p><strong>Halal Directory:</strong> FIANZ memos, brand websites, community verification</p>
+                        <p style="font-size:.78em;color:var(--text-3);margin-top:8px">Islamic dates subject to moon sighting</p>
+                    </div>
+                </div>
+
+                <!-- App credits -->
+                <div class="info-card" style="text-align:center">
+                    <div class="info-body" style="font-size:.82em">
+                        <p style="color:var(--gold-light);font-family:'Fraunces',serif;font-size:1.15em;font-style:italic">Built with love by Next Wave NZ</p>
+                        <p style="font-size:.78em;color:var(--text-3);margin-top:6px">For the Waikato Muslim community 🤲</p>
+                    </div>
+                </div>
+
             </div>
             <div class="gap"></div>
         </div>
 
-    </div><!-- end .content -->
-
-    <!-- BOTTOM NAV -->
+        <!-- BOTTOM NAV -->
     <div class="bottom-nav">
         <button class="nav-item active" onclick="switchNav('home',this)"><div class="nav-icon">🏠</div><div class="nav-label">Home</div></button>
         <button class="nav-item" onclick="switchNav('calendar',this)"><div class="nav-icon">📅</div><div class="nav-label">Calendar</div></button>
-        <button class="nav-item" onclick="switchNav('hadith',this)"><div class="nav-icon">📖</div><div class="nav-label">Hadith</div></button>
         <button class="nav-item" onclick="switchNav('halal',this)"><div class="nav-icon">✅</div><div class="nav-label">Halal</div></button>
+        <button class="nav-item" onclick="switchNav('hadith',this)"><div class="nav-icon">📖</div><div class="nav-label">Hadith</div></button>
         <button class="nav-item" onclick="switchNav('info',this)"><div class="nav-icon">ℹ️</div><div class="nav-label">Info</div></button>
     </div>
 </div>
@@ -2412,6 +2469,29 @@ const DEFAULT_HALAL_DATA = {
           ]
         },
         {
+          "brand": "Brink's Best Bird",
+          "status": "halal",
+          "details": "Brink's Best Bird is Halal certified chicken — processed in accordance with Islamic Law. Available fresh or frozen across NZ supermarkets. All ingredients halal certified.",
+          "source": "brinks.co.nz/our-range/best-bird",
+          "url": "https://brinks.co.nz/our-range/best-bird",
+          "scope": "All Best Bird branded chicken — look for the halal logo on packaging",
+          "products": [
+            { "name": "Best Bird Whole Chicken 1-2.6kg", "code": "", "barcode": "" },
+            { "name": "Best Bird Skin-on Thighs", "code": "", "barcode": "" },
+            { "name": "Best Bird Twin Pack 1.3kg", "code": "", "barcode": "" },
+            { "name": "Best Bird Skinless Breast", "code": "", "barcode": "" },
+            { "name": "Best Bird Skin-on Breast", "code": "", "barcode": "" },
+            { "name": "Best Bird Tenderloins", "code": "", "barcode": "" },
+            { "name": "Best Bird Skinless Cutlet", "code": "", "barcode": "" },
+            { "name": "Best Bird Stir Fry", "code": "", "barcode": "" },
+            { "name": "Best Bird Skinless Thighs", "code": "", "barcode": "" },
+            { "name": "Best Bird Whole Legs", "code": "", "barcode": "" },
+            { "name": "Best Bird Wings", "code": "", "barcode": "" },
+            { "name": "Best Bird Drumsticks", "code": "", "barcode": "" },
+            { "name": "Best Bird Nibbles", "code": "", "barcode": "" }
+          ]
+        },
+        {
           "brand": "Turks Poultry (Foxton)",
           "status": "halal",
           "details": "Halal-certified chicken production resumed 5 August 2025 under Semi-Mechanical Halal Slaughter process. Look for batch codes after 5 August 2025 (e.g. batch 250811 = 11 August 2025).",
@@ -2724,6 +2804,112 @@ const DEFAULT_HALAL_DATA = {
           "url": "https://www.burgerfuel.com/nz/dietary-requirements"
         }
       ]
+    },
+    {
+      "id": "hamilton-restaurants",
+      "name": "Hamilton & Waikato — Halal Restaurants",
+      "icon": "🍽️",
+      "items": [
+        {
+          "brand": "Salam Afghan Food",
+          "status": "halal",
+          "details": "Popular Afghan restaurant in Hamilton — fully halal. Dine-in at Hamilton East, takeaways available.",
+          "source": "salam.nz",
+          "url": "https://salam.nz/",
+          "scope": "Hamilton East — Afghan cuisine, takeaway & dine-in",
+          "location": "Hamilton East, Hamilton"
+        },
+        {
+          "brand": "Tandoor Corner",
+          "status": "halal",
+          "details": "Halal Indian takeaway in Enderley, Hamilton. Authentic Indian cuisine with online ordering available.",
+          "source": "tandoorcorner.co.nz",
+          "url": "https://tandoorcorner.co.nz/",
+          "scope": "Indian takeaway — Enderley, Hamilton",
+          "location": "Enderley, Hamilton"
+        },
+        {
+          "brand": "Sultan's Kitchen",
+          "status": "halal",
+          "details": "Well-known halal restaurant in Hamilton serving Middle Eastern and Turkish cuisine. Generous portions, full halal meat.",
+          "source": "Verified by community · Yelp 2026",
+          "url": "",
+          "scope": "Middle Eastern / Turkish — Hamilton",
+          "location": "Hamilton"
+        },
+        {
+          "brand": "Kebabs Salateen",
+          "status": "halal",
+          "details": "Halal kebab restaurant in Hamilton — popular for shawarma, kebabs, and Middle Eastern dishes.",
+          "source": "Verified by community",
+          "url": "",
+          "scope": "Kebabs & Middle Eastern — Hamilton",
+          "location": "Hamilton"
+        },
+        {
+          "brand": "Flame Gourmet Pizza & Burger",
+          "status": "halal",
+          "details": "Halal-certified pizza and burger restaurant in Hamilton.",
+          "source": "Verified by community · Yelp 2026",
+          "url": "",
+          "scope": "Pizza & Burgers — Hamilton",
+          "location": "Hamilton"
+        },
+        {
+          "brand": "Akbar Durbar Indian Takeaway",
+          "status": "halal",
+          "details": "Halal Indian takeaway in Hamilton. Authentic Hyderabadi Biryani and traditional Indian dishes.",
+          "source": "Verified by community · Yelp 2026",
+          "url": "",
+          "scope": "Indian takeaway — Hamilton",
+          "location": "Hamilton"
+        },
+        {
+          "brand": "Kebab Turka",
+          "status": "halal",
+          "details": "Authentic Turkish halal kebabs and food in Hamilton.",
+          "source": "Verified by community · Yelp 2026",
+          "url": "",
+          "scope": "Turkish kebabs — Hamilton",
+          "location": "Hamilton"
+        },
+        {
+          "brand": "Curry Pot South Indian Restaurant",
+          "status": "halal",
+          "details": "South Indian restaurant in Hamilton — fully halal with diverse Indian cuisine options.",
+          "source": "Halaltrip Hamilton Guide",
+          "url": "",
+          "scope": "South Indian — Hamilton",
+          "location": "Hamilton"
+        },
+        {
+          "brand": "Babaganush",
+          "status": "halal",
+          "details": "Middle Eastern halal restaurant in Hamilton.",
+          "source": "Halaltrip Hamilton Guide",
+          "url": "",
+          "scope": "Middle Eastern — Hamilton",
+          "location": "Hamilton"
+        },
+        {
+          "brand": "Grill and Shakes",
+          "status": "halal",
+          "details": "Halal grill restaurant in Hamilton featuring burgers, grilled meats and shakes. Retro 90s theme.",
+          "source": "Verified by community · Yelp 2026",
+          "url": "",
+          "scope": "Burgers & Grills — Hamilton",
+          "location": "Hamilton"
+        },
+        {
+          "brand": "Bake & Beans",
+          "status": "halal",
+          "details": "Halal restaurant in Hamilton.",
+          "source": "Verified by community · Yelp 2026",
+          "url": "",
+          "scope": "Halal eatery — Hamilton",
+          "location": "Hamilton"
+        }
+      ]
     }
   ]
 };
@@ -2764,10 +2950,18 @@ window.HALAL_DATA = HALAL_DATA;  // expose for barcode scanner
 let halalFilter = 'all';
 let halalSearchTerm = '';
 let halalBrandFilter = '';
+let halalCatFilter = 'all';
+
+function setHalalCatFilter(cat, btn) {
+    halalCatFilter = cat;
+    document.querySelectorAll('#halalCatFilters .hf-chip').forEach(c => c.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    renderHalal();
+}
 
 function setHalalFilter(status, btn){
     halalFilter = status;
-    document.querySelectorAll('.hf-chip').forEach(c => c.classList.remove('active'));
+    document.querySelectorAll('#halalFilters .hf-chip').forEach(c => c.classList.remove('active'));
     btn.classList.add('active');
     renderHalal();
 }
@@ -2806,6 +3000,8 @@ function renderHalal(){
 
     let totalShown = 0;
     HALAL_DATA.categories.forEach(cat => {
+        // Category filter
+        if(halalCatFilter !== 'all' && cat.id !== halalCatFilter) return;
         const items = cat.items.filter(item => {
             if(halalFilter !== 'all' && item.status !== halalFilter) return false;
             if(halalBrandFilter && item.brand !== halalBrandFilter) return false;
